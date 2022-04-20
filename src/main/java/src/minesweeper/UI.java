@@ -10,43 +10,43 @@ import javax.swing.border.EtchedBorder;
 public class UI extends JFrame
 {
     // The buttons
-    private JButton[][] buttons;
+    protected JButton[][] buttons;
     
     // Number of Buttons in Grid
-    private int rows;
-    private int cols;
+    protected int rows;
+    protected int cols;
     
     // Labels 
-    private JLabel minesLabel;
-    private int mines;
+    protected JLabel minesLabel;
+    protected int mines;
     
-    private JLabel timePassedLabel;    
-    private Thread timer;
-    private int timePassed;
-    private boolean stopTimer;
+    protected JLabel timePassedLabel;
+    protected Thread timer;
+    protected int timePassed;
+    protected boolean stopTimer;
     
     // Frame settings
-    private final String FRAME_TITLE = "Minesweeper ~ Developed by Haris Muneer";
+    protected final String FRAME_TITLE = "Minesweeper ~ Developed by Haris Muneer";
     
-    private int FRAME_WIDTH = 520;
-    private int FRAME_HEIGHT = 550;
-    private int FRAME_LOC_X = 430;
-    private int FRAME_LOC_Y = 50;
+    protected int FRAME_WIDTH = 520;
+    protected int FRAME_HEIGHT = 550;
+    protected int FRAME_LOC_X = 430;
+    protected int FRAME_LOC_Y = 50;
 
     // Icons
-    private Icon redMine;
-    private Icon mine;
-    private Icon flag;
-    private Icon tile;
+    protected Icon redMine;
+    protected Icon mine;
+    protected Icon flag;
+    protected Icon tile;
     
     
     // Menu Bar and Items
     
-    private JMenuBar menuBar;
-    private JMenu gameMenu;
-    private JMenuItem newGame;
-    private JMenuItem statistics;
-    private JMenuItem exit;
+    protected JMenuBar menuBar;
+    protected JMenu gameMenu;
+    protected JMenuItem newGame;
+    protected JMenuItem statistics;
+    protected JMenuItem exit;
 
     
     
@@ -111,7 +111,7 @@ public class UI extends JFrame
         timePassedLabel.setOpaque(true);
         
         JLabel iT = new JLabel("",SwingConstants.CENTER);
-        iT.setIcon(new ImageIcon(getClass().getResource("./resources/clock.png")));
+        iT.setIcon(new ImageIcon(getClass().getResource("/../../resources/main/clock.png")));
 
         timePassedPanel.add(iT, BorderLayout.WEST);
         timePassedPanel.add(timePassedLabel, BorderLayout.CENTER);
@@ -136,7 +136,7 @@ public class UI extends JFrame
         setMines(m);
         
         JLabel mT = new JLabel("", SwingConstants.CENTER);
-        mT.setIcon(new ImageIcon(getClass().getResource("/resources/mine.png")));
+        mT.setIcon(new ImageIcon(getClass().getResource("/../../resources/main/mine.png")));
 
         minesPanel.add(minesLabel, BorderLayout.WEST);
         minesPanel.add(mT, BorderLayout.CENTER);
@@ -185,7 +185,7 @@ public class UI extends JFrame
       
         
         setLayout(new BorderLayout());
-        JLabel background = new JLabel(new ImageIcon(getClass().getResource("/resources/2.jpg")));
+        JLabel background = new JLabel(new ImageIcon(getClass().getResource("/../../resources/main/2.jpg")));
         
         add(background);        
         
@@ -195,7 +195,7 @@ public class UI extends JFrame
         background.add(p, BorderLayout.CENTER);        
         
         
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("./resources/mine.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/../../resources/main/mine.png")));
                
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
@@ -409,16 +409,16 @@ public class UI extends JFrame
         
         ImageIcon d;
         
-        d = new ImageIcon(getClass().getResource("/resources/redmine.png"));                
+        d = new ImageIcon(getClass().getResource("/../../resources/main/redmine.png"));
         redMine =   resizeIcon(d, bWidth - bOffset, bHeight - bOffset);        
 
-        d = new ImageIcon(getClass().getResource("/resources/mine.png"));                
+        d = new ImageIcon(getClass().getResource("/../../resources/main/mine.png"));
         mine =   resizeIcon(d, bWidth - bOffset, bHeight - bOffset);        
         
-        d = new ImageIcon(getClass().getResource("/resources/flag.png"));                
+        d = new ImageIcon(getClass().getResource("/../../resources/main/flag.png"));
         flag =   resizeIcon(d, bWidth - bOffset, bHeight - bOffset);        
         
-        d = new ImageIcon(getClass().getResource("/resources/tile.png"));                
+        d = new ImageIcon(getClass().getResource("/../../resources/main/tile.png"));
         tile =   resizeIcon(d, bWidth - bOffset, bHeight - bOffset);        
                 
         //-------------------------------------------------------//

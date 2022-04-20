@@ -11,13 +11,11 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.net.URISyntaxException;
-import java.security.CodeSource;
 import java.util.ArrayList;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.sql.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javafx.util.Pair;
 import javax.swing.border.TitledBorder;
 //import Score.Time;
@@ -44,11 +42,12 @@ public class Game implements MouseListener, ActionListener, WindowListener
         // set db path
         String p = "";
 
-        try 
+        try
         {
             p = new File(Game.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath() + "\\db.accdb";
+            p = getClass().getResource("/../../resources/main/db.accdb").getPath();
         }
-        catch (URISyntaxException ex) 
+        catch (URISyntaxException ex)
         {
             System.out.println("Error loading database file.");
         }
@@ -57,7 +56,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 
         
         score = new Score();
-        //score.populate();
+        score.populate();
         
         UI.setLook("Nimbus");
                         
@@ -82,7 +81,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
     {
         if(board.checkSave())
         {
-            ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
+            ImageIcon question = new ImageIcon(getClass().getResource("/../../resources/main/question.png"));
 
             int option = JOptionPane.showOptionDialog(null, "Do you want to continue your saved game?", 
                             "Saved Game Found", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, question,null,null);
@@ -486,7 +485,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
             dialog.dispose();
         });        
         reset.addActionListener((ActionEvent e) -> {
-            ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
+            ImageIcon question = new ImageIcon(getClass().getResource("/../../resources/main/question.png"));
 
             int option = JOptionPane.showOptionDialog(null, "Do you want to reset all your statistics to zero?", 
                             "Reset Statistics", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, question,null,null);
@@ -704,7 +703,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
     {
         if (playing)
         {
-            ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
+            ImageIcon question = new ImageIcon(getClass().getResource("/../../resources/main/question.png"));
 
             Object[] options = {"Save","Don't Save","Cancel"};
 
@@ -774,7 +773,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
         {
             if (playing)
             {
-                ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
+                ImageIcon question = new ImageIcon(getClass().getResource("/../../resources/main/question.png"));
 
                 Object[] options = {"Quit and Start a New Game","Restart","Keep Playing"};
                 
