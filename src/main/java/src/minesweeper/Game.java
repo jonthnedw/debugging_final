@@ -29,11 +29,19 @@ public class Game implements MouseListener, ActionListener, WindowListener
     // "playing" indicates whether a game is running (true) or not (false).
     private boolean playing; 
 
-    private Board board;
+    protected Board board;
 
     protected UI gui;
     
     private Score score;
+
+    public TestGame game = new TestGame();
+
+    class TestGame extends Game {
+        public UI getGui() { return this.gui; }
+
+        public Board getBoard() { return this.board; }
+    }
         
     //------------------------------------------------------------------//        
 
@@ -46,6 +54,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
         {
             p = new File(Game.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath() + "\\db.accdb";
             p = getClass().getResource("/../../resources/main/db.accdb").getPath();
+            p = new File("build/resources/main/db.accdb").getAbsolutePath();
         }
         catch (URISyntaxException ex)
         {
