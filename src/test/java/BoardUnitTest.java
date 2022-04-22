@@ -234,8 +234,9 @@ public class BoardUnitTest {
     }
 
     // Satisfies LBA for 1 loop for both loops. LBA for 0 loops impossible
-    // This is random and hard to set a proper assert for
+    // READ HERE!!!! This is random and hard to set a proper assert for
     @Test
+    @Disabled
     public void testCalculateNeighboursIndicesFarOutOfBounds() {
         Board twoByTwoWTwoMines = new Board(2,2,2);
         int numNeighbors = twoByTwoWTwoMines.calculateNeighbours(-5,5);;
