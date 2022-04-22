@@ -3,15 +3,12 @@ import org.junit.jupiter.api.*;
 import src.minesweeper.Board;
 import src.minesweeper.Cell;
 import src.minesweeper.Game;
-import src.minesweeper.UI;
 
-import java.sql.SQLException;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BoardTest {
+public class BoardUnitTest {
     private Board boardDefault;
     private Board boardNoColumns;
     private Board boardNoRows;
