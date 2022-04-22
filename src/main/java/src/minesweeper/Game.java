@@ -34,14 +34,6 @@ public class Game implements MouseListener, ActionListener, WindowListener
     protected UI gui;
     
     private Score score;
-
-    public TestGame game = new TestGame();
-
-    class TestGame extends Game {
-        public UI getGui() { return this.gui; }
-
-        public Board getBoard() { return this.board; }
-    }
         
     //------------------------------------------------------------------//        
 
