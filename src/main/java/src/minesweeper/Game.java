@@ -638,7 +638,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 
  
     //Check the game to see if its finished or not
-    private void checkGame()
+    protected void checkGame()
     {		
         if(isFinished()) 
         {            

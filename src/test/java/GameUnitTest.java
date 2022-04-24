@@ -76,6 +76,8 @@ public class GameUnitTest {
         public void endTestGame() { endGame(); }
 
         public void testShowAll() { this.showAll(); }
+
+        public void testCheckGame() { this.checkGame(); }
     }
 
     // BC: fails outermost if-statement - simply to enact branch coverage
@@ -455,16 +457,249 @@ public class GameUnitTest {
         assertEquals("", buttons[1][1].getText());
     }
 
+    // BC: Pass and fail both if statements.
+    // LBA is not possible because of coupling with other classes and hardcoded
+    // values that do not allow boards smaller than 2x2
+    @Test
+    public void testIsFinishedNotFinishedBoard() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(2);
+        cells[0][0].setContent("F");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("2");
+        cells[0][1].setSurroundingMines(2);
+        cells[0][1].setMine(false);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(1);
+        cells[1][0].setMine(true);
+        cells[1][1].setContent("2");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(2);
 
+        TestGame tg = new TestGame(tb);
 
+        assertFalse(tg.isFinished());
+    }
 
+    // Does it properly detect a finished game
+    @Test
+    public void testIsFinishedFinishedBoard() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(2);
+        cells[0][0].setContent("F");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("2");
+        cells[0][1].setSurroundingMines(2);
+        cells[0][1].setMine(false);
+        cells[1][0].setContent("F");
+        cells[1][0].setSurroundingMines(1);
+        cells[1][0].setMine(true);
+        cells[1][1].setContent("2");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(2);
 
+        TestGame tg = new TestGame(tb);
 
+        assertTrue(tg.isFinished());
+    }
 
+    // BC: Pass only if statement
+    @Test
+    public void testCheckGameFinishedGame() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(2);
+        cells[0][0].setContent("F");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("2");
+        cells[0][1].setSurroundingMines(2);
+        cells[0][1].setMine(false);
+        cells[1][0].setContent("F");
+        cells[1][0].setSurroundingMines(1);
+        cells[1][0].setMine(true);
+        cells[1][1].setContent("2");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(2);
 
+        TestGame tg = new TestGame(tb);
+//        Score scorePre = tg.getScore();
+//        scorePre.resetScore();
 
+        tg.testCheckGame();
 
+        Score score = tg.getScore();
 
+        assertEquals(1, score.getCurrentStreak());
+        assertEquals(1, score.getCurrentWinningStreak());
+        assertEquals(1,score.getGamesWon());
+        assertEquals(1, score.getGamesPlayed());
+    }
+
+    // BC: Fail only if statement
+    @Test
+    public void testCheckGameNotFinishedGame() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(2);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("2");
+        cells[0][1].setSurroundingMines(2);
+        cells[0][1].setMine(false);
+        cells[1][0].setContent("F");
+        cells[1][0].setSurroundingMines(1);
+        cells[1][0].setMine(true);
+        cells[1][1].setContent("2");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(2);
+
+        TestGame tg = new TestGame(tb);
+//        Score scorePre = tg.getScore();
+//        scorePre.resetScore();
+
+        tg.testCheckGame();
+
+        Score score = tg.getScore();
+
+        assertEquals(0, score.getCurrentStreak());
+        assertEquals(0, score.getCurrentWinningStreak());
+        assertEquals(0,score.getGamesWon());
+        assertEquals(0, score.getGamesPlayed());
+    }
+
+    // BC: Pass all if statements
+    // LBA is not possible for this method
+    @Test
+    public void testFindZeroesAllZeroesTopLeftStart() {
+        TestBoard tb = new TestBoard(0,2,2);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.findZeroes(0,0);
+
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        assertEquals(Color.lightGray, buttons[0][0].getBackground());
+        assertEquals("", buttons[0][0].getText());
+        assertEquals(Color.lightGray, buttons[0][1].getBackground());
+        assertEquals("", buttons[0][1].getText());
+        assertEquals(Color.lightGray, buttons[1][0].getBackground());
+        assertEquals("", buttons[1][0].getText());
+        assertEquals(Color.lightGray, buttons[1][1].getBackground());
+        assertEquals("", buttons[1][1].getText());
+    }
+
+    @Test
+    public void testFindZeroesAllZeroesTopRightStart() {
+        TestBoard tb = new TestBoard(0,2,2);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.findZeroes(1,0);
+
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        assertEquals(Color.lightGray, buttons[0][0].getBackground());
+        assertEquals("", buttons[0][0].getText());
+        assertEquals(Color.lightGray, buttons[0][1].getBackground());
+        assertEquals("", buttons[0][1].getText());
+        assertEquals(Color.lightGray, buttons[1][0].getBackground());
+        assertEquals("", buttons[1][0].getText());
+        assertEquals(Color.lightGray, buttons[1][1].getBackground());
+        assertEquals("", buttons[1][1].getText());
+    }
+
+    @Test
+    public void testFindZeroesAllZeroesBottomRightStart() {
+        TestBoard tb = new TestBoard(0,2,2);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.findZeroes(1,1);
+
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        assertEquals(Color.lightGray, buttons[0][0].getBackground());
+        assertEquals("", buttons[0][0].getText());
+        assertEquals(Color.lightGray, buttons[0][1].getBackground());
+        assertEquals("", buttons[0][1].getText());
+        assertEquals(Color.lightGray, buttons[1][0].getBackground());
+        assertEquals("", buttons[1][0].getText());
+        assertEquals(Color.lightGray, buttons[1][1].getBackground());
+        assertEquals("", buttons[1][1].getText());
+    }
+
+    @Test
+    public void testFindZeroesAllZeroesBottomLeftStart() {
+        TestBoard tb = new TestBoard(0,2,2);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.findZeroes(1,1);
+
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        assertEquals(Color.lightGray, buttons[0][0].getBackground());
+        assertEquals("", buttons[0][0].getText());
+        assertEquals(Color.lightGray, buttons[0][1].getBackground());
+        assertEquals("", buttons[0][1].getText());
+        assertEquals(Color.lightGray, buttons[1][0].getBackground());
+        assertEquals("", buttons[1][0].getText());
+        assertEquals(Color.lightGray, buttons[1][1].getBackground());
+        assertEquals("", buttons[1][1].getText());
+    }
+
+    // BC: All if statements failed at least once (passed already covered above)
+    @Test
+    public void testFindZeroesWithMines() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(2);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("");
+        cells[0][1].setSurroundingMines(1);
+        cells[0][1].setMine(true);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(2);
+        cells[1][0].setMine(false);
+        cells[1][1].setContent("F");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(2);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.findZeroes(0,0);
+
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        assertEquals(Color.lightGray, buttons[0][0].getBackground());
+        assertEquals("1", buttons[0][0].getText());
+        assertEquals(Color.blue, buttons[0][0].getForeground());
+        assertEquals(Color.lightGray, buttons[0][1].getBackground());
+        assertEquals("1", buttons[0][1].getText());
+        assertEquals(Color.blue, buttons[0][1].getForeground());
+        assertEquals(Color.lightGray, buttons[1][0].getBackground());
+        assertEquals("2", buttons[1][0].getText());
+        assertEquals(new Color(76,153,0), buttons[1][0].getForeground());
+    }
 
 
 
