@@ -5,6 +5,7 @@ import src.minesweeper.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.URISyntaxException;
 
@@ -71,7 +72,7 @@ public class GameUnitTest {
 
         public Score getScore() { return this.score; }
 
-        public void setScore(Score s) { this.score = s; }
+        public void setPlaying(boolean p) { this.playing = p; }
 
         public void endTestGame() { endGame(); }
 
@@ -701,6 +702,237 @@ public class GameUnitTest {
         assertEquals(new Color(76,153,0), buttons[1][0].getForeground());
     }
 
+    // BC: Pass first if, pass second, pass third, pass fourth, pass fifth
+    // Not possible to achieve full BC because second if is an if(true) if statement
+    // Select "Play again"
+    @Test
+    public void testMouseClickedLeftClickOnUnflaggedMine() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(2);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("");
+        cells[0][1].setSurroundingMines(1);
+        cells[0][1].setMine(true);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(2);
+        cells[1][0].setMine(false);
+        cells[1][1].setContent("F");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(2);
 
+        TestGame tg = new TestGame(tb);
 
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        MouseEvent ev = new MouseEvent(buttons[0][0], 0, 1, 0,0,0,1,false,1);
+
+        tg.mouseClicked(ev);
+
+        Score score = tg.getScore();
+
+        assertEquals(1, score.getCurrentLosingStreak());
+        assertEquals(1, score.getGamesPlayed());
+    }
+
+    // BC: Fail first if, pass second, pass third, pass fourth, fail fifth, fail sixth
+    // Not possible to achieve full BC because second if is an if(true) if statement
+    @Test
+    public void testMouseClickedLeftClickOnUnflaggedNumber() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(2);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("");
+        cells[0][1].setSurroundingMines(1);
+        cells[0][1].setMine(true);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(2);
+        cells[1][0].setMine(false);
+        cells[1][1].setContent("F");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(2);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.setPlaying(true);
+
+        UI gui = tg.getGUI();
+
+        gui.startTimer();
+
+        JButton[][] buttons = gui.getButtons();
+
+        MouseEvent ev = new MouseEvent(buttons[1][0], 0, 1, 0,0,0,1,false,1);
+
+        tg.mouseClicked(ev);
+
+        assertEquals(Color.lightGray, buttons[1][0].getBackground());
+        assertEquals("2", buttons[1][0].getText());
+        assertEquals(new Color(76,153,0), buttons[1][0].getForeground());
+        assertEquals("2", cells[1][0].getContent());
+    }
+
+    // BC: Fail first if, pass second, pass third, pass fourth, fail fifth, pass sixth
+    // Not possible to achieve full BC because there is an if(true) if statement
+    @Test
+    public void testMouseClickedLeftClickOnUnflaggedNoNeighbors() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(1);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("");
+        cells[0][1].setSurroundingMines(0);
+        cells[0][1].setMine(false);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(1);
+        cells[1][0].setMine(false);
+        cells[1][1].setContent("F");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(1);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.setPlaying(true);
+
+        UI gui = tg.getGUI();
+
+        gui.startTimer();
+
+        JButton[][] buttons = gui.getButtons();
+
+        MouseEvent ev = new MouseEvent(buttons[0][1], 0, 1, 0,0,0,1,false,1);
+
+        tg.mouseClicked(ev);
+
+        assertEquals(Color.lightGray, buttons[0][1].getBackground());
+        assertEquals("", buttons[0][1].getText());
+        assertEquals("0", cells[0][1].getContent());
+    }
+
+    // BC: Fail first if, pass second, pass third, pass fourth, fail fifth, pass sixth
+    // Not possible to achieve full BC because there is an if(true) if statement
+    @Test
+    public void testMouseClickedLeftClickOnFlaggedCell() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(1);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("");
+        cells[0][1].setSurroundingMines(0);
+        cells[0][1].setMine(false);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(1);
+        cells[1][0].setMine(false);
+        cells[1][1].setContent("F");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(1);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.setPlaying(true);
+
+        UI gui = tg.getGUI();
+
+        gui.startTimer();
+
+        JButton[][] buttons = gui.getButtons();
+
+        MouseEvent ev = new MouseEvent(buttons[1][1], 0, 1, 0,0,0,1,false,1);
+
+        tg.mouseClicked(ev);
+
+        assertEquals("F", cells[1][1].getContent());
+    }
+
+    // BC: Fail first if, pass second, fail third, fail seventh
+    // Not possible to achieve full BC because there is an if(true) if statement
+    @Test
+    public void testMouseClickedMiddleClickOnFlaggedCell() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(1);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("");
+        cells[0][1].setSurroundingMines(0);
+        cells[0][1].setMine(false);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(1);
+        cells[1][0].setMine(false);
+        cells[1][1].setContent("F");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(1);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.setPlaying(true);
+
+        UI gui = tg.getGUI();
+
+        gui.startTimer();
+
+        JButton[][] buttons = gui.getButtons();
+
+        MouseEvent ev = new MouseEvent(buttons[1][1], 0, 1, 0,0,0,1,false,2);
+
+        tg.mouseClicked(ev);
+
+        assertEquals("F", cells[1][1].getContent());
+    }
+
+    // BC: Pass and fail final branches
+    // Not possible to achieve full BC because there is an if(true) if statement
+    @Test
+    public void testMouseClickedRightClickOnCellTwice() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(1);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(0);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("");
+        cells[0][1].setSurroundingMines(1);
+        cells[0][1].setMine(false);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(1);
+        cells[1][0].setMine(false);
+        cells[1][1].setContent("");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(1);
+
+        TestGame tg = new TestGame(tb);
+
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        MouseEvent ev = new MouseEvent(buttons[1][1], 0, 1, 0,0,0,1,false,3);
+
+        tg.mouseClicked(ev);
+
+        assertEquals("F", cells[1][1].getContent());
+        assertEquals(Color.blue, buttons[1][1].getBackground());
+        assertEquals(gui.getIconFlag(), buttons[1][1].getIcon());
+        assertEquals(0, gui.getMines());
+
+        tg.mouseClicked(ev);
+
+        assertEquals("", buttons[1][1].getText());
+        assertEquals(new Color(0,110,140), buttons[1][1].getBackground());
+        assertEquals("", cells[1][1].getContent());
+        assertEquals(gui.getIconTile(), buttons[1][1].getIcon());
+        assertEquals(1, gui.getMines());
+    }
 }
