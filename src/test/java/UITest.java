@@ -1,9 +1,7 @@
 import org.assertj.swing.core.GenericTypeMatcher;
-import org.assertj.swing.core.matcher.FrameMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.*;
-import org.assertj.swing.util.PatternTextMatcher;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +28,7 @@ public class UITest {
         }
     }
 
+    // Finds a JLabel containing the substring text, null is returned otherwise
     private JLabelFixture jLabelFinder(AbstractWindowFixture frame, String text) {
         return frame.label(new GenericTypeMatcher<JLabel>(JLabel.class) {
             @Override
@@ -39,12 +38,73 @@ public class UITest {
         });
     }
 
+    private DialogFixture jDialogFinder(String text) {
+        return WindowFinder.findDialog(new GenericTypeMatcher<JDialog>(JDialog.class) {
+            protected boolean isMatching(JDialog dialog) {
+                return text.equals(dialog.getTitle()) && dialog.isShowing();
+            }
+        }).using(window.robot());
+    }
+
+    private JButtonFixture jButtonFinder(AbstractWindowFixture frame, String text) {
+        return frame.button(new GenericTypeMatcher<JButton>(JButton.class) {
+            @Override
+            protected boolean isMatching(JButton component) {
+                return component.getText().equals(text);
+            }
+        });
+    }
+
+    private void clickOnMine(Board board) {
+        for (int i = 0; i < board.getRows(); i++) {
+            for (int j = 0; j < board.getCols(); j++) {
+                if (board.getCells()[i][j].getMine()) {
+                    window.button(i + "," + j).click();
+                    return;
+                }
+            }
+        }
+    }
+
+    private void clickOnNonMine(Board board) {
+        for (int i = 0; i < board.getRows(); i++) {
+            for (int j = 0; j < board.getCols(); j++) {
+                if (!board.getCells()[i][j].getMine()) {
+                    window.button(i + "," + j).click();
+                    return;
+                }
+            }
+        }
+    }
+
+    private boolean isNewGame(TestGame game) {
+        boolean isNew = true;
+        JButton [][] buttons = game.getGui().getButtons();
+
+        // Assert Buttons are default buttons
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[0].length; j++) {
+                if (!(buttons[i][j].isEnabled() && buttons[i][j].getText().equals("")
+                        && buttons[i][j].getBackground().equals(new Color(0,103,200)))) {
+                    isNew = false;
+                }
+            }
+        }
+
+        // Assert no time has passed and assert no mines have been identified
+        if (!(game.getGui().getTimePassed() == 0 && game.getGui().getMines() == 10)) {
+            isNew = false;
+        }
+
+        return isNew;
+    }
+
     @BeforeEach
     public void setUp() throws InterruptedException {
         UI frame = GuiActionRunner.execute(() -> game.getGui());
         window = new FrameFixture(frame);
         window.show(); // shows the frame to test
-        //window.maximize();
+
         Thread.sleep(1000);
     }
 
@@ -57,33 +117,13 @@ public class UITest {
     @Test
     public void newGameShouldWork() {
         window.menuItem("New Game").click();
-
-        JButton [][] buttons = game.getGui().getButtons();
-        // Assert Buttons are default buttons
-        for (int i = 0; i < buttons.length; i++) {
-            for (int j = 0; j < buttons[0].length; j++) {
-                assertTrue(buttons[i][j].isEnabled()
-                        && buttons[i][j].getText().equals("")
-                        && buttons[i][j].getBackground().equals(new Color(0,103,200)));
-            }
-        }
-
-        // Assert no time has passed
-        assertEquals(0, game.getGui().getTimePassed());
-
-        // Assert no mines have been identified
-        assertEquals(10, game.getGui().getMines());
+        assertTrue(isNewGame(game));
     }
 
     @Test
     public void statisticsShouldDisplay() {
         window.menuItem("Statistics").click();
-        GenericTypeMatcher<JDialog> matcher = new GenericTypeMatcher<JDialog>(JDialog.class) {
-            protected boolean isMatching(JDialog dialog) {
-                return "Minesweeper Statistics - Haris Muneer".equals(dialog.getTitle());
-            }
-        };
-        DialogFixture frame = WindowFinder.findDialog(matcher).using(window.robot());
+        DialogFixture frame = jDialogFinder("Minesweeper Statistics - Haris Muneer");
 
         assertNotNull(jLabelFinder(frame, "  Games Played:  "));
         assertNotNull(jLabelFinder(frame, "  Games Won:  "));
@@ -98,12 +138,7 @@ public class UITest {
         window.menuItem("New Game").click();
 
         window.menuItem("Statistics").click();
-        GenericTypeMatcher<JDialog> matcher = new GenericTypeMatcher<JDialog>(JDialog.class) {
-            protected boolean isMatching(JDialog dialog) {
-                return "Minesweeper Statistics - Haris Muneer".equals(dialog.getTitle());
-            }
-        };
-        DialogFixture frame = WindowFinder.findDialog(matcher).using(window.robot());
+        DialogFixture frame = jDialogFinder("Minesweeper Statistics - Haris Muneer");
 
         jLabelFinder(frame, "  Games Played:  ").requireText("  Games Played:  0");
         jLabelFinder(frame, "  Games Won:  ").requireText("  Games Won:  0");
@@ -112,6 +147,35 @@ public class UITest {
         jLabelFinder(frame, "  Longest Losing Streak:  ").requireText("  Longest Losing Streak:  0");
         jLabelFinder(frame, "  Current Streak:  ").requireText("  Current Streak:  0");
     }
+
+    @Test
+    public void statisticsShouldReset() throws InterruptedException {
+        // Start playing
+        clickOnNonMine(game.getBoard());
+
+        // Start new game
+        window.menuItem("New Game").click();
+        jButtonFinder(jDialogFinder("New Game"), "Restart").click();
+
+        // Reset the statistics
+        window.menuItem("Statistics").click();
+        DialogFixture stat_frame = jDialogFinder("Minesweeper Statistics - Haris Muneer");
+        jButtonFinder(stat_frame, "Reset").click();
+        DialogFixture confirm_frame = jDialogFinder("Reset Statistics");
+        jButtonFinder(confirm_frame, "Yes").click();
+        stat_frame = jDialogFinder("Minesweeper Statistics - Haris Muneer");
+        jButtonFinder(stat_frame, "Close").click();
+
+        window.menuItem("Statistics").click();
+        DialogFixture frame = jDialogFinder("Minesweeper Statistics - Haris Muneer");
+        jLabelFinder(frame, "  Games Played:  ").requireText("  Games Played:  0");
+        jLabelFinder(frame, "  Games Won:  ").requireText("  Games Won:  0");
+        jLabelFinder(frame, "  Win Percentage:  ").requireText("  Win Percentage:  0%");
+        jLabelFinder(frame, "  Longest Winning Streak:  ").requireText("  Longest Winning Streak:  0");
+        jLabelFinder(frame, "  Longest Losing Streak:  ").requireText("  Longest Losing Streak:  0");
+        jLabelFinder(frame, "  Current Streak:  ").requireText("  Current Streak:  0");
+    }
+
 
     @Test
     public void leftClickFirstCellShouldStartTimer() throws InterruptedException {
@@ -124,10 +188,10 @@ public class UITest {
 
     @Test
     public void leftClickFirstCellChangeCell() {
-        ColorFixture before = window.button("0,0").background();
+        Color before = window.button("0,0").background().target();
 
         window.button("0,0").click();
-        ColorFixture after = window.button("0,0").background();
+        Color after = window.button("0,0").background().target();
 
         assertFalse(before.equals(after));
     }
@@ -176,20 +240,7 @@ public class UITest {
     public void clickingOnMineShouldPopupGameLostWindow() throws InterruptedException {
         window.maximize();
         Thread.sleep(1000);
-        Board board = game.getBoard();
-        boolean brk = false;
-        for (int i = 0; i < board.getRows(); i++) {
-            if (brk) break;
-
-            for (int j = 0; j < board.getCols(); j++) {
-                if (brk) break;
-
-                if (board.getCells()[i][j].getMine()) {
-                    window.button(i + "," + j).click();
-                    brk = true;
-                }
-            }
-        }
+        clickOnMine(game.getBoard());
 
         GenericTypeMatcher<JDialog> matcher = new GenericTypeMatcher<JDialog>(JDialog.class) {
             protected boolean isMatching(JDialog dialog) {
@@ -220,5 +271,19 @@ public class UITest {
             }
         };
         assertNotNull(WindowFinder.findDialog(matcher).using(window.robot()));
+    }
+
+    @Test
+    public void restartShouldStartNewGame() {
+        clickOnMine(game.getBoard());
+        jButtonFinder(jDialogFinder("Game Lost"), "Restart").click();
+        assertTrue(isNewGame(game));
+    }
+
+    @Test
+    public void playAgainShouldStartNewGame() {
+        clickOnMine(game.getBoard());
+        jButtonFinder(jDialogFinder("Game Lost"), "Play Again").click();
+        assertTrue(isNewGame(game));
     }
 }
