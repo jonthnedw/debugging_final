@@ -13,7 +13,7 @@ import javafx.util.Pair;
 public class Board 
 {
     private int numberOfMines;	
-    private Cell cells[][];
+    protected Cell cells[][];
 
     private int rows;
     private int cols;

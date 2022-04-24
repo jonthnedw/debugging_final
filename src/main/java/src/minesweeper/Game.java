@@ -27,13 +27,13 @@ public class Game implements MouseListener, ActionListener, WindowListener
 {
     public static String dbPath;
     // "playing" indicates whether a game is running (true) or not (false).
-    private boolean playing; 
+    protected boolean playing;
 
     protected Board board;
 
     protected UI gui;
     
-    private Score score;
+    protected Score score;
         
     //------------------------------------------------------------------//        
 
@@ -197,7 +197,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
     }
         
     //------------------------------------------------------------------------------//    
-    private void endGame()
+    protected void endGame()
     {
         playing = false;
         showAll();
@@ -533,7 +533,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 	
         
     // Shows the "solution" of the game.
-    private void showAll()
+    protected void showAll()
     {
         String cellSolution;
         
@@ -638,7 +638,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 
  
     //Check the game to see if its finished or not
-    private void checkGame()
+    protected void checkGame()
     {		
         if(isFinished()) 
         {            
