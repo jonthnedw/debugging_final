@@ -533,7 +533,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 	
         
     // Shows the "solution" of the game.
-    private void showAll()
+    protected void showAll()
     {
         String cellSolution;
         

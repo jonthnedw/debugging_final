@@ -74,6 +74,8 @@ public class GameUnitTest {
         public void setScore(Score s) { this.score = s; }
 
         public void endTestGame() { endGame(); }
+
+        public void testShowAll() { this.showAll(); }
     }
 
     // BC: fails outermost if-statement - simply to enact branch coverage
@@ -208,7 +210,7 @@ public class GameUnitTest {
     // possible because it is impossible to pass the second if statement)
     // Instructions: Do NOT Select "Exit"
     @Test
-    public void testGameWon() {
+    public void testGameWonFirstGame() {
         TestGame tg = new TestGame();
         Score scorePre = tg.getScore();
         scorePre.resetScore();
@@ -223,6 +225,242 @@ public class GameUnitTest {
         assertEquals(1, score.getGamesPlayed());
 
     }
+
+    // BC: Fail first if statement, fail second if statement (Note, BC is not
+    // possible because it is impossible to pass the second if statement)
+    // Instructions: Do NOT Select "Exit". On first pop up, select "Play Again",
+    // On second pop up, close the dialog box.
+    @Test
+    public void testGameWonSecondGameWonWithSameTime() {
+        TestGame tg = new TestGame();
+        Score scorePre = tg.getScore();
+        scorePre.resetScore();
+
+        // Select "Play Again"
+        tg.gameWon();
+
+        // Close the dialog box
+        tg.gameWon();
+
+        Score score = tg.getScore();
+
+        assertEquals(2, score.getCurrentStreak());
+        assertEquals(2, score.getCurrentWinningStreak());
+        assertEquals(2,score.getGamesWon());
+        assertEquals(2, score.getGamesPlayed());
+
+    }
+
+    // Instructions: Do NOT Select "Exit". On first pop up, select "Play Again",
+    // On second pop up, close the dialog box.
+    @Test
+    public void testGameWonSecondGameWonWithFasterTime() throws InterruptedException {
+        TestGame tg = new TestGame();
+        Score scorePre = tg.getScore();
+        scorePre.resetScore();
+        UI g = tg.getGUI();
+
+        g.startTimer();
+
+        Thread.sleep(2000);
+
+
+        // Select "Play Again"
+        tg.gameWon();
+
+        // Close the dialog box
+        tg.gameWon();
+
+        Score score = tg.getScore();
+
+        assertEquals(2, score.getCurrentStreak());
+        assertEquals(2, score.getCurrentWinningStreak());
+        assertEquals(2,score.getGamesWon());
+        assertEquals(2, score.getGamesPlayed());
+    }
+
+    /*
+       BC: Pass first if statement
+       Instructions: Do NOT Select "Exit"
+
+       Fails because the current streak is decremented instead of reset to 0
+       as would follow from the definition of "streak"
+     */
+    @Test
+    public void testGameLostFirstGame() {
+        TestGame tg = new TestGame();
+        Score scorePre = tg.getScore();
+        scorePre.resetScore();
+
+        tg.gameLost();
+
+        Score score = tg.getScore();
+
+        assertEquals(1, score.getCurrentLosingStreak());
+        assertEquals(1, score.getGamesPlayed());
+        assertEquals(0, score.getCurrentStreak());
+    }
+
+    // BC: Fail first if statement.
+    // Check if game lost after game won works correctly
+    //
+    // Instructions: Do NOT Select "Exit". On first pop up, select "Play Again",
+    // On second pop up, close the dialog box.
+    @Test
+    public void testGameLostSecondGameWonPreviously() throws InterruptedException {
+        TestGame tg = new TestGame();
+        Score scorePre = tg.getScore();
+        scorePre.resetScore();
+        UI g = tg.getGUI();
+
+        g.startTimer();
+
+        Thread.sleep(2000);
+
+
+        // Select "Play Again"
+        tg.gameWon();
+
+        // Close the dialog box
+        tg.gameLost();
+
+        Score score = tg.getScore();
+
+        assertEquals(0, score.getCurrentStreak());
+        assertEquals(1, score.getCurrentLosingStreak());
+        assertEquals(2, score.getGamesPlayed());
+    }
+
+    // gameWon and gameLost need GUI Testing for Full BC
+
+    // LBA: No Loop Entry
+    // BC: Pass first if statement, Pass Second If Statement
+    // Instructions: Prior to running: MUST go to Build -> Resources -> Main -> db file.
+    // Open it in Microsoft Access. Delete rows with data in the time and score tables.
+    @Test
+    public void testShowScoreNoBestTimes() {
+        TestGame tg = new TestGame();
+        Score scorePre = tg.getScore();
+        scorePre.resetScore();
+
+        tg.showScore();
+
+        Score s = tg.getScore();
+
+        assertEquals(0,s.getBestTimes().size());
+    }
+
+    // LBA: One Loop Entry
+    // BC: Fail first if statement, Fail Second If Statement
+    // Instructions: Prior to running: MUST go to Build -> Resources -> Main -> db file.
+    // Open it in Microsoft Access. Delete rows with data in the time and score tables.
+    // ALSO, make sure to select "Play Again" in the first dialog box. Second dialog box
+    // can be closed.
+    @Test
+    public void testShowScoreOneBestTime() {
+        TestGame tg = new TestGame();
+
+        tg.gameWon();
+
+        tg.showScore();
+
+        Score s = tg.getScore();
+
+        assertEquals(1,s.getBestTimes().size());
+    }
+
+    // LBA: Multiple Loop Entries
+    // BC: Fail first if statement, Fail Second If Statement
+    // Instructions: Prior to running: MUST go to Build -> Resources -> Main -> db file.
+    // Open it in Microsoft Access. Delete rows with data in the time and score tables.
+    // ALSO, make sure to select "Play Again" in the first and Second dialog box. Third
+    // dialog box can be closed
+    @Test
+    public void testShowScoreMultipleBestTimes() {
+        TestGame tg = new TestGame();
+
+        tg.gameWon();
+
+        tg.gameWon();
+
+        tg.showScore();
+
+        Score s = tg.getScore();
+
+        assertEquals(2,s.getBestTimes().size());
+    }
+
+    // BC: Pass and Fail every if statement except for 'if(cellSolution.equals("0"))'
+    // Cannot achieve LBA because of intense coupling with other classes.
+    // Grid must be of size at least 2x2 to avoid failure.
+    @Test
+    public void testShowAllTwoMinesOneFlagged() {
+        TestBoard tb = new TestBoard(0,2,2);
+        Cell[][] cells = tb.getCells();
+        tb.setNumberOfMines(2);
+        cells[0][0].setContent("");
+        cells[0][0].setSurroundingMines(1);
+        cells[0][0].setMine(true);
+        cells[0][1].setContent("F");
+        cells[0][1].setSurroundingMines(1);
+        cells[0][1].setMine(true);
+        cells[1][0].setContent("");
+        cells[1][0].setSurroundingMines(2);
+        cells[1][0].setMine(false);
+        cells[1][1].setContent("F");
+        cells[1][1].setMine(false);
+        cells[1][1].setSurroundingMines(2);
+
+        tb.setCells(cells);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.testShowAll();
+
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        assertEquals(Color.lightGray, buttons[0][0].getBackground());
+        assertEquals(gui.getIconMine(), buttons[0][0].getIcon());
+        assertEquals(Color.green, buttons[0][1].getBackground());
+        assertEquals(Color.lightGray, buttons[1][0].getBackground());
+        assertEquals("2", buttons[1][0].getText());
+        assertEquals(new Color(76,153,0),  buttons[1][0].getForeground());
+        assertEquals(Color.orange, buttons[1][1].getBackground());
+    }
+
+    // BC: Pass final if statement 'if(cellSolution.equals("0"))'
+    // Cannot achieve LBA because of intense coupling with other classes.
+    // Grid must be of size at least 2x2 to avoid failure.
+    @Test
+    public void testShowAllNoMines() {
+        TestBoard tb = new TestBoard(0,2,2);
+
+        TestGame tg = new TestGame(tb);
+
+        tg.testShowAll();
+
+        UI gui = tg.getGUI();
+
+        JButton[][] buttons = gui.getButtons();
+
+        assertEquals(Color.lightGray, buttons[0][0].getBackground());
+        assertEquals("", buttons[0][0].getText());
+        assertEquals(Color.lightGray, buttons[0][1].getBackground());
+        assertEquals("", buttons[0][1].getText());
+        assertEquals(Color.lightGray, buttons[1][0].getBackground());
+        assertEquals("", buttons[1][0].getText());
+        assertEquals(Color.lightGray, buttons[1][1].getBackground());
+        assertEquals("", buttons[1][1].getText());
+    }
+
+
+
+
+
+
+
 
 
 
