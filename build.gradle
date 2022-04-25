@@ -24,6 +24,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'org.assertj:assertj-swing-testng:3.17.1'
     implementation group: 'net.sf.ucanaccess', name: 'ucanaccess', version: '4.0.1'
+    testImplementation "net.jqwik:jqwik:1.6.5"
 }
 
 test {
