@@ -4,6 +4,7 @@ import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import src.minesweeper.Board;
 import src.minesweeper.Game;
@@ -14,6 +15,7 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 public class UITest {
     private FrameFixture window;
     TestGame game = new TestGame();

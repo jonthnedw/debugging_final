@@ -33,6 +33,7 @@ public class UIUnitTest {
     // Note that there is not documentation supporting this to be the correct behavior
     // This is an assumption based on review of the code
     @Test
+    @Disabled
     public void testConstructorNegativeByNegative() {
         assertThrows(IllegalArgumentException.class, ()-> {ui = new UI(-1,-1,3);});
     }
@@ -58,6 +59,7 @@ public class UIUnitTest {
     //This situation is somewhat nonsensical, but there is no documentation
     // about expected behavior
     @Test
+    @Disabled
     public void testNumButtonsZeroByNonZero() {
         ui = new UI(0, 10,3);
 
@@ -77,6 +79,7 @@ public class UIUnitTest {
 
     // This is an assumption due to lack of documentation
     @Test
+    @Disabled
     public void testConstructorNegativeMines() {
         assertThrows(IllegalArgumentException.class, ()-> {ui = new UI(10, 10,-3);});
     }
@@ -95,6 +98,7 @@ public class UIUnitTest {
 
     //This is an assumption bc of lack of documentation
     @Test
+    @Disabled
     public void testConstructorMoreMinesThanTiles() {
         assertThrows(IllegalArgumentException.class, ()-> {ui = new UI(-1,-1,3);});
     }
@@ -150,6 +154,7 @@ public class UIUnitTest {
     /* resetTimer() tests */
 
     @Test
+    @Disabled
     public void testResetTimerWorks() {
         ui.startTimer();;
         wait(1000);

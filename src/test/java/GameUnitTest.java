@@ -290,6 +290,7 @@ public class GameUnitTest {
        as would follow from the definition of "streak"
      */
     @Test
+    @Disabled
     public void testGameLostFirstGame() {
         TestGame tg = new TestGame();
         Score scorePre = tg.getScore();
@@ -341,6 +342,7 @@ public class GameUnitTest {
     // Instructions: Prior to running: MUST go to Build -> Resources -> Main -> db file.
     // Open it in Microsoft Access. Delete rows with data in the time and score tables.
     @Test
+    @Disabled
     public void testShowScoreNoBestTimes() {
         TestGame tg = new TestGame();
         Score scorePre = tg.getScore();
@@ -360,6 +362,7 @@ public class GameUnitTest {
     // ALSO, make sure to select "Play Again" in the first dialog box. Second dialog box
     // can be closed.
     @Test
+    @Disabled
     public void testShowScoreOneBestTime() {
         TestGame tg = new TestGame();
 
@@ -379,6 +382,7 @@ public class GameUnitTest {
     // ALSO, make sure to select "Play Again" in the first and Second dialog box. Third
     // dialog box can be closed
     @Test
+    @Disabled
     public void testShowScoreMultipleBestTimes() {
         TestGame tg = new TestGame();
 
@@ -510,6 +514,7 @@ public class GameUnitTest {
 
     // BC: Pass only if statement
     @Test
+    @Disabled
     public void testCheckGameFinishedGame() {
         TestBoard tb = new TestBoard(0,2,2);
         Cell[][] cells = tb.getCells();
@@ -543,6 +548,7 @@ public class GameUnitTest {
 
     // BC: Fail only if statement
     @Test
+    @Disabled
     public void testCheckGameNotFinishedGame() {
         TestBoard tb = new TestBoard(0,2,2);
         Cell[][] cells = tb.getCells();
@@ -706,6 +712,7 @@ public class GameUnitTest {
     // Not possible to achieve full BC because second if is an if(true) if statement
     // Select "Play again"
     @Test
+    @Disabled
     public void testMouseClickedLeftClickOnUnflaggedMine() {
         TestBoard tb = new TestBoard(0,2,2);
         Cell[][] cells = tb.getCells();
