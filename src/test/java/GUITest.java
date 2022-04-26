@@ -9,15 +9,16 @@ import src.minesweeper.Board;
 import src.minesweeper.Game;
 import src.minesweeper.UI;
 
-import javax.swing.*;
+import javax.swing.*; 
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UITest {
-    private FrameFixture window;
-    TestGame game = new TestGame();
+public class GUITest {
+    private FrameFixture window; // Used to interact with window
+    TestGame game;
 
+    // Subclass to access member variables of Game
     class TestGame extends Game {
         public UI getGui() {
             return this.gui;
@@ -28,7 +29,7 @@ public class UITest {
         }
     }
 
-    // Finds a JLabel containing the substring text, null is returned otherwise
+    // Helper function that finds a JLabel containing the substring text, null is returned otherwise
     private JLabelFixture jLabelFinder(AbstractWindowFixture frame, String text) {
         return frame.label(new GenericTypeMatcher<JLabel>(JLabel.class) {
             @Override
@@ -38,6 +39,7 @@ public class UITest {
         });
     }
 
+    // Helper function that finds a JDialog box with a specific title, null is returned otherwise
     private DialogFixture jDialogFinder(String text) {
         return WindowFinder.findDialog(new GenericTypeMatcher<JDialog>(JDialog.class) {
             protected boolean isMatching(JDialog dialog) {
@@ -46,6 +48,7 @@ public class UITest {
         }).using(window.robot());
     }
 
+    // Helper function that finds a JButton with match text, null is returned otherwise
     private JButtonFixture jButtonFinder(AbstractWindowFixture frame, String text) {
         return frame.button(new GenericTypeMatcher<JButton>(JButton.class) {
             @Override
@@ -55,6 +58,7 @@ public class UITest {
         });
     }
 
+    // Helper function that clicks on the first mine on the board from left to right
     private void clickOnMine(Board board) {
         for (int i = 0; i < board.getRows(); i++) {
             for (int j = 0; j < board.getCols(); j++) {
@@ -66,9 +70,10 @@ public class UITest {
         }
     }
 
+    // Helper function that click on the first non-mine on the board from left to right
     private void clickOnNonMine(Board board) {
-        for (int i = 0; i < board.getRows(); i++) {
-            for (int j = 0; j < board.getCols(); j++) {
+        for (int i = board.getRows() - 1; i >= 0; i--) {
+            for (int j = board.getCols() - 1;j >= 0; j--) {
                 if (!board.getCells()[i][j].getMine()) {
                     window.button(i + "," + j).click();
                     return;
@@ -77,6 +82,7 @@ public class UITest {
         }
     }
 
+    // Helper function that returns true if the GUI has all the default settings of a new game
     private boolean isNewGame(TestGame game) {
         boolean isNew = true;
         JButton [][] buttons = game.getGui().getButtons();
@@ -101,10 +107,11 @@ public class UITest {
 
     @BeforeEach
     public void setUp() throws InterruptedException {
+        game = new TestGame();
         UI frame = GuiActionRunner.execute(() -> game.getGui());
         window = new FrameFixture(frame);
         window.show(); // shows the frame to test
-
+        // Wait before running test, sometimes jAssert glitches out when action speed is faster than animation speed
         Thread.sleep(1000);
     }
 
@@ -115,7 +122,7 @@ public class UITest {
 
 
     @Test
-    public void newGameShouldWork() {
+    public void newGameHasDefaultGUI() {
         window.menuItem("New Game").click();
         assertTrue(isNewGame(game));
     }
@@ -125,6 +132,7 @@ public class UITest {
         window.menuItem("Statistics").click();
         DialogFixture frame = jDialogFinder("Minesweeper Statistics - Haris Muneer");
 
+        // Assert text in the statistics are present
         assertNotNull(jLabelFinder(frame, "  Games Played:  "));
         assertNotNull(jLabelFinder(frame, "  Games Won:  "));
         assertNotNull(jLabelFinder(frame, "  Win Percentage:  "));
@@ -140,6 +148,7 @@ public class UITest {
         window.menuItem("Statistics").click();
         DialogFixture frame = jDialogFinder("Minesweeper Statistics - Haris Muneer");
 
+        // Assert a new game has zeroed out statistics
         jLabelFinder(frame, "  Games Played:  ").requireText("  Games Played:  0");
         jLabelFinder(frame, "  Games Won:  ").requireText("  Games Won:  0");
         jLabelFinder(frame, "  Win Percentage:  ").requireText("  Win Percentage:  0%");
@@ -149,7 +158,7 @@ public class UITest {
     }
 
     @Test
-    public void statisticsShouldReset() throws InterruptedException {
+    public void statisticsShouldReset() {
         // Start playing
         clickOnNonMine(game.getBoard());
 
@@ -226,9 +235,11 @@ public class UITest {
     public void numberOfMinesShouldNotGoBelowZero() throws InterruptedException {
         window.maximize();
         Thread.sleep(1000);
+
+        Board board = game.getBoard();
          //Right-click the whole 8 x 8 grid
-        for (int i = 0; i < 9; i++) {
-            for (int j =0; j < 9; j++) {
+        for (int i = board.getRows() - 1; i >= 0; i--) {
+            for (int j = board.getCols() - 1; j >= 0; j--) {
                 window.button(i + "," + j).rightClick();
             }
         }
@@ -242,21 +253,17 @@ public class UITest {
         Thread.sleep(1000);
         clickOnMine(game.getBoard());
 
-        GenericTypeMatcher<JDialog> matcher = new GenericTypeMatcher<JDialog>(JDialog.class) {
-            protected boolean isMatching(JDialog dialog) {
-                return "Game Lost".equals(dialog.getTitle());
-            }
-        };
-        assertNotNull(WindowFinder.findDialog(matcher).using(window.robot()));
+        assertNotNull(jDialogFinder("Game Lost"));
     }
 
     @Test
     public void findingAllMinesShouldPopupWinningWindow() throws InterruptedException {
         window.maximize();
         Thread.sleep(1000);
+
         Board board = game.getBoard();
-        for (int i = 0; i < board.getRows(); i++) {
-            for (int j = 0; j < board.getCols(); j++) {
+        for (int i = board.getRows() - 1; i >= 0; i--) {
+            for (int j = board.getCols() - 1; j >= 0; j--) {
                 if (board.getCells()[i][j].getMine()) {
                     window.button(i + "," + j).rightClick();
                 } else {
@@ -265,12 +272,7 @@ public class UITest {
             }
         }
 
-        GenericTypeMatcher<JDialog> matcher = new GenericTypeMatcher<JDialog>(JDialog.class) {
-            protected boolean isMatching(JDialog dialog) {
-                return "Game Won".equals(dialog.getTitle());
-            }
-        };
-        assertNotNull(WindowFinder.findDialog(matcher).using(window.robot()));
+        assertNotNull(jDialogFinder("Game Won"));
     }
 
     @Test

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="UITest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-04-24T23:36:36" hostname="Jonathans-MacBook-Pro.local" time="7.95">
-  <properties/>
-  <testcase name="statisticsShouldReset()" classname="UITest" time="7.95"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
