@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'info.solidsoft.pitest' version '1.5.2'
 }
 
 group 'org.example'
@@ -29,4 +30,13 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+pitest {
+    junit5PluginVersion = '0.15'
+    targetClasses = ['src.minesweeper.*']  //by default "${project.group}.*"
+    targetTests = ['CellUnitTest, GameIntegrationTests, GameUnitTest, GUITest, ScoreUnitTest, UIUnitTest']
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
 }

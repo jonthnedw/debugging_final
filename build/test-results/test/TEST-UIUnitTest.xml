@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="UIUnitTest" tests="37" skipped="6" failures="0" errors="0" timestamp="2022-04-28T23:40:38" hostname="Jonathans-MacBook-Pro.local" time="85.713">
+  <properties/>
+  <testcase name="testConstructorSetsTimeToZero" classname="UIUnitTest" time="4.365"/>
+  <testcase name="testNumButtonsOneByOne()" classname="UIUnitTest" time="0.053"/>
+  <testcase name="testSetTimePassedWorks()" classname="UIUnitTest" time="0.013"/>
+  <testcase name="testResetTimerWorks()" classname="UIUnitTest" time="2.058"/>
+  <testcase name="testEnableAllEnablesButtonsTwoByTwo()" classname="UIUnitTest" time="0.014"/>
+  <testcase name="testSetButtonListenersSetsMouseListeners()" classname="UIUnitTest" time="0.109"/>
+  <testcase name="testInitGameEnablesButtonsTwoByTwo()" classname="UIUnitTest" time="0.139"/>
+  <testcase name="testEnableAllEnablesButtonsOneByOne()" classname="UIUnitTest" time="0.022"/>
+  <testcase name="testSetMinesWorks()" classname="UIUnitTest" time="0.008"/>
+  <testcase name="testInitGameEnablesButtonsOneByOne()" classname="UIUnitTest" time="0.023"/>
+  <testcase name="testIncMinesWorks()" classname="UIUnitTest" time="0.008"/>
+  <testcase name="testStartTimerIncrementsOneSecond()" classname="UIUnitTest" time="2.03"/>
+  <testcase name="testInterruptStopsTimer()" classname="UIUnitTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testNumButtonsTenByTen()" classname="UIUnitTest" time="0.016"/>
+  <testcase name="testDecMinesWorks()" classname="UIUnitTest" time="0.007"/>
+  <testcase name="testButtonWithUnconsideredText()" classname="UIUnitTest" time="0.012"/>
+  <testcase name="testStartTimerIncrementsZeroSeconds()" classname="UIUnitTest" time="0.007"/>
+  <testcase name="testNumButtonsNonZeroByZero()" classname="UIUnitTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testButton1()" classname="UIUnitTest" time="0.039"/>
+  <testcase name="testButton2()" classname="UIUnitTest" time="0.006"/>
+  <testcase name="testButton3()" classname="UIUnitTest" time="0.01"/>
+  <testcase name="testButton4()" classname="UIUnitTest" time="0.009"/>
+  <testcase name="testButton5()" classname="UIUnitTest" time="0.034"/>
+  <testcase name="testButton6()" classname="UIUnitTest" time="0.021"/>
+  <testcase name="testButton7()" classname="UIUnitTest" time="0.009"/>
+  <testcase name="testButton8()" classname="UIUnitTest" time="0.004"/>
+  <testcase name="testConstructorZeroMines()" classname="UIUnitTest" time="0.009"/>
+  <testcase name="testHideAllSetsText()" classname="UIUnitTest" time="0.012"/>
+  <testcase name="testStartTimerIncrementsTwoSeconds()" classname="UIUnitTest" time="3.022"/>
+  <testcase name="testConstructorMoreMinesThanTiles()" classname="UIUnitTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testConstructorNegativeByNegative()" classname="UIUnitTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="testConstructorPositiveMines()" classname="UIUnitTest" time="0.079"/>
+  <testcase name="testNumButtonsZeroByNonZero()" classname="UIUnitTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testConstructorZerobyZero()" classname="UIUnitTest" time="0.046"/>
+  <testcase name="testConstructorNegativeMines()" classname="UIUnitTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testDisableAll()" classname="UIUnitTest" time="0.011"/>
+  <testcase name="testSetIconsNotNull()" classname="UIUnitTest" time="0.015"/>
+  <system-out><![CDATA[timestamp = 2022-04-28T19:40:42.721, UIUnitTest:testConstructorSetsTimeToZero = 
+                              |-------------------jqwik-------------------
+tries = 420                   | # of calls to property
+checks = 420                  | # of not rejected calls
+generation = EXHAUSTIVE       | parameters are exhaustively generated
+after-failure = PREVIOUS_SEED | use the previous seed
+when-fixed-seed = ALLOW       | fixing the random seed is allowed
+edge-cases#mode = MIXIN       | edge cases are mixed in
+edge-cases#total = 0          | # of all combined edge cases
+edge-cases#tried = 0          | # of edge cases tried in current run
+seed = 1295949764395331018    | random seed to reproduce generated values
+
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
