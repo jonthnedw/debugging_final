@@ -1,9 +1,12 @@
 import javafx.util.Pair;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 import src.minesweeper.Board;
 import src.minesweeper.Cell;
 import src.minesweeper.Game;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,10 +29,8 @@ public class BoardUnitTest {
         boardDefault.deleteSavedGame();
     }
 
-
-
     @Test
-    @Disabled
+    @Tag("Fail")
     public void testBoardMoreMinesThanCellsMinesInitCorrect() {
         assertTimeoutPreemptively(Duration.ofSeconds(10), () -> {
             Board b1 = new Board(5,2,2);
@@ -54,7 +55,7 @@ public class BoardUnitTest {
 
     // Create Empty Cells for a board that is not a perfect square
     @Test
-    @Disabled
+    @Tag("Fails")
     public void testCreateEmptyCellsNotSquareBoard() {
         Board b2 = new Board(5, 4, 2);
         b2.createEmptyCells();
@@ -70,7 +71,7 @@ public class BoardUnitTest {
 
     // Consider editing this assert statement
     @Test
-    @Disabled
+    @Tag("Fails")
     public void testCreateEmptyCellsNoInitializationColumns() {
         boardNoColumns.createEmptyCells();
 
@@ -81,7 +82,7 @@ public class BoardUnitTest {
 
     // Consider editing this assert statement
     @Test
-    @Disabled
+    @Tag("Fails")
     public void testCreateEmptyCellsNoInitializationRows() {
         boardNoRows.createEmptyCells();
 
@@ -236,7 +237,7 @@ public class BoardUnitTest {
     // Satisfies LBA for 1 loop for both loops. LBA for 0 loops impossible
     // READ HERE!!!! This is random and hard to set a proper assert for
     @Test
-    @Disabled
+    @Tag("Fails")
     public void testCalculateNeighboursIndicesFarOutOfBounds() {
         Board twoByTwoWTwoMines = new Board(2,2,2);
         int numNeighbors = twoByTwoWTwoMines.calculateNeighbours(-5,5);;
@@ -424,7 +425,7 @@ public class BoardUnitTest {
 
     // Nothing In LoadSavedGame Checks if there is a saved game to load
     @Test
-    @Disabled
+    @Tag("Fails")
     public void testLoadSavedGameDefaultBoardNoPriorSave() {
         Game game = new Game();
 
@@ -468,7 +469,7 @@ public class BoardUnitTest {
     // the current/any board, however we get index out of bounds
     // Because they need to be the same dimensions
     @Test
-    @Disabled
+    @Tag("Fails")
     public void testLoadSavedGameIntoNewBoardDiffDims() {
         Game game = new Game();
 

@@ -1,12 +1,12 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.*;
 import src.minesweeper.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,6 +81,17 @@ public class GameUnitTest {
         public void testCheckGame() { this.checkGame(); }
     }
 
+    /*
+    @BeforeEach
+    public void databaseReset() throws IOException, InterruptedException {
+        File blankSource = new File("build/resources/main/dbBlank.accdb");
+        File usedFile = new File("build/resources/main/db.accdb");
+
+        FileUtils.copyFile(blankSource, usedFile);
+    }
+
+     */
+
     // BC: fails outermost if-statement - simply to enact branch coverage
     @Test
     public void testResumeGameNoSave() {
@@ -103,7 +114,7 @@ public class GameUnitTest {
     // LBA: NOT POSSIBLE WITHOUT CAUSING FALSE FAILURES - due to intense coupling
     // across classes and hardcoded values
     @Test
-    @Disabled
+    @Tag("Fails")
     public void setTestImagesNoBoardMissingRows() {
         Board noRows = new Board(0,0,1);
 
@@ -290,6 +301,7 @@ public class GameUnitTest {
        as would follow from the definition of "streak"
      */
     @Test
+    @Tag("Fails")
     public void testGameLostFirstGame() {
         TestGame tg = new TestGame();
         Score scorePre = tg.getScore();
