@@ -80,33 +80,33 @@ public class Game implements MouseListener, ActionListener, WindowListener
     
     public void resumeGame()
     {
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if(board.checkSave())</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if(board.checkSave())</span>
         {
-<span class="nc" id="L85">            ImageIcon question = new ImageIcon(getClass().getResource(&quot;/../../resources/main/question.png&quot;));</span>
+<span class="fc" id="L85">            ImageIcon question = new ImageIcon(getClass().getResource(&quot;/../../resources/main/question.png&quot;));</span>
 
-<span class="nc" id="L87">            int option = JOptionPane.showOptionDialog(null, &quot;Do you want to continue your saved game?&quot;, </span>
+<span class="fc" id="L87">            int option = JOptionPane.showOptionDialog(null, &quot;Do you want to continue your saved game?&quot;, </span>
                             &quot;Saved Game Found&quot;, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, question,null,null);
 
-<span class="nc bnc" id="L90" title="All 4 branches missed.">            switch(option) </span>
+<span class="pc bpc" id="L90" title="3 of 4 branches missed.">            switch(option) </span>
             {
                 case JOptionPane.YES_OPTION:      
       
                     //load board's state
-<span class="nc" id="L95">                    Pair p = board.loadSaveGame();</span>
+<span class="fc" id="L95">                    Pair p = board.loadSaveGame();</span>
                     
                     //set button's images
-<span class="nc" id="L98">                    setButtonImages();</span>
+<span class="fc" id="L98">                    setButtonImages();</span>
                     
                     //load timer's value                                        
-<span class="nc" id="L101">                    gui.setTimePassed((int)p.getKey());</span>
+<span class="fc" id="L101">                    gui.setTimePassed((int)p.getKey());</span>
 
                     //load mines value
-<span class="nc" id="L104">                    gui.setMines((int)p.getValue());</span>
+<span class="fc" id="L104">                    gui.setMines((int)p.getValue());</span>
                     
-<span class="nc" id="L106">                    gui.startTimer();</span>
+<span class="fc" id="L106">                    gui.startTimer();</span>
                     
-<span class="nc" id="L108">                    playing = true;</span>
-<span class="nc" id="L109">                    break;</span>
+<span class="fc" id="L108">                    playing = true;</span>
+<span class="fc" id="L109">                    break;</span>
 
                 case JOptionPane.NO_OPTION:
 <span class="nc" id="L112">                    board.deleteSavedGame();</span>
@@ -123,37 +123,37 @@ public class Game implements MouseListener, ActionListener, WindowListener
     //-------------------------------------------------//
     public void setButtonImages()
     {
-<span class="nc" id="L126">        Cell cells[][] = board.getCells();</span>
-<span class="nc" id="L127">        JButton buttons[][] = gui.getButtons();</span>
+<span class="fc" id="L126">        Cell cells[][] = board.getCells();</span>
+<span class="fc" id="L127">        JButton buttons[][] = gui.getButtons();</span>
         
-<span class="nc bnc" id="L129" title="All 2 branches missed.">        for( int y=0 ; y&lt;board.getRows() ; y++ ) </span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        for( int y=0 ; y&lt;board.getRows() ; y++ ) </span>
         {
-<span class="nc bnc" id="L131" title="All 2 branches missed.">            for( int x=0 ; x&lt;board.getCols() ; x++ ) </span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">            for( int x=0 ; x&lt;board.getCols() ; x++ ) </span>
             {
-<span class="nc" id="L133">                buttons[x][y].setIcon(null);</span>
+<span class="fc" id="L133">                buttons[x][y].setIcon(null);</span>
                 
-<span class="nc bnc" id="L135" title="All 2 branches missed.">                if (cells[x][y].getContent().equals(&quot;&quot;))</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">                if (cells[x][y].getContent().equals(&quot;&quot;))</span>
                 {
-<span class="nc" id="L137">                    buttons[x][y].setIcon(gui.getIconTile());</span>
+<span class="fc" id="L137">                    buttons[x][y].setIcon(gui.getIconTile());</span>
                 }
-<span class="nc bnc" id="L139" title="All 2 branches missed.">                else if (cells[x][y].getContent().equals(&quot;F&quot;))</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">                else if (cells[x][y].getContent().equals(&quot;F&quot;))</span>
                 {
-<span class="nc" id="L141">                    buttons[x][y].setIcon(gui.getIconFlag());</span>
-<span class="nc" id="L142">                    buttons[x][y].setBackground(Color.blue);	                    </span>
+<span class="fc" id="L141">                    buttons[x][y].setIcon(gui.getIconFlag());</span>
+<span class="fc" id="L142">                    buttons[x][y].setBackground(Color.blue);	                    </span>
                 }
-<span class="nc bnc" id="L144" title="All 2 branches missed.">                else if (cells[x][y].getContent().equals(&quot;0&quot;))</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">                else if (cells[x][y].getContent().equals(&quot;0&quot;))</span>
                 {
-<span class="nc" id="L146">                    buttons[x][y].setBackground(Color.lightGray);</span>
+<span class="fc" id="L146">                    buttons[x][y].setBackground(Color.lightGray);</span>
                 }
                 else
                 {
-<span class="nc" id="L150">                    buttons[x][y].setBackground(Color.lightGray);                    </span>
-<span class="nc" id="L151">                    buttons[x][y].setText(cells[x][y].getContent());</span>
-<span class="nc" id="L152">                    gui.setTextColor(buttons[x][y]);                                        </span>
+<span class="fc" id="L150">                    buttons[x][y].setBackground(Color.lightGray);                    </span>
+<span class="fc" id="L151">                    buttons[x][y].setText(cells[x][y].getContent());</span>
+<span class="fc" id="L152">                    gui.setTextColor(buttons[x][y]);                                        </span>
                 }
             }
         }
-<span class="nc" id="L156">    }</span>
+<span class="fc" id="L156">    }</span>
     
     
     //------------------------------------------------------------//
@@ -173,28 +173,28 @@ public class Game implements MouseListener, ActionListener, WindowListener
     //---------------------------------------------------------------//
     public void newGame()
     {                
-<span class="nc" id="L176">        this.playing = false;        </span>
+<span class="fc" id="L176">        this.playing = false;        </span>
                                 
-<span class="nc" id="L178">        createBoard();</span>
+<span class="fc" id="L178">        createBoard();</span>
         
-<span class="nc" id="L180">        gui.interruptTimer();</span>
-<span class="nc" id="L181">        gui.resetTimer();        </span>
-<span class="nc" id="L182">        gui.initGame();</span>
-<span class="nc" id="L183">        gui.setMines(board.getNumberOfMines());</span>
-<span class="nc" id="L184">    }</span>
+<span class="fc" id="L180">        gui.interruptTimer();</span>
+<span class="fc" id="L181">        gui.resetTimer();        </span>
+<span class="fc" id="L182">        gui.initGame();</span>
+<span class="fc" id="L183">        gui.setMines(board.getNumberOfMines());</span>
+<span class="fc" id="L184">    }</span>
     //------------------------------------------------------------------------------//
     
     public void restartGame()
     {
-<span class="nc" id="L189">        this.playing = false;</span>
+<span class="fc" id="L189">        this.playing = false;</span>
         
-<span class="nc" id="L191">        board.resetBoard();</span>
+<span class="fc" id="L191">        board.resetBoard();</span>
         
-<span class="nc" id="L193">        gui.interruptTimer();</span>
-<span class="nc" id="L194">        gui.resetTimer();        </span>
-<span class="nc" id="L195">        gui.initGame();</span>
-<span class="nc" id="L196">        gui.setMines(board.getNumberOfMines());</span>
-<span class="nc" id="L197">    }</span>
+<span class="fc" id="L193">        gui.interruptTimer();</span>
+<span class="fc" id="L194">        gui.resetTimer();        </span>
+<span class="fc" id="L195">        gui.initGame();</span>
+<span class="fc" id="L196">        gui.setMines(board.getNumberOfMines());</span>
+<span class="fc" id="L197">    }</span>
         
     //------------------------------------------------------------------------------//    
     protected void endGame()
@@ -210,95 +210,95 @@ public class Game implements MouseListener, ActionListener, WindowListener
     
     public void gameWon()
     {
-<span class="nc" id="L213">        score.incCurrentStreak();</span>
-<span class="nc" id="L214">        score.incCurrentWinningStreak();</span>
-<span class="nc" id="L215">        score.incGamesWon();</span>
-<span class="nc" id="L216">        score.incGamesPlayed();</span>
+<span class="fc" id="L213">        score.incCurrentStreak();</span>
+<span class="fc" id="L214">        score.incCurrentWinningStreak();</span>
+<span class="fc" id="L215">        score.incGamesWon();</span>
+<span class="fc" id="L216">        score.incGamesPlayed();</span>
         
-<span class="nc" id="L218">        gui.interruptTimer();</span>
-<span class="nc" id="L219">        endGame();</span>
+<span class="fc" id="L218">        gui.interruptTimer();</span>
+<span class="fc" id="L219">        endGame();</span>
         //----------------------------------------------------------------//
         
         
-<span class="nc" id="L223">        JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);</span>
+<span class="fc" id="L223">        JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);</span>
         
         //------MESSAGE-----------//
-<span class="nc" id="L226">        JLabel message = new JLabel(&quot;Congratulations, you won the game!&quot;, SwingConstants.CENTER);</span>
+<span class="fc" id="L226">        JLabel message = new JLabel(&quot;Congratulations, you won the game!&quot;, SwingConstants.CENTER);</span>
                 
         //-----STATISTICS-----------//
-<span class="nc" id="L229">        JPanel statistics = new JPanel();</span>
-<span class="nc" id="L230">        statistics.setLayout(new GridLayout(6,1,0,10));</span>
+<span class="fc" id="L229">        JPanel statistics = new JPanel();</span>
+<span class="fc" id="L230">        statistics.setLayout(new GridLayout(6,1,0,10));</span>
         
-<span class="nc" id="L232">        ArrayList&lt;Score.Time&gt; bTimes = score.getBestTimes();</span>
+<span class="fc" id="L232">        ArrayList&lt;Score.Time&gt; bTimes = score.getBestTimes();</span>
         
-<span class="nc bnc" id="L234" title="All 4 branches missed.">        if (bTimes.isEmpty() || (bTimes.get(0).getTimeValue() &gt; gui.getTimePassed()))</span>
+<span class="fc bfc" id="L234" title="All 4 branches covered.">        if (bTimes.isEmpty() || (bTimes.get(0).getTimeValue() &gt; gui.getTimePassed()))</span>
         {
-<span class="nc" id="L236">            statistics.add(new JLabel(&quot;    You have the fastest time for this difficulty level!    &quot;));</span>
+<span class="fc" id="L236">            statistics.add(new JLabel(&quot;    You have the fastest time for this difficulty level!    &quot;));</span>
         }
         
-<span class="nc" id="L239">        score.addTime(gui.getTimePassed(), new Date(System.currentTimeMillis()));</span>
+<span class="fc" id="L239">        score.addTime(gui.getTimePassed(), new Date(System.currentTimeMillis()));</span>
                 
-<span class="nc" id="L241">        JLabel time = new JLabel(&quot;  Time:  &quot; + Integer.toString(gui.getTimePassed()) + &quot; seconds            Date:  &quot; + new Date(System.currentTimeMillis()));</span>
+<span class="fc" id="L241">        JLabel time = new JLabel(&quot;  Time:  &quot; + Integer.toString(gui.getTimePassed()) + &quot; seconds            Date:  &quot; + new Date(System.currentTimeMillis()));</span>
         
-<span class="nc" id="L243">        JLabel bestTime = new JLabel();</span>
+<span class="fc" id="L243">        JLabel bestTime = new JLabel();</span>
         
         
-<span class="nc bnc" id="L246" title="All 2 branches missed.">        if (bTimes.isEmpty())</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">        if (bTimes.isEmpty())</span>
         {
 <span class="nc" id="L248">            bestTime.setText(&quot;  Best Time:  ---                  Date:  ---&quot;);</span>
         }
         else
         {
-<span class="nc" id="L252">            bestTime.setText(&quot;  Best Time:  &quot; + bTimes.get(0).getTimeValue() + &quot; seconds            Date:  &quot; + bTimes.get(0).getDateValue());</span>
+<span class="fc" id="L252">            bestTime.setText(&quot;  Best Time:  &quot; + bTimes.get(0).getTimeValue() + &quot; seconds            Date:  &quot; + bTimes.get(0).getDateValue());</span>
         }
         
-<span class="nc" id="L255">        JLabel gPlayed = new JLabel(&quot;  Games Played:  &quot; + score.getGamesPlayed());</span>
-<span class="nc" id="L256">        JLabel gWon = new JLabel(&quot;  Games Won:  &quot; + score.getGamesWon());</span>
-<span class="nc" id="L257">        JLabel gPercentage = new JLabel(&quot;  Win Percentage:  &quot; + score.getWinPercentage() + &quot;%&quot;);</span>
+<span class="fc" id="L255">        JLabel gPlayed = new JLabel(&quot;  Games Played:  &quot; + score.getGamesPlayed());</span>
+<span class="fc" id="L256">        JLabel gWon = new JLabel(&quot;  Games Won:  &quot; + score.getGamesWon());</span>
+<span class="fc" id="L257">        JLabel gPercentage = new JLabel(&quot;  Win Percentage:  &quot; + score.getWinPercentage() + &quot;%&quot;);</span>
         
-<span class="nc" id="L259">        statistics.add(time);</span>
-<span class="nc" id="L260">        statistics.add(bestTime);</span>
-<span class="nc" id="L261">        statistics.add(gPlayed);</span>
-<span class="nc" id="L262">        statistics.add(gWon);</span>
-<span class="nc" id="L263">        statistics.add(gPercentage);</span>
+<span class="fc" id="L259">        statistics.add(time);</span>
+<span class="fc" id="L260">        statistics.add(bestTime);</span>
+<span class="fc" id="L261">        statistics.add(gPlayed);</span>
+<span class="fc" id="L262">        statistics.add(gWon);</span>
+<span class="fc" id="L263">        statistics.add(gPercentage);</span>
         
-<span class="nc" id="L265">        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);        </span>
-<span class="nc" id="L266">        statistics.setBorder(loweredetched);</span>
+<span class="fc" id="L265">        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);        </span>
+<span class="fc" id="L266">        statistics.setBorder(loweredetched);</span>
         
         
         //--------BUTTONS----------//
-<span class="nc" id="L270">        JPanel buttons = new JPanel();</span>
-<span class="nc" id="L271">        buttons.setLayout(new GridLayout(1,2,10,0));</span>
+<span class="fc" id="L270">        JPanel buttons = new JPanel();</span>
+<span class="fc" id="L271">        buttons.setLayout(new GridLayout(1,2,10,0));</span>
         
-<span class="nc" id="L273">        JButton exit = new JButton(&quot;Exit&quot;);</span>
-<span class="nc" id="L274">        JButton playAgain = new JButton(&quot;Play Again&quot;);</span>
+<span class="fc" id="L273">        JButton exit = new JButton(&quot;Exit&quot;);</span>
+<span class="fc" id="L274">        JButton playAgain = new JButton(&quot;Play Again&quot;);</span>
 
         
-<span class="nc" id="L277">        exit.addActionListener((ActionEvent e) -&gt; {</span>
+<span class="fc" id="L277">        exit.addActionListener((ActionEvent e) -&gt; {</span>
 <span class="nc" id="L278">            dialog.dispose();</span>
 <span class="nc" id="L279">            windowClosing(null);</span>
 <span class="nc" id="L280">        });        </span>
-<span class="nc" id="L281">        playAgain.addActionListener((ActionEvent e) -&gt; {</span>
-<span class="nc" id="L282">            dialog.dispose();            </span>
-<span class="nc" id="L283">            newGame();</span>
-<span class="nc" id="L284">        });        </span>
+<span class="fc" id="L281">        playAgain.addActionListener((ActionEvent e) -&gt; {</span>
+<span class="fc" id="L282">            dialog.dispose();            </span>
+<span class="fc" id="L283">            newGame();</span>
+<span class="fc" id="L284">        });        </span>
         
         
-<span class="nc" id="L287">        buttons.add(exit);</span>
-<span class="nc" id="L288">        buttons.add(playAgain);</span>
+<span class="fc" id="L287">        buttons.add(exit);</span>
+<span class="fc" id="L288">        buttons.add(playAgain);</span>
         
         //--------DIALOG-------------//
         
-<span class="nc" id="L292">        JPanel c = new JPanel();</span>
-<span class="nc" id="L293">        c.setLayout(new BorderLayout(20,20));</span>
-<span class="nc" id="L294">        c.add(message, BorderLayout.NORTH);</span>
-<span class="nc" id="L295">        c.add(statistics, BorderLayout.CENTER);</span>
-<span class="nc" id="L296">        c.add(buttons, BorderLayout.SOUTH);</span>
+<span class="fc" id="L292">        JPanel c = new JPanel();</span>
+<span class="fc" id="L293">        c.setLayout(new BorderLayout(20,20));</span>
+<span class="fc" id="L294">        c.add(message, BorderLayout.NORTH);</span>
+<span class="fc" id="L295">        c.add(statistics, BorderLayout.CENTER);</span>
+<span class="fc" id="L296">        c.add(buttons, BorderLayout.SOUTH);</span>
         
-<span class="nc" id="L298">        c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
+<span class="fc" id="L298">        c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
         
-<span class="nc" id="L300">        dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);</span>
-<span class="nc" id="L301">        dialog.addWindowListener(new java.awt.event.WindowAdapter() {</span>
+<span class="fc" id="L300">        dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);</span>
+<span class="fc" id="L301">        dialog.addWindowListener(new java.awt.event.WindowAdapter() {</span>
             @Override
             public void windowClosing(WindowEvent windowEvent) {
 <span class="nc" id="L304">                    dialog.dispose();</span>
@@ -307,12 +307,12 @@ public class Game implements MouseListener, ActionListener, WindowListener
             }
         );
 
-<span class="nc" id="L310">        dialog.setTitle(&quot;Game Won&quot;);</span>
-<span class="nc" id="L311">        dialog.add(c);</span>
-<span class="nc" id="L312">        dialog.pack();</span>
-<span class="nc" id="L313">        dialog.setLocationRelativeTo(gui);</span>
-<span class="nc" id="L314">        dialog.setVisible(true);                        </span>
-<span class="nc" id="L315">    }</span>
+<span class="fc" id="L310">        dialog.setTitle(&quot;Game Won&quot;);</span>
+<span class="fc" id="L311">        dialog.add(c);</span>
+<span class="fc" id="L312">        dialog.pack();</span>
+<span class="fc" id="L313">        dialog.setLocationRelativeTo(gui);</span>
+<span class="fc" id="L314">        dialog.setVisible(true);                        </span>
+<span class="fc" id="L315">    }</span>
     
     public void gameLost()
     {
@@ -341,13 +341,13 @@ public class Game implements MouseListener, ActionListener, WindowListener
         
 <span class="fc" id="L342">        ArrayList&lt;Score.Time&gt; bTimes = score.getBestTimes();</span>
         
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">        if (bTimes.isEmpty())</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">        if (bTimes.isEmpty())</span>
         {
 <span class="fc" id="L346">            bestTime.setText(&quot;                        &quot;);</span>
         }
         else
         {
-<span class="nc" id="L350">            bestTime.setText(&quot;  Best Time:  &quot; + bTimes.get(0).getTimeValue() + &quot; seconds            Date:  &quot; + bTimes.get(0).getDateValue());</span>
+<span class="fc" id="L350">            bestTime.setText(&quot;  Best Time:  &quot; + bTimes.get(0).getTimeValue() + &quot; seconds            Date:  &quot; + bTimes.get(0).getDateValue());</span>
         }
         
 <span class="fc" id="L353">        JLabel gPlayed = new JLabel(&quot;  Games Played:  &quot; + score.getGamesPlayed());</span>
@@ -374,17 +374,17 @@ public class Game implements MouseListener, ActionListener, WindowListener
 
         
 <span class="fc" id="L376">        exit.addActionListener((ActionEvent e) -&gt; {</span>
-<span class="fc" id="L377">            dialog.dispose();</span>
+<span class="nc" id="L377">            dialog.dispose();</span>
 <span class="nc" id="L378">            windowClosing(null);</span>
 <span class="nc" id="L379">        });        </span>
 <span class="fc" id="L380">        restart.addActionListener((ActionEvent e) -&gt; {</span>
-<span class="nc" id="L381">            dialog.dispose();            </span>
-<span class="nc" id="L382">            restartGame();</span>
-<span class="nc" id="L383">        });        </span>
+<span class="fc" id="L381">            dialog.dispose();            </span>
+<span class="fc" id="L382">            restartGame();</span>
+<span class="fc" id="L383">        });        </span>
 <span class="fc" id="L384">        playAgain.addActionListener((ActionEvent e) -&gt; {</span>
-<span class="nc" id="L385">            dialog.dispose();            </span>
-<span class="nc" id="L386">            newGame();</span>
-<span class="nc" id="L387">        });        </span>
+<span class="fc" id="L385">            dialog.dispose();            </span>
+<span class="fc" id="L386">            newGame();</span>
+<span class="fc" id="L387">        });        </span>
         
         
 <span class="fc" id="L390">        buttons.add(exit);</span>
@@ -415,8 +415,8 @@ public class Game implements MouseListener, ActionListener, WindowListener
 <span class="fc" id="L415">        dialog.add(c);</span>
 <span class="fc" id="L416">        dialog.pack();</span>
 <span class="fc" id="L417">        dialog.setLocationRelativeTo(gui);</span>
-<span class="nc" id="L418">        dialog.setVisible(true);        </span>
-<span class="nc" id="L419">    }</span>
+<span class="fc" id="L418">        dialog.setVisible(true);        </span>
+<span class="fc" id="L419">    }</span>
     
     
     //--------------------------------SCORE BOARD--------------------------------------//
@@ -424,110 +424,110 @@ public class Game implements MouseListener, ActionListener, WindowListener
     {
         //----------------------------------------------------------------//
                 
-<span class="nc" id="L427">        JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);</span>
+<span class="fc" id="L427">        JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);</span>
 
         //-----BEST TIMES--------//
         
-<span class="nc" id="L431">        JPanel bestTimes = new JPanel();</span>
-<span class="nc" id="L432">        bestTimes.setLayout(new GridLayout(5,1));</span>
+<span class="fc" id="L431">        JPanel bestTimes = new JPanel();</span>
+<span class="fc" id="L432">        bestTimes.setLayout(new GridLayout(5,1));</span>
         
-<span class="nc" id="L434">        ArrayList&lt;Score.Time&gt; bTimes = score.getBestTimes();</span>
+<span class="fc" id="L434">        ArrayList&lt;Score.Time&gt; bTimes = score.getBestTimes();</span>
         
-<span class="nc bnc" id="L436" title="All 2 branches missed.">        for (int i = 0; i &lt; bTimes.size(); i++)</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">        for (int i = 0; i &lt; bTimes.size(); i++)</span>
         {
-<span class="nc" id="L438">            JLabel t = new JLabel(&quot;  &quot; + bTimes.get(i).getTimeValue() + &quot;           &quot; + bTimes.get(i).getDateValue());            </span>
-<span class="nc" id="L439">            bestTimes.add(t);</span>
+<span class="fc" id="L438">            JLabel t = new JLabel(&quot;  &quot; + bTimes.get(i).getTimeValue() + &quot;           &quot; + bTimes.get(i).getDateValue());            </span>
+<span class="fc" id="L439">            bestTimes.add(t);</span>
         }
         
-<span class="nc bnc" id="L442" title="All 2 branches missed.">        if (bTimes.isEmpty())</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">        if (bTimes.isEmpty())</span>
         {
-<span class="nc" id="L444">            JLabel t = new JLabel(&quot;                               &quot;);            </span>
-<span class="nc" id="L445">            bestTimes.add(t);</span>
+<span class="fc" id="L444">            JLabel t = new JLabel(&quot;                               &quot;);            </span>
+<span class="fc" id="L445">            bestTimes.add(t);</span>
         }
         
-<span class="nc" id="L448">        TitledBorder b = BorderFactory.createTitledBorder(&quot;Best Times&quot;);</span>
-<span class="nc" id="L449">        b.setTitleJustification(TitledBorder.LEFT);</span>
+<span class="fc" id="L448">        TitledBorder b = BorderFactory.createTitledBorder(&quot;Best Times&quot;);</span>
+<span class="fc" id="L449">        b.setTitleJustification(TitledBorder.LEFT);</span>
 
-<span class="nc" id="L451">        bestTimes.setBorder(b);</span>
+<span class="fc" id="L451">        bestTimes.setBorder(b);</span>
                 
         //-----STATISTICS-----------//
-<span class="nc" id="L454">        JPanel statistics = new JPanel();</span>
+<span class="fc" id="L454">        JPanel statistics = new JPanel();</span>
         
-<span class="nc" id="L456">        statistics.setLayout(new GridLayout(6,1,0,10));        </span>
+<span class="fc" id="L456">        statistics.setLayout(new GridLayout(6,1,0,10));        </span>
         
-<span class="nc" id="L458">        JLabel gPlayed = new JLabel(&quot;  Games Played:  &quot; + score.getGamesPlayed());</span>
-<span class="nc" id="L459">        JLabel gWon = new JLabel(&quot;  Games Won:  &quot; + score.getGamesWon());</span>
-<span class="nc" id="L460">        JLabel gPercentage = new JLabel(&quot;  Win Percentage:  &quot; + score.getWinPercentage() + &quot;%&quot;);</span>
-<span class="nc" id="L461">        JLabel lWin = new JLabel(&quot;  Longest Winning Streak:  &quot; + score.getLongestWinningStreak());</span>
-<span class="nc" id="L462">        JLabel lLose = new JLabel(&quot;  Longest Losing Streak:  &quot; + score.getLongestLosingStreak());</span>
-<span class="nc" id="L463">        JLabel currentStreak = new JLabel(&quot;  Current Streak:  &quot; + score.getCurrentStreak());</span>
+<span class="fc" id="L458">        JLabel gPlayed = new JLabel(&quot;  Games Played:  &quot; + score.getGamesPlayed());</span>
+<span class="fc" id="L459">        JLabel gWon = new JLabel(&quot;  Games Won:  &quot; + score.getGamesWon());</span>
+<span class="fc" id="L460">        JLabel gPercentage = new JLabel(&quot;  Win Percentage:  &quot; + score.getWinPercentage() + &quot;%&quot;);</span>
+<span class="fc" id="L461">        JLabel lWin = new JLabel(&quot;  Longest Winning Streak:  &quot; + score.getLongestWinningStreak());</span>
+<span class="fc" id="L462">        JLabel lLose = new JLabel(&quot;  Longest Losing Streak:  &quot; + score.getLongestLosingStreak());</span>
+<span class="fc" id="L463">        JLabel currentStreak = new JLabel(&quot;  Current Streak:  &quot; + score.getCurrentStreak());</span>
 
         
-<span class="nc" id="L466">        statistics.add(gPlayed);</span>
-<span class="nc" id="L467">        statistics.add(gWon);</span>
-<span class="nc" id="L468">        statistics.add(gPercentage);</span>
-<span class="nc" id="L469">        statistics.add(lWin);</span>
-<span class="nc" id="L470">        statistics.add(lLose);</span>
-<span class="nc" id="L471">        statistics.add(currentStreak);</span>
+<span class="fc" id="L466">        statistics.add(gPlayed);</span>
+<span class="fc" id="L467">        statistics.add(gWon);</span>
+<span class="fc" id="L468">        statistics.add(gPercentage);</span>
+<span class="fc" id="L469">        statistics.add(lWin);</span>
+<span class="fc" id="L470">        statistics.add(lLose);</span>
+<span class="fc" id="L471">        statistics.add(currentStreak);</span>
                         
-<span class="nc" id="L473">        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);        </span>
-<span class="nc" id="L474">        statistics.setBorder(loweredetched);</span>
+<span class="fc" id="L473">        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);        </span>
+<span class="fc" id="L474">        statistics.setBorder(loweredetched);</span>
         
         
         //--------BUTTONS----------//
-<span class="nc" id="L478">        JPanel buttons = new JPanel();</span>
-<span class="nc" id="L479">        buttons.setLayout(new GridLayout(1,2,10,0));</span>
+<span class="fc" id="L478">        JPanel buttons = new JPanel();</span>
+<span class="fc" id="L479">        buttons.setLayout(new GridLayout(1,2,10,0));</span>
         
-<span class="nc" id="L481">        JButton close = new JButton(&quot;Close&quot;);</span>
-<span class="nc" id="L482">        JButton reset = new JButton(&quot;Reset&quot;);</span>
+<span class="fc" id="L481">        JButton close = new JButton(&quot;Close&quot;);</span>
+<span class="fc" id="L482">        JButton reset = new JButton(&quot;Reset&quot;);</span>
 
         
-<span class="nc" id="L485">        close.addActionListener((ActionEvent e) -&gt; {</span>
-<span class="nc" id="L486">            dialog.dispose();</span>
-<span class="nc" id="L487">        });        </span>
-<span class="nc" id="L488">        reset.addActionListener((ActionEvent e) -&gt; {</span>
-<span class="nc" id="L489">            ImageIcon question = new ImageIcon(getClass().getResource(&quot;/../../resources/main/question.png&quot;));</span>
+<span class="fc" id="L485">        close.addActionListener((ActionEvent e) -&gt; {</span>
+<span class="fc" id="L486">            dialog.dispose();</span>
+<span class="fc" id="L487">        });        </span>
+<span class="fc" id="L488">        reset.addActionListener((ActionEvent e) -&gt; {</span>
+<span class="fc" id="L489">            ImageIcon question = new ImageIcon(getClass().getResource(&quot;/../../resources/main/question.png&quot;));</span>
 
-<span class="nc" id="L491">            int option = JOptionPane.showOptionDialog(null, &quot;Do you want to reset all your statistics to zero?&quot;, </span>
+<span class="fc" id="L491">            int option = JOptionPane.showOptionDialog(null, &quot;Do you want to reset all your statistics to zero?&quot;, </span>
                             &quot;Reset Statistics&quot;, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, question,null,null);
 
-<span class="nc bnc" id="L494" title="All 2 branches missed.">            switch(option) </span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">            switch(option) </span>
             {
                 case JOptionPane.YES_OPTION:      
 
-<span class="nc" id="L498">                    score.resetScore();</span>
-<span class="nc" id="L499">                    score.save();</span>
-<span class="nc" id="L500">                    dialog.dispose();</span>
-<span class="nc" id="L501">                    showScore();</span>
-<span class="nc" id="L502">                    break;</span>
+<span class="fc" id="L498">                    score.resetScore();</span>
+<span class="fc" id="L499">                    score.save();</span>
+<span class="fc" id="L500">                    dialog.dispose();</span>
+<span class="fc" id="L501">                    showScore();</span>
+<span class="fc" id="L502">                    break;</span>
 
                 case JOptionPane.NO_OPTION: 
                     break;
             }
-<span class="nc" id="L507">        });        </span>
+<span class="fc" id="L507">        });        </span>
         
-<span class="nc" id="L509">        buttons.add(close);</span>
-<span class="nc" id="L510">        buttons.add(reset);</span>
+<span class="fc" id="L509">        buttons.add(close);</span>
+<span class="fc" id="L510">        buttons.add(reset);</span>
         
-<span class="nc bnc" id="L512" title="All 2 branches missed.">        if (score.getGamesPlayed() == 0)</span>
-<span class="nc" id="L513">            reset.setEnabled(false);</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">        if (score.getGamesPlayed() == 0)</span>
+<span class="fc" id="L513">            reset.setEnabled(false);</span>
         
         //--------DIALOG-------------//
         
-<span class="nc" id="L517">        JPanel c = new JPanel();</span>
-<span class="nc" id="L518">        c.setLayout(new BorderLayout(20,20));</span>
-<span class="nc" id="L519">        c.add(bestTimes, BorderLayout.WEST);</span>
-<span class="nc" id="L520">        c.add(statistics, BorderLayout.CENTER);        </span>
-<span class="nc" id="L521">        c.add(buttons, BorderLayout.SOUTH);</span>
+<span class="fc" id="L517">        JPanel c = new JPanel();</span>
+<span class="fc" id="L518">        c.setLayout(new BorderLayout(20,20));</span>
+<span class="fc" id="L519">        c.add(bestTimes, BorderLayout.WEST);</span>
+<span class="fc" id="L520">        c.add(statistics, BorderLayout.CENTER);        </span>
+<span class="fc" id="L521">        c.add(buttons, BorderLayout.SOUTH);</span>
         
-<span class="nc" id="L523">        c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
+<span class="fc" id="L523">        c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
         
-<span class="nc" id="L525">        dialog.setTitle(&quot;Minesweeper Statistics - Haris Muneer&quot;);</span>
-<span class="nc" id="L526">        dialog.add(c);</span>
-<span class="nc" id="L527">        dialog.pack();</span>
-<span class="nc" id="L528">        dialog.setLocationRelativeTo(gui);</span>
-<span class="nc" id="L529">        dialog.setVisible(true);                        </span>
-<span class="nc" id="L530">    }</span>
+<span class="fc" id="L525">        dialog.setTitle(&quot;Minesweeper Statistics - Haris Muneer&quot;);</span>
+<span class="fc" id="L526">        dialog.add(c);</span>
+<span class="fc" id="L527">        dialog.pack();</span>
+<span class="fc" id="L528">        dialog.setLocationRelativeTo(gui);</span>
+<span class="fc" id="L529">        dialog.setVisible(true);                        </span>
+<span class="fc" id="L530">    }</span>
     
     //------------------------------------------------------------------------------//
 	
@@ -547,7 +547,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 <span class="fc" id="L547">                cellSolution = cells[x][y].getContent();</span>
 
                 // Is the cell still unrevealed
-<span class="pc bpc" id="L550" title="1 of 2 branches missed.">                if( cellSolution.equals(&quot;&quot;) ) </span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">                if( cellSolution.equals(&quot;&quot;) ) </span>
                 {
 <span class="fc" id="L552">                    buttons[x][y].setIcon(null);</span>
                     
@@ -580,15 +580,15 @@ public class Game implements MouseListener, ActionListener, WindowListener
                 }
 
                 // This cell is already flagged!
-<span class="nc bnc" id="L583" title="All 2 branches missed.">                else if( cellSolution.equals(&quot;F&quot;) ) </span>
+<span class="fc bfc" id="L583" title="All 2 branches covered.">                else if( cellSolution.equals(&quot;F&quot;) ) </span>
                 {
                     // Is it correctly flagged?
-<span class="nc bnc" id="L586" title="All 2 branches missed.">                    if(!cells[x][y].getMine()) </span>
+<span class="fc bfc" id="L586" title="All 2 branches covered.">                    if(!cells[x][y].getMine()) </span>
                     {
-<span class="nc" id="L588">                        buttons[x][y].setBackground(Color.orange);</span>
+<span class="fc" id="L588">                        buttons[x][y].setBackground(Color.orange);</span>
                     }
                     else
-<span class="nc" id="L591">                        buttons[x][y].setBackground(Color.green);</span>
+<span class="fc" id="L591">                        buttons[x][y].setBackground(Color.green);</span>
                 }
                 
             }
@@ -608,43 +608,43 @@ public class Game implements MouseListener, ActionListener, WindowListener
     
     public boolean isFinished()
     {
-<span class="nc" id="L611">        boolean isFinished = true;</span>
+<span class="fc" id="L611">        boolean isFinished = true;</span>
         String cellSolution;
 
-<span class="nc" id="L614">        Cell cells[][] = board.getCells();</span>
+<span class="fc" id="L614">        Cell cells[][] = board.getCells();</span>
         
-<span class="nc bnc" id="L616" title="All 2 branches missed.">        for( int x = 0 ; x &lt; board.getCols() ; x++ ) </span>
+<span class="fc bfc" id="L616" title="All 2 branches covered.">        for( int x = 0 ; x &lt; board.getCols() ; x++ ) </span>
         {
-<span class="nc bnc" id="L618" title="All 2 branches missed.">            for( int y = 0 ; y &lt; board.getRows() ; y++ ) </span>
+<span class="fc bfc" id="L618" title="All 2 branches covered.">            for( int y = 0 ; y &lt; board.getRows() ; y++ ) </span>
             {
                 // If a game is solved, the content of each Cell should match the value of its surrounding mines
-<span class="nc" id="L621">                cellSolution = Integer.toString(cells[x][y].getSurroundingMines());</span>
+<span class="fc" id="L621">                cellSolution = Integer.toString(cells[x][y].getSurroundingMines());</span>
                 
-<span class="nc bnc" id="L623" title="All 2 branches missed.">                if(cells[x][y].getMine()) </span>
-<span class="nc" id="L624">                    cellSolution = &quot;F&quot;;</span>
+<span class="fc bfc" id="L623" title="All 2 branches covered.">                if(cells[x][y].getMine()) </span>
+<span class="fc" id="L624">                    cellSolution = &quot;F&quot;;</span>
 
                 // Compare the player's &quot;answer&quot; to the solution.
-<span class="nc bnc" id="L627" title="All 2 branches missed.">                if(!cells[x][y].getContent().equals(cellSolution))</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">                if(!cells[x][y].getContent().equals(cellSolution))</span>
                 {
                     //This cell is not solved yet
-<span class="nc" id="L630">                    isFinished = false;</span>
-<span class="nc" id="L631">                    break;</span>
+<span class="fc" id="L630">                    isFinished = false;</span>
+<span class="fc" id="L631">                    break;</span>
                 }
             }
         }
 
-<span class="nc" id="L636">        return isFinished;</span>
+<span class="fc" id="L636">        return isFinished;</span>
     }
 
  
     //Check the game to see if its finished or not
     protected void checkGame()
     {		
-<span class="nc bnc" id="L643" title="All 2 branches missed.">        if(isFinished()) </span>
+<span class="fc bfc" id="L643" title="All 2 branches covered.">        if(isFinished()) </span>
         {            
-<span class="nc" id="L645">            gameWon();</span>
+<span class="fc" id="L645">            gameWon();</span>
         }
-<span class="nc" id="L647">    }</span>
+<span class="fc" id="L647">    }</span>
    
     //----------------------------------------------------------------------/
        
@@ -657,61 +657,61 @@ public class Game implements MouseListener, ActionListener, WindowListener
     {
         int neighbours;
         
-<span class="nc" id="L660">        Cell cells[][] = board.getCells();</span>
-<span class="nc" id="L661">        JButton buttons[][] = gui.getButtons();</span>
+<span class="fc" id="L660">        Cell cells[][] = board.getCells();</span>
+<span class="fc" id="L661">        JButton buttons[][] = gui.getButtons();</span>
 
         // Columns
-<span class="nc bnc" id="L664" title="All 2 branches missed.">        for(int x = board.makeValidCoordinateX(xCo - 1) ; x &lt;= board.makeValidCoordinateX(xCo + 1) ; x++) </span>
+<span class="fc bfc" id="L664" title="All 2 branches covered.">        for(int x = board.makeValidCoordinateX(xCo - 1) ; x &lt;= board.makeValidCoordinateX(xCo + 1) ; x++) </span>
         {			
             // Rows
-<span class="nc bnc" id="L667" title="All 2 branches missed.">            for(int y = board.makeValidCoordinateY(yCo - 1) ; y &lt;= board.makeValidCoordinateY(yCo + 1) ; y++) </span>
+<span class="fc bfc" id="L667" title="All 2 branches covered.">            for(int y = board.makeValidCoordinateY(yCo - 1) ; y &lt;= board.makeValidCoordinateY(yCo + 1) ; y++) </span>
             {
                 // Only unrevealed cells need to be revealed.
-<span class="nc bnc" id="L670" title="All 2 branches missed.">                if(cells[x][y].getContent().equals(&quot;&quot;)) </span>
+<span class="fc bfc" id="L670" title="All 2 branches covered.">                if(cells[x][y].getContent().equals(&quot;&quot;)) </span>
                 {
                     // Get the neighbours of the current (neighbouring) cell.
-<span class="nc" id="L673">                    neighbours = cells[x][y].getSurroundingMines();</span>
+<span class="fc" id="L673">                    neighbours = cells[x][y].getSurroundingMines();</span>
 
                     // Reveal the neighbours of the current (neighbouring) cell
-<span class="nc" id="L676">                    cells[x][y].setContent(Integer.toString(neighbours));</span>
+<span class="fc" id="L676">                    cells[x][y].setContent(Integer.toString(neighbours));</span>
 
-<span class="nc bnc" id="L678" title="All 2 branches missed.">                    if (!cells[x][y].getMine())</span>
-<span class="nc" id="L679">                        buttons[x][y].setIcon(null);                        </span>
+<span class="fc bfc" id="L678" title="All 2 branches covered.">                    if (!cells[x][y].getMine())</span>
+<span class="fc" id="L679">                        buttons[x][y].setIcon(null);                        </span>
                     
                     // Is this (neighbouring) cell a &quot;zero&quot; cell itself?
-<span class="nc bnc" id="L682" title="All 2 branches missed.">                    if(neighbours == 0)</span>
+<span class="fc bfc" id="L682" title="All 2 branches covered.">                    if(neighbours == 0)</span>
                     {                        
                         // Yes, give it a special color and recurse!
-<span class="nc" id="L685">                        buttons[x][y].setBackground(Color.lightGray);</span>
-<span class="nc" id="L686">                        buttons[x][y].setText(&quot;&quot;);</span>
-<span class="nc" id="L687">                        findZeroes(x, y);</span>
+<span class="fc" id="L685">                        buttons[x][y].setBackground(Color.lightGray);</span>
+<span class="fc" id="L686">                        buttons[x][y].setText(&quot;&quot;);</span>
+<span class="fc" id="L687">                        findZeroes(x, y);</span>
                     }
                     else
                     {
                         // No, give it a boring gray color.
-<span class="nc" id="L692">                        buttons[x][y].setBackground(Color.lightGray);</span>
-<span class="nc" id="L693">                        buttons[x][y].setText(Integer.toString(neighbours));</span>
-<span class="nc" id="L694">                        gui.setTextColor(buttons[x][y]);                        </span>
+<span class="fc" id="L692">                        buttons[x][y].setBackground(Color.lightGray);</span>
+<span class="fc" id="L693">                        buttons[x][y].setText(Integer.toString(neighbours));</span>
+<span class="fc" id="L694">                        gui.setTextColor(buttons[x][y]);                        </span>
                     }
                 }
             }
         }
-<span class="nc" id="L699">    }</span>
+<span class="fc" id="L699">    }</span>
     //-----------------------------------------------------------------------------//
     //This function is called when clicked on closed button or exit
     @Override
     public void windowClosing(WindowEvent e) 
     {
-<span class="nc bnc" id="L705" title="All 2 branches missed.">        if (playing)</span>
+<span class="pc bpc" id="L705" title="1 of 2 branches missed.">        if (playing)</span>
         {
-<span class="nc" id="L707">            ImageIcon question = new ImageIcon(getClass().getResource(&quot;/../../resources/main/question.png&quot;));</span>
+<span class="fc" id="L707">            ImageIcon question = new ImageIcon(getClass().getResource(&quot;/../../resources/main/question.png&quot;));</span>
 
-<span class="nc" id="L709">            Object[] options = {&quot;Save&quot;,&quot;Don't Save&quot;,&quot;Cancel&quot;};</span>
+<span class="fc" id="L709">            Object[] options = {&quot;Save&quot;,&quot;Don't Save&quot;,&quot;Cancel&quot;};</span>
 
-<span class="nc" id="L711">            int quit = JOptionPane.showOptionDialog(null, &quot;What do you want to do with the game in progress?&quot;, </span>
+<span class="fc" id="L711">            int quit = JOptionPane.showOptionDialog(null, &quot;What do you want to do with the game in progress?&quot;, </span>
                             &quot;New Game&quot;, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, question, options, options[2]);
 
-<span class="nc bnc" id="L714" title="All 3 branches missed.">            switch(quit) </span>
+<span class="pc bpc" id="L714" title="2 of 3 branches missed.">            switch(quit) </span>
             {
                 //save
                 case JOptionPane.YES_OPTION:
@@ -759,29 +759,29 @@ public class Game implements MouseListener, ActionListener, WindowListener
                     
                 case JOptionPane.CANCEL_OPTION: break;
             }
-<span class="nc" id="L762">        }</span>
+<span class="fc" id="L762">        }</span>
         else
 <span class="nc" id="L764">            System.exit(0);</span>
-<span class="nc" id="L765">    }</span>
+<span class="fc" id="L765">    }</span>
     
     //-----------------------------------------------------------------------//
 
     @Override
     public void actionPerformed(ActionEvent e) {        
-<span class="nc" id="L771">        JMenuItem menuItem = (JMenuItem) e.getSource();</span>
+<span class="fc" id="L771">        JMenuItem menuItem = (JMenuItem) e.getSource();</span>
 
-<span class="nc bnc" id="L773" title="All 2 branches missed.">        if (menuItem.getName().equals(&quot;New Game&quot;))</span>
+<span class="fc bfc" id="L773" title="All 2 branches covered.">        if (menuItem.getName().equals(&quot;New Game&quot;))</span>
         {
-<span class="nc bnc" id="L775" title="All 2 branches missed.">            if (playing)</span>
+<span class="fc bfc" id="L775" title="All 2 branches covered.">            if (playing)</span>
             {
-<span class="nc" id="L777">                ImageIcon question = new ImageIcon(getClass().getResource(&quot;/../../resources/main/question.png&quot;));</span>
+<span class="fc" id="L777">                ImageIcon question = new ImageIcon(getClass().getResource(&quot;/../../resources/main/question.png&quot;));</span>
 
-<span class="nc" id="L779">                Object[] options = {&quot;Quit and Start a New Game&quot;,&quot;Restart&quot;,&quot;Keep Playing&quot;};</span>
+<span class="fc" id="L779">                Object[] options = {&quot;Quit and Start a New Game&quot;,&quot;Restart&quot;,&quot;Keep Playing&quot;};</span>
                 
-<span class="nc" id="L781">                int startNew = JOptionPane.showOptionDialog(null, &quot;What do you want to do with the game in progress?&quot;, </span>
+<span class="fc" id="L781">                int startNew = JOptionPane.showOptionDialog(null, &quot;What do you want to do with the game in progress?&quot;, </span>
                                 &quot;New Game&quot;, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, question, options, options[2]);
 
-<span class="nc bnc" id="L784" title="All 3 branches missed.">                switch(startNew) </span>
+<span class="pc bpc" id="L784" title="2 of 3 branches missed.">                switch(startNew) </span>
                 {
                     case JOptionPane.YES_OPTION:      
                         
@@ -792,27 +792,27 @@ public class Game implements MouseListener, ActionListener, WindowListener
 <span class="nc" id="L792">                        break;</span>
 
                     case JOptionPane.NO_OPTION: 
-<span class="nc" id="L795">                        score.incGamesPlayed();   </span>
-<span class="nc" id="L796">                        score.save();</span>
-<span class="nc" id="L797">                        restartGame();</span>
-<span class="nc" id="L798">                        break;</span>
+<span class="fc" id="L795">                        score.incGamesPlayed();   </span>
+<span class="fc" id="L796">                        score.save();</span>
+<span class="fc" id="L797">                        restartGame();</span>
+<span class="fc" id="L798">                        break;</span>
                     
                     case JOptionPane.CANCEL_OPTION: break;
                 }
-<span class="nc" id="L802">            }</span>
+<span class="fc" id="L802">            }</span>
         }
         
-<span class="nc bnc" id="L805" title="All 2 branches missed.">        else if (menuItem.getName().equals(&quot;Exit&quot;))</span>
+<span class="fc bfc" id="L805" title="All 2 branches covered.">        else if (menuItem.getName().equals(&quot;Exit&quot;))</span>
         {
-<span class="nc" id="L807">            windowClosing(null);</span>
+<span class="fc" id="L807">            windowClosing(null);</span>
         }
         
         //Statistics
         else
         {
-<span class="nc" id="L813">            showScore();</span>
+<span class="fc" id="L813">            showScore();</span>
         }        
-<span class="nc" id="L815">    }</span>
+<span class="fc" id="L815">    }</span>
     
     
     //--------------------------------------------------------------------------//
@@ -822,92 +822,92 @@ public class Game implements MouseListener, ActionListener, WindowListener
     public void mouseClicked(MouseEvent e)
     {
         // start timer on first click
-<span class="nc bnc" id="L825" title="All 2 branches missed.">        if(!playing)</span>
+<span class="fc bfc" id="L825" title="All 2 branches covered.">        if(!playing)</span>
         {
-<span class="nc" id="L827">            gui.startTimer();</span>
-<span class="nc" id="L828">            playing = true;</span>
+<span class="fc" id="L827">            gui.startTimer();</span>
+<span class="fc" id="L828">            playing = true;</span>
         }
         
-<span class="nc bnc" id="L831" title="All 2 branches missed.">        if (playing)</span>
+<span class="pc bpc" id="L831" title="1 of 2 branches missed.">        if (playing)</span>
         {
             //Get the button's name
-<span class="nc" id="L834">            JButton button = (JButton)e.getSource();</span>
+<span class="fc" id="L834">            JButton button = (JButton)e.getSource();</span>
 
             // Get coordinates (button.getName().equals(&quot;x,y&quot;)).
-<span class="nc" id="L837">            String[] co = button.getName().split(&quot;,&quot;);</span>
+<span class="fc" id="L837">            String[] co = button.getName().split(&quot;,&quot;);</span>
 
-<span class="nc" id="L839">            int x = Integer.parseInt(co[0]);</span>
-<span class="nc" id="L840">            int y = Integer.parseInt(co[1]);</span>
+<span class="fc" id="L839">            int x = Integer.parseInt(co[0]);</span>
+<span class="fc" id="L840">            int y = Integer.parseInt(co[1]);</span>
 
             // Get cell information.
-<span class="nc" id="L843">            boolean isMine = board.getCells()[x][y].getMine();</span>
-<span class="nc" id="L844">            int neighbours = board.getCells()[x][y].getSurroundingMines();</span>
+<span class="fc" id="L843">            boolean isMine = board.getCells()[x][y].getMine();</span>
+<span class="fc" id="L844">            int neighbours = board.getCells()[x][y].getSurroundingMines();</span>
 
             // Left Click
-<span class="nc bnc" id="L847" title="All 2 branches missed.">            if (SwingUtilities.isLeftMouseButton(e)) </span>
+<span class="fc bfc" id="L847" title="All 2 branches covered.">            if (SwingUtilities.isLeftMouseButton(e)) </span>
             {
-<span class="nc bnc" id="L849" title="All 2 branches missed.">                if (!board.getCells()[x][y].getContent().equals(&quot;F&quot;))</span>
+<span class="fc bfc" id="L849" title="All 2 branches covered.">                if (!board.getCells()[x][y].getContent().equals(&quot;F&quot;))</span>
                 {
-<span class="nc" id="L851">                    button.setIcon(null);</span>
+<span class="fc" id="L851">                    button.setIcon(null);</span>
 
                     //Mine is clicked.
-<span class="nc bnc" id="L854" title="All 2 branches missed.">                    if(isMine) </span>
+<span class="fc bfc" id="L854" title="All 2 branches covered.">                    if(isMine) </span>
                     {  
                         //red mine
-<span class="nc" id="L857">                        button.setIcon(gui.getIconRedMine());</span>
-<span class="nc" id="L858">                        button.setBackground(Color.red);</span>
-<span class="nc" id="L859">                        board.getCells()[x][y].setContent(&quot;M&quot;);</span>
+<span class="fc" id="L857">                        button.setIcon(gui.getIconRedMine());</span>
+<span class="fc" id="L858">                        button.setBackground(Color.red);</span>
+<span class="fc" id="L859">                        board.getCells()[x][y].setContent(&quot;M&quot;);</span>
 
-<span class="nc" id="L861">                        gameLost();</span>
+<span class="fc" id="L861">                        gameLost();</span>
                     }
                     else 
                     {
                         // The player has clicked on a number.
-<span class="nc" id="L866">                        board.getCells()[x][y].setContent(Integer.toString(neighbours));</span>
-<span class="nc" id="L867">                        button.setText(Integer.toString(neighbours));</span>
-<span class="nc" id="L868">                        gui.setTextColor(button);</span>
+<span class="fc" id="L866">                        board.getCells()[x][y].setContent(Integer.toString(neighbours));</span>
+<span class="fc" id="L867">                        button.setText(Integer.toString(neighbours));</span>
+<span class="fc" id="L868">                        gui.setTextColor(button);</span>
 
-<span class="nc bnc" id="L870" title="All 2 branches missed.">                        if( neighbours == 0 ) </span>
+<span class="fc bfc" id="L870" title="All 2 branches covered.">                        if( neighbours == 0 ) </span>
                         {
                             // Show all surrounding cells.
-<span class="nc" id="L873">                            button.setBackground(Color.lightGray);</span>
-<span class="nc" id="L874">                            button.setText(&quot;&quot;);</span>
-<span class="nc" id="L875">                            findZeroes(x, y);</span>
+<span class="fc" id="L873">                            button.setBackground(Color.lightGray);</span>
+<span class="fc" id="L874">                            button.setText(&quot;&quot;);</span>
+<span class="fc" id="L875">                            findZeroes(x, y);</span>
                         } 
                         else 
                         {
-<span class="nc" id="L879">                            button.setBackground(Color.lightGray);</span>
+<span class="fc" id="L879">                            button.setBackground(Color.lightGray);</span>
                         }
                     }
                 }
             }
             // Right Click
-<span class="nc bnc" id="L885" title="All 2 branches missed.">            else if (SwingUtilities.isRightMouseButton(e)) </span>
+<span class="fc bfc" id="L885" title="All 2 branches covered.">            else if (SwingUtilities.isRightMouseButton(e)) </span>
             {
-<span class="nc bnc" id="L887" title="All 2 branches missed.">                if(board.getCells()[x][y].getContent().equals(&quot;F&quot;)) </span>
+<span class="fc bfc" id="L887" title="All 2 branches covered.">                if(board.getCells()[x][y].getContent().equals(&quot;F&quot;)) </span>
                 {   
-<span class="nc" id="L889">                    board.getCells()[x][y].setContent(&quot;&quot;);</span>
-<span class="nc" id="L890">                    button.setText(&quot;&quot;);</span>
-<span class="nc" id="L891">                    button.setBackground(new Color(0,110,140));</span>
+<span class="fc" id="L889">                    board.getCells()[x][y].setContent(&quot;&quot;);</span>
+<span class="fc" id="L890">                    button.setText(&quot;&quot;);</span>
+<span class="fc" id="L891">                    button.setBackground(new Color(0,110,140));</span>
 
                     //simple blue
 
-<span class="nc" id="L895">                    button.setIcon(gui.getIconTile());</span>
-<span class="nc" id="L896">                    gui.incMines();</span>
+<span class="fc" id="L895">                    button.setIcon(gui.getIconTile());</span>
+<span class="fc" id="L896">                    gui.incMines();</span>
                 }
-<span class="nc bnc" id="L898" title="All 2 branches missed.">                else if (board.getCells()[x][y].getContent().equals(&quot;&quot;)) </span>
+<span class="pc bpc" id="L898" title="1 of 2 branches missed.">                else if (board.getCells()[x][y].getContent().equals(&quot;&quot;)) </span>
                 {
-<span class="nc" id="L900">                    board.getCells()[x][y].setContent(&quot;F&quot;);</span>
-<span class="nc" id="L901">                    button.setBackground(Color.blue);	</span>
+<span class="fc" id="L900">                    board.getCells()[x][y].setContent(&quot;F&quot;);</span>
+<span class="fc" id="L901">                    button.setBackground(Color.blue);	</span>
 
-<span class="nc" id="L903">                    button.setIcon(gui.getIconFlag());</span>
-<span class="nc" id="L904">                    gui.decMines();</span>
+<span class="fc" id="L903">                    button.setIcon(gui.getIconFlag());</span>
+<span class="fc" id="L904">                    gui.decMines();</span>
                 }
             }
 
-<span class="nc" id="L908">            checkGame();</span>
+<span class="fc" id="L908">            checkGame();</span>
         }
-<span class="nc" id="L910">    }</span>
+<span class="fc" id="L910">    }</span>
 
     //-------------------------RELATED TO SCORES----------------------//
 
@@ -916,19 +916,19 @@ public class Game implements MouseListener, ActionListener, WindowListener
     //---------------------EMPTY FUNCTIONS-------------------------------//
     @Override
     public void mousePressed(MouseEvent e) {
-<span class="nc" id="L919">    }</span>
+<span class="fc" id="L919">    }</span>
 
     @Override
     public void mouseReleased(MouseEvent e) {
-<span class="nc" id="L923">    }</span>
+<span class="fc" id="L923">    }</span>
 
     @Override
     public void mouseEntered(MouseEvent e) {
-<span class="nc" id="L927">    }</span>
+<span class="fc" id="L927">    }</span>
 
     @Override
     public void mouseExited(MouseEvent e) {
-<span class="nc" id="L931">    }    </span>
+<span class="fc" id="L931">    }    </span>
 
     @Override
     public void windowOpened(WindowEvent e) {
@@ -936,7 +936,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 
     @Override
     public void windowClosed(WindowEvent e) {
-<span class="nc" id="L939">    }</span>
+<span class="fc" id="L939">    }</span>
 
     @Override
     public void windowIconified(WindowEvent e) {

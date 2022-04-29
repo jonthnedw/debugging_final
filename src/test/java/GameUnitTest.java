@@ -81,7 +81,7 @@ public class GameUnitTest {
         public void testCheckGame() { this.checkGame(); }
     }
 
-    /*
+
     @BeforeEach
     public void databaseReset() throws IOException, InterruptedException {
         File blankSource = new File("build/resources/main/dbBlank.accdb");
@@ -90,7 +90,7 @@ public class GameUnitTest {
         FileUtils.copyFile(blankSource, usedFile);
     }
 
-     */
+
 
     // BC: fails outermost if-statement - simply to enact branch coverage
     @Test
@@ -116,11 +116,15 @@ public class GameUnitTest {
     @Test
     @Tag("Fails")
     public void setTestImagesNoBoardMissingRows() {
-        Board noRows = new Board(0,0,1);
+        try {
+            Board noRows = new Board(0, 0, 1);
 
-        TestGame tg = new TestGame(noRows);
+            TestGame tg = new TestGame(noRows);
 
-        tg.setButtonImages();
+            tg.setButtonImages();
+        } catch (Exception e) {
+            fail("Exception was thrown: " + e);
+        }
     }
 
     // BC: Full Branch Coverage

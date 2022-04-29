@@ -57,32 +57,32 @@ public class Score
     
     public int getLongestWinningStreak()
     {
-<span class="nc" id="L60">        return longestWinningStreak;</span>
+<span class="fc" id="L60">        return longestWinningStreak;</span>
     }
     
     public int getLongestLosingStreak()
     {
-<span class="nc" id="L65">        return longestLosingStreak;</span>
+<span class="fc" id="L65">        return longestLosingStreak;</span>
     }
     
     public int getCurrentStreak()
     {
-<span class="nc" id="L70">        return currentStreak;</span>
+<span class="fc" id="L70">        return currentStreak;</span>
     }
     
     public int getCurrentLosingStreak()
     {
-<span class="nc" id="L75">        return currentLosingStreak;</span>
+<span class="fc" id="L75">        return currentLosingStreak;</span>
     }
 
     public int getCurrentWinningStreak(){
-<span class="nc" id="L79">        return currentWinningStreak;</span>
+<span class="fc" id="L79">        return currentWinningStreak;</span>
     }
     
     public void incGamesWon()
     {
-<span class="nc" id="L84">        gamesWon++;</span>
-<span class="nc" id="L85">    }</span>
+<span class="fc" id="L84">        gamesWon++;</span>
+<span class="fc" id="L85">    }</span>
     
     public void incGamesPlayed()
     {
@@ -91,8 +91,8 @@ public class Score
     
     public void incCurrentStreak()
     {
-<span class="nc" id="L94">        currentStreak++;</span>
-<span class="nc" id="L95">    }</span>
+<span class="fc" id="L94">        currentStreak++;</span>
+<span class="fc" id="L95">    }</span>
     
     public void incCurrentLosingStreak()
     {
@@ -106,13 +106,13 @@ public class Score
 
     public void incCurrentWinningStreak()
     {
-<span class="nc" id="L109">        currentWinningStreak++;</span>
+<span class="fc" id="L109">        currentWinningStreak++;</span>
         
-<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (longestWinningStreak &lt; currentWinningStreak)</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        if (longestWinningStreak &lt; currentWinningStreak)</span>
         {
-<span class="nc" id="L113">            longestWinningStreak = currentWinningStreak;</span>
+<span class="fc" id="L113">            longestWinningStreak = currentWinningStreak;</span>
         }                
-<span class="nc" id="L115">    }</span>
+<span class="fc" id="L115">    }</span>
     
     
     public void decCurrentStreak()
@@ -123,8 +123,8 @@ public class Score
     
     public void resetScore()
     {
-<span class="nc" id="L126">        gamesPlayed = gamesWon = currentStreak = longestLosingStreak = longestWinningStreak = currentWinningStreak = currentLosingStreak = 0;</span>
-<span class="nc" id="L127">    }</span>
+<span class="fc" id="L126">        gamesPlayed = gamesWon = currentStreak = longestLosingStreak = longestWinningStreak = currentWinningStreak = currentLosingStreak = 0;</span>
+<span class="fc" id="L127">    }</span>
     
     
     
@@ -136,12 +136,12 @@ public class Score
     
     public void addTime(int time, Date date)
     {
-<span class="nc" id="L139">        bestTimes.add(new Time(time,date));</span>
-<span class="nc" id="L140">        Collections.sort(bestTimes,new TimeComparator()); </span>
+<span class="fc" id="L139">        bestTimes.add(new Time(time,date));</span>
+<span class="fc" id="L140">        Collections.sort(bestTimes,new TimeComparator()); </span>
         
-<span class="nc bnc" id="L142" title="All 2 branches missed.">        if(bestTimes.size() &gt; 5)</span>
-<span class="nc" id="L143">            bestTimes.remove(bestTimes.size()-1);</span>
-<span class="nc" id="L144">    }</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if(bestTimes.size() &gt; 5)</span>
+<span class="fc" id="L143">            bestTimes.remove(bestTimes.size()-1);</span>
+<span class="fc" id="L144">    }</span>
      
     //--------------------------------------------------------//
 
@@ -187,13 +187,13 @@ public class Score
 <span class="fc" id="L187">            resultSet = statement.executeQuery(&quot;SELECT * FROM TIME&quot;);</span>
             
             
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">            while(resultSet.next())</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            while(resultSet.next())</span>
             {
-<span class="nc" id="L192">                int time = resultSet.getInt(&quot;TIME_VALUE&quot;);</span>
-<span class="nc" id="L193">                Date date = resultSet.getDate(&quot;DATE_VALUE&quot;);</span>
+<span class="fc" id="L192">                int time = resultSet.getInt(&quot;TIME_VALUE&quot;);</span>
+<span class="fc" id="L193">                Date date = resultSet.getDate(&quot;DATE_VALUE&quot;);</span>
                 
-<span class="nc" id="L195">                bestTimes.add(new Time(time,date));</span>
-<span class="nc" id="L196">            }</span>
+<span class="fc" id="L195">                bestTimes.add(new Time(time,date));</span>
+<span class="fc" id="L196">            }</span>
             
             
             // cleanup resources, once after processing
@@ -255,12 +255,12 @@ public class Score
 <span class="fc" id="L255">            statement = connection.prepareStatement(template);</span>
             
 
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">            for (int i = 0; i &lt; bestTimes.size(); i++)</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">            for (int i = 0; i &lt; bestTimes.size(); i++)</span>
             {
-<span class="nc" id="L260">                statement.setInt(1, bestTimes.get(i).getTimeValue());</span>
-<span class="nc" id="L261">                statement.setDate(2, bestTimes.get(i).getDateValue());</span>
+<span class="fc" id="L260">                statement.setInt(1, bestTimes.get(i).getTimeValue());</span>
+<span class="fc" id="L261">                statement.setDate(2, bestTimes.get(i).getDateValue());</span>
                 
-<span class="nc" id="L263">                statement.executeUpdate();            </span>
+<span class="fc" id="L263">                statement.executeUpdate();            </span>
             }
 
             //---------------------------------------------------------//
@@ -270,9 +270,9 @@ public class Score
             // and then finally close connection
 <span class="fc" id="L271">            connection.close();            </span>
         }
-<span class="nc" id="L273">        catch(SQLException sqlex)</span>
+<span class="fc" id="L273">        catch(SQLException sqlex)</span>
         {
-<span class="nc" id="L275">            sqlex.printStackTrace();</span>
+<span class="fc" id="L275">            sqlex.printStackTrace();</span>
 <span class="fc" id="L276">        }</span>
         
 <span class="fc" id="L278">    }</span>
@@ -281,16 +281,16 @@ public class Score
     
     
     //---------------------------------------------------//
-<span class="nc" id="L284">    public class TimeComparator implements Comparator&lt;Time&gt;</span>
+<span class="fc" id="L284">    public class TimeComparator implements Comparator&lt;Time&gt;</span>
     {
         @Override
         public int compare(Time a, Time b) {
-<span class="nc bnc" id="L288" title="All 2 branches missed.">            if (a.getTimeValue() &gt; b.getTimeValue())</span>
-<span class="nc" id="L289">                return 1;</span>
-<span class="nc bnc" id="L290" title="All 2 branches missed.">            else if (a.getTimeValue() &lt; b.getTimeValue())</span>
-<span class="nc" id="L291">                return -1;</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">            if (a.getTimeValue() &gt; b.getTimeValue())</span>
+<span class="fc" id="L289">                return 1;</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">            else if (a.getTimeValue() &lt; b.getTimeValue())</span>
+<span class="fc" id="L291">                return -1;</span>
             else
-<span class="nc" id="L293">                return 0;</span>
+<span class="fc" id="L293">                return 0;</span>
         }                        
     }
 
@@ -300,19 +300,19 @@ public class Score
         int time;
         
         public Time(int t, Date d)
-<span class="nc" id="L303">        {</span>
-<span class="nc" id="L304">            time = t;</span>
-<span class="nc" id="L305">            date = d;</span>
-<span class="nc" id="L306">        }</span>
+<span class="fc" id="L303">        {</span>
+<span class="fc" id="L304">            time = t;</span>
+<span class="fc" id="L305">            date = d;</span>
+<span class="fc" id="L306">        }</span>
         
         public Date getDateValue()
         {
-<span class="nc" id="L310">            return date;</span>
+<span class="fc" id="L310">            return date;</span>
         }
         
         public int getTimeValue()
         {
-<span class="nc" id="L315">            return time;</span>
+<span class="fc" id="L315">            return time;</span>
         }        
     }    
 }

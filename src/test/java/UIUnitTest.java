@@ -116,7 +116,13 @@ public class UIUnitTest {
     //a NegativeArraySizeException
     @Test
     public void testConstructorNegativeByNegative() {
-        assertThrows(IllegalArgumentException.class, ()-> {ui = new UI(-1,-1,3);});
+        try {
+            assertThrows(IllegalArgumentException.class, () -> {
+                ui = new UI(-1, -1, 3);
+            });
+        } catch (NegativeArraySizeException e) {
+            fail("Unexpected Exception thrown: " + e);
+        }
     }
 
     //Unable to achieve LBA bc rows and columns of 0 not allowed.
@@ -182,7 +188,13 @@ public class UIUnitTest {
     //not a NegativeArraySizeException
     @Test
     public void testConstructorMoreMinesThanTiles() {
-        assertThrows(IllegalArgumentException.class, ()-> {ui = new UI(-1,-1,3);});
+        try {
+            assertThrows(IllegalArgumentException.class, () -> {
+                ui = new UI(-1, -1, 3);
+            });
+        } catch (NegativeArraySizeException e) {
+            fail("Unexpected exception thrown: " + e);
+        }
     }
 
     //Property: Time passed is always initialized to 0

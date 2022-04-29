@@ -213,18 +213,18 @@ public class UI extends JFrame
                 @Override
                 public void run()
                 {
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">                    while(!stopTimer)</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">                    while(!stopTimer)</span>
                     {
-<span class="nc" id="L218">                        timePassed++;</span>
+<span class="fc" id="L218">                        timePassed++;</span>
 
                         // Update the time passed label.
-<span class="nc" id="L221">                        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);</span>
+<span class="fc" id="L221">                        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);</span>
 
                         // Wait 1 second.
                         try{
-<span class="nc" id="L225">                            sleep(1000); </span>
+<span class="fc" id="L225">                            sleep(1000); </span>
                         }
-<span class="nc" id="L227">                        catch(InterruptedException ex){}</span>
+<span class="pc" id="L227">                        catch(InterruptedException ex){}</span>
                     }
 <span class="fc" id="L229">                }</span>
         };                
@@ -239,7 +239,7 @@ public class UI extends JFrame
                 
         try 
         {
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">            if (timer!= null)</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">            if (timer!= null)</span>
 <span class="fc" id="L243">                timer.join();</span>
         } 
 <span class="nc" id="L245">        catch (InterruptedException ex) </span>
@@ -250,50 +250,50 @@ public class UI extends JFrame
     
     public void resetTimer()
     {
-<span class="nc" id="L253">        timePassed = 0;</span>
-<span class="nc" id="L254">        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);        </span>
-<span class="nc" id="L255">    }</span>
+<span class="fc" id="L253">        timePassed = 0;</span>
+<span class="fc" id="L254">        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);        </span>
+<span class="fc" id="L255">    }</span>
 
     public void setTimePassed(int t)
     {
-<span class="nc" id="L259">        timePassed = t;</span>
-<span class="nc" id="L260">        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);                </span>
-<span class="nc" id="L261">    }</span>
+<span class="fc" id="L259">        timePassed = t;</span>
+<span class="fc" id="L260">        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);                </span>
+<span class="fc" id="L261">    }</span>
     
     //-----------------------------------------------------------//
     
     
     public void initGame()
     {
-<span class="nc" id="L268">        hideAll();</span>
-<span class="nc" id="L269">        enableAll();</span>
-<span class="nc" id="L270">    }</span>
+<span class="fc" id="L268">        hideAll();</span>
+<span class="fc" id="L269">        enableAll();</span>
+<span class="fc" id="L270">    }</span>
     
     //------------------HELPER FUNCTIONS-----------------------//
 
     //Makes buttons clickable
     public void enableAll()
     {
-<span class="nc bnc" id="L277" title="All 2 branches missed.">        for( int x=0 ; x&lt;cols ; x++ ) </span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">        for( int x=0 ; x&lt;cols ; x++ ) </span>
         {
-<span class="nc bnc" id="L279" title="All 2 branches missed.">            for( int y=0 ; y&lt;rows ; y++ ) </span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">            for( int y=0 ; y&lt;rows ; y++ ) </span>
             {
-<span class="nc" id="L281">                buttons[x][y].setEnabled(true);</span>
+<span class="fc" id="L281">                buttons[x][y].setEnabled(true);</span>
             }
         }
-<span class="nc" id="L284">    }</span>
+<span class="fc" id="L284">    }</span>
 
     //Makes buttons non-clickable
     public void disableAll()
     {
-<span class="nc bnc" id="L289" title="All 2 branches missed.">        for( int x=0 ; x&lt;cols ; x++ ) </span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        for( int x=0 ; x&lt;cols ; x++ ) </span>
         {
-<span class="nc bnc" id="L291" title="All 2 branches missed.">            for( int y=0 ; y&lt;rows ; y++ ) </span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">            for( int y=0 ; y&lt;rows ; y++ ) </span>
             {
-<span class="nc" id="L293">                buttons[x][y].setEnabled(false);</span>
+<span class="fc" id="L293">                buttons[x][y].setEnabled(false);</span>
             }
         }
-<span class="nc" id="L296">    }</span>
+<span class="fc" id="L296">    }</span>
 
 
     //Resets the content of all buttons
@@ -376,19 +376,19 @@ public class UI extends JFrame
     
     public void incMines()
     {
-<span class="nc" id="L379">        mines++;</span>
-<span class="nc" id="L380">        setMines(mines);</span>
-<span class="nc" id="L381">    }</span>
+<span class="fc" id="L379">        mines++;</span>
+<span class="fc" id="L380">        setMines(mines);</span>
+<span class="fc" id="L381">    }</span>
     
     public void decMines()
     {
-<span class="nc" id="L385">        mines--;</span>
-<span class="nc" id="L386">        setMines(mines);</span>
-<span class="nc" id="L387">    }</span>
+<span class="fc" id="L385">        mines--;</span>
+<span class="fc" id="L386">        setMines(mines);</span>
+<span class="fc" id="L387">    }</span>
     
     public int getMines()
     {
-<span class="nc" id="L391">        return mines;</span>
+<span class="fc" id="L391">        return mines;</span>
     }
             
     //--------------------Related to Icons----------------------------//
@@ -432,17 +432,17 @@ public class UI extends JFrame
 
     public Icon getIconRedMine()
     {
-<span class="nc" id="L435">        return redMine;</span>
+<span class="fc" id="L435">        return redMine;</span>
     }
     
     public Icon getIconFlag()
     {
-<span class="nc" id="L440">        return flag;</span>
+<span class="fc" id="L440">        return flag;</span>
     }
     
     public Icon getIconTile()
     {
-<span class="nc" id="L445">        return tile;       </span>
+<span class="fc" id="L445">        return tile;       </span>
     }        
     
     
@@ -453,18 +453,18 @@ public class UI extends JFrame
 <span class="fc" id="L453">            b.setForeground(Color.blue);</span>
 <span class="fc bfc" id="L454" title="All 2 branches covered.">        else if (b.getText().equals(&quot;2&quot;))</span>
 <span class="fc" id="L455">            b.setForeground(new Color(76,153,0));</span>
-<span class="pc bpc" id="L456" title="1 of 2 branches missed.">        else if (b.getText().equals(&quot;3&quot;))</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">        else if (b.getText().equals(&quot;3&quot;))</span>
 <span class="fc" id="L457">            b.setForeground(Color.red);</span>
-<span class="nc bnc" id="L458" title="All 2 branches missed.">        else if (b.getText().equals(&quot;4&quot;))</span>
-<span class="nc" id="L459">            b.setForeground(new Color(153,0,0));</span>
-<span class="nc bnc" id="L460" title="All 2 branches missed.">        else if (b.getText().equals(&quot;5&quot;))</span>
-<span class="nc" id="L461">            b.setForeground(new Color(153,0,153));</span>
-<span class="nc bnc" id="L462" title="All 2 branches missed.">        else if (b.getText().equals(&quot;6&quot;))</span>
-<span class="nc" id="L463">            b.setForeground(new Color(96,96,96));</span>
-<span class="nc bnc" id="L464" title="All 2 branches missed.">        else if (b.getText().equals(&quot;7&quot;))</span>
-<span class="nc" id="L465">            b.setForeground(new Color(0,0,102));</span>
-<span class="nc bnc" id="L466" title="All 2 branches missed.">        else if (b.getText().equals(&quot;8&quot;))</span>
-<span class="nc" id="L467">            b.setForeground(new Color(153,0,76));        </span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">        else if (b.getText().equals(&quot;4&quot;))</span>
+<span class="fc" id="L459">            b.setForeground(new Color(153,0,0));</span>
+<span class="fc bfc" id="L460" title="All 2 branches covered.">        else if (b.getText().equals(&quot;5&quot;))</span>
+<span class="fc" id="L461">            b.setForeground(new Color(153,0,153));</span>
+<span class="fc bfc" id="L462" title="All 2 branches covered.">        else if (b.getText().equals(&quot;6&quot;))</span>
+<span class="fc" id="L463">            b.setForeground(new Color(96,96,96));</span>
+<span class="fc bfc" id="L464" title="All 2 branches covered.">        else if (b.getText().equals(&quot;7&quot;))</span>
+<span class="fc" id="L465">            b.setForeground(new Color(0,0,102));</span>
+<span class="fc bfc" id="L466" title="All 2 branches covered.">        else if (b.getText().equals(&quot;8&quot;))</span>
+<span class="fc" id="L467">            b.setForeground(new Color(153,0,76));        </span>
 <span class="fc" id="L468">    }</span>
     //------------------------------------------------------------------------//
     
