@@ -17,6 +17,27 @@ Normally, we simply select "Play again," if an option box comes up with only "Ye
 Commented instructions that describe deleting data rows in the local database can be ignored as the BeforeEach method now
 rewrites the database before each method.
 
+### Branch Coverage and Loop Boundary Adequacy
+*Loop Boundary Adequacy* often could not be reached because either the loops were set to run at least twice because the loops are set up to search nearby cells in the board. In other instances, it was not possible to attain because the parameters that the loop cycle through were not accessible. And in most other instances, it is because it loops through a game board to access cells, and hardcoded values in the code do not allow for a board to be smaller than 2x2 cells.
+
+For *Branch Coverage*, the following will explain the branches that jacoco reports as uncovered:
+
+All exceptions in Jacoco either have been triggered by the unit tests, or are not possible to trigger during runtime (for example, in Game initialization there is a URISyntaxException that checks that the hardcoded string value written in the code actually corresponds with an existing file).
+
+In the *Score Class*, line 101 and 111 are if statements. They cannot be failed because the only time a longest streak is different from a current streak is if it has been loaded from a database, which we are minimally interacting with.
+
+*Cell*, *Board*, and *UI* are already covered (Save for exceptions however they have also been triggered despite the report).
+
+
+*Game Class*:
+In ResumeGame(), ShowScore(), WindowClosing(), and ActionPerformed(), [Jonathan fill here the attempts/reason why we cannot access these JPane branches]
+
+In GameWon(), GameLost(), ShowScore(), WindowClosing(), and ActionPerformed(), [Jonathan fill here the attempts/reason why we cannot access these actionListener branches].
+
+In GameWon(), if statement on 246 cannot be entered because if the individual has won, they have by default set a best time, so the best times array will not be empty.
+
+In MouseClicked(), the if statement on 831 is always true, because if the "playing" field is false entering this method, it is made true just before this if statement.
+
 ### BoardUnitTesting
 Failing Tests:
 For all failures, they are made on assumptions of functionality since there is no documentation in this source code.
