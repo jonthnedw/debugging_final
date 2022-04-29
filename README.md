@@ -14,6 +14,8 @@ No faults were found using Integration Testing
 ### GameTestInstructions
 When running any Game class test that results in a pop-up dialogue box, select any option that is NOT "Exit." 
 Normally, we simply select "Play again," if an option box comes up with only "Yes" or "No," "Yes" was selected. "Reset" and "Close" should also be okay to select.
+Commented instructions that describe deleting data rows in the local database can be ignored as the BeforeEach method now
+rewrites the database before each method.
 
 ### BoardUnitTesting
 Failing Tests:
