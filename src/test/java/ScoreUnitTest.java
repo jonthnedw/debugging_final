@@ -45,8 +45,7 @@ public class ScoreUnitTest {
     // Test for getLongestWinningStreak and IncrementStreak
     @Test
     @Tag("Fails")
-    @Disabled
-    public void testGetLongestWinningStreakWhenStreakIsLostAndThenRecreated() {
+public void testGetLongestWinningStreakWhenStreakIsLostAndThenRecreated() {
         assertEquals(0,scr.getLongestWinningStreak());
         scr.incCurrentWinningStreak();
         scr.incCurrentLosingStreak();
@@ -75,8 +74,7 @@ public class ScoreUnitTest {
     // Test for getLongestLosingStreak and IncrementCurrentLosingStreak
     @Test
     @Tag("Fails")
-    @Disabled
-    public void testGetLongestLosingStreakWhenStreakIsLostAndThenRecreated() {
+public void testGetLongestLosingStreakWhenStreakIsLostAndThenRecreated() {
         assertEquals(0,scr.getLongestLosingStreak());
         scr.incCurrentLosingStreak();
         scr.incCurrentWinningStreak();
@@ -303,8 +301,7 @@ public class ScoreUnitTest {
     // Test getCurrentStreak and incCurrentStreak - not negative since negative streak seems unreasonable
     @Test
     @Tag("Fail")
-    @Disabled
-    public void testDecCurrentStreakNotNegative() {
+public void testDecCurrentStreakNotNegative() {
         scr.decCurrentStreak();
         assertEquals(0, scr.getCurrentStreak());
     }
@@ -569,7 +566,6 @@ public class ScoreUnitTest {
 
     // Does not work in bulk
     @Test
-    @Disabled
     public void testPopulateSQLException() {
         assertFalse(scr.populate());
     }

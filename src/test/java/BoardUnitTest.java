@@ -31,11 +31,11 @@ public class BoardUnitTest {
 
     @Test
     @Tag("Fail") // FAILS: Infinite Loop
-    @Disabled
     public void testBoardMoreMinesThanCellsMinesInitCorrect() {
-        Board b1 = new Board(5,2,2);
-
-        assertEquals(5, b1.getNumberOfMines());
+        assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {
+            Board b1 = new Board(5,2,2);
+            assertEquals(5, b1.getNumberOfMines());
+        });
     }
 
     @Test
@@ -55,7 +55,6 @@ public class BoardUnitTest {
     // Create Empty Cells for a board that is not a perfect square
     @Test
     @Tag("Fails")
-    @Disabled
     public void testCreateEmptyCellsNotSquareBoard() {
         try {
             Board b2 = new Board(5, 4, 2);
@@ -76,8 +75,7 @@ public class BoardUnitTest {
     // Consider editing this assert statement
     @Test
     @Tag("Fails")
-    @Disabled
-    public void testCreateEmptyCellsNoInitializationColumns() {
+public void testCreateEmptyCellsNoInitializationColumns() {
         boardNoColumns.createEmptyCells();
 
         Cell[][] board = boardNoColumns.getCells();
@@ -88,8 +86,7 @@ public class BoardUnitTest {
     // Consider editing this assert statement
     @Test
     @Tag("Fails")
-    @Disabled
-    public void testCreateEmptyCellsNoInitializationRows() {
+public void testCreateEmptyCellsNoInitializationRows() {
         boardNoRows.createEmptyCells();
 
         Cell[][] board = boardNoRows.getCells();
@@ -244,8 +241,7 @@ public class BoardUnitTest {
     // READ HERE!!!! This is random and hard to set a proper assert for
     @Test
     @Tag("Fails")
-    @Disabled
-    public void testCalculateNeighboursIndicesFarOutOfBounds() {
+public void testCalculateNeighboursIndicesFarOutOfBounds() {
         Board twoByTwoWTwoMines = new Board(2,2,2);
         int numNeighbors = twoByTwoWTwoMines.calculateNeighbours(-5,5);;
 
@@ -433,8 +429,7 @@ public class BoardUnitTest {
     // Nothing In LoadSavedGame Checks if there is a saved game to load
     @Test
     @Tag("Fails")
-    @Disabled
-    public void testLoadSavedGameDefaultBoardNoPriorSave() {
+public void testLoadSavedGameDefaultBoardNoPriorSave() {
         Game game = new Game();
 
         try {
@@ -478,8 +473,7 @@ public class BoardUnitTest {
     // Because they need to be the same dimensions
     @Test
     @Tag("Fails")
-    @Disabled
-    public void testLoadSavedGameIntoNewBoardDiffDims() {
+public void testLoadSavedGameIntoNewBoardDiffDims() {
         Game game = new Game();
 
         boardDefault.saveGame(0, 10);

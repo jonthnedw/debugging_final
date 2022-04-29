@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="GameIntegrationTests" tests="13" skipped="0" failures="0" errors="0" timestamp="2022-04-29T16:41:48" hostname="Jonathans-MacBook-Pro.local" time="19.303">
+<testsuite name="GameIntegrationTests" tests="13" skipped="0" failures="0" errors="0" timestamp="2022-04-29T17:48:53" hostname="Jonathans-MacBook-Pro.local" time="55.504">
   <properties/>
-  <testcase name="testGameLostPausesTimer()" classname="GameIntegrationTests" time="8.717"/>
-  <testcase name="testConstructorInitializesBoard()" classname="GameIntegrationTests" time="0.242"/>
-  <testcase name="testConstructorInitializesScore()" classname="GameIntegrationTests" time="0.331"/>
-  <testcase name="testGameWonIncrementsFields()" classname="GameIntegrationTests" time="1.226"/>
-  <testcase name="testCreateBoard()" classname="GameIntegrationTests" time="0.24"/>
-  <testcase name="testRestartGameDoesNotMakeNewBoard()" classname="GameIntegrationTests" time="0.172"/>
-  <testcase name="testConstructorInitializesGUI()" classname="GameIntegrationTests" time="0.112"/>
-  <testcase name="testGameLostIncsAndDecs()" classname="GameIntegrationTests" time="1.394"/>
-  <testcase name="testNewGameMakesNewBoard()" classname="GameIntegrationTests" time="0.192"/>
-  <testcase name="testRestartGameResetsTimer()" classname="GameIntegrationTests" time="2.198"/>
-  <testcase name="testNewGameResetsTimer()" classname="GameIntegrationTests" time="2.164"/>
-  <testcase name="testEndGameSavesScore()" classname="GameIntegrationTests" time="0.096"/>
-  <testcase name="testGameWonPausesTimer()" classname="GameIntegrationTests" time="2.116"/>
+  <testcase name="testGameLostPausesTimer()" classname="GameIntegrationTests" time="9.294"/>
+  <testcase name="testConstructorInitializesBoard()" classname="GameIntegrationTests" time="0.179"/>
+  <testcase name="testConstructorInitializesScore()" classname="GameIntegrationTests" time="0.197"/>
+  <testcase name="testGameWonIncrementsFields()" classname="GameIntegrationTests" time="1.102"/>
+  <testcase name="testCreateBoard()" classname="GameIntegrationTests" time="0.194"/>
+  <testcase name="testRestartGameDoesNotMakeNewBoard()" classname="GameIntegrationTests" time="0.13"/>
+  <testcase name="testConstructorInitializesGUI()" classname="GameIntegrationTests" time="0.096"/>
+  <testcase name="testGameLostIncsAndDecs()" classname="GameIntegrationTests" time="1.976"/>
+  <testcase name="testNewGameMakesNewBoard()" classname="GameIntegrationTests" time="0.093"/>
+  <testcase name="testRestartGameResetsTimer()" classname="GameIntegrationTests" time="2.137"/>
+  <testcase name="testNewGameResetsTimer()" classname="GameIntegrationTests" time="2.135"/>
+  <testcase name="testEndGameSavesScore()" classname="GameIntegrationTests" time="0.175"/>
+  <testcase name="testGameWonPausesTimer()" classname="GameIntegrationTests" time="37.727"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

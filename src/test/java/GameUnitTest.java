@@ -115,7 +115,6 @@ public class GameUnitTest {
     // across classes and hardcoded values
     @Test
     @Tag("Fails")
-    @Disabled
     public void setTestImagesNoBoardMissingRows() {
         try {
             Board noRows = new Board(0, 0, 1);
@@ -307,7 +306,6 @@ public class GameUnitTest {
      */
     @Test
     @Tag("Fails")
-    @Disabled
     public void testGameLostFirstGame() {
         TestGame tg = new TestGame();
         Score scorePre = tg.getScore();
@@ -397,7 +395,6 @@ public class GameUnitTest {
     // ALSO, make sure to select "Play Again" in the first and Second dialog box. Third
     // dialog box can be closed
     @Test
-    @Disabled
     public void testShowScoreMultipleBestTimes() {
         TestGame tg = new TestGame();
 
@@ -529,7 +526,6 @@ public class GameUnitTest {
 
     // BC: Pass only if statement
     @Test
-    @Disabled
     public void testCheckGameFinishedGame() {
         TestBoard tb = new TestBoard(0,2,2);
         Cell[][] cells = tb.getCells();
@@ -726,7 +722,6 @@ public class GameUnitTest {
     // Not possible to achieve full BC because second if is an if(true) if statement
     // Select "Play again"
     @Test
-    @Disabled
     public void testMouseClickedLeftClickOnUnflaggedMine() {
         TestBoard tb = new TestBoard(0,2,2);
         Cell[][] cells = tb.getCells();

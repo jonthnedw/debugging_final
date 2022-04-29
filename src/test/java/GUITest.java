@@ -2,10 +2,7 @@ import org.assertj.swing.core.GenericTypeMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import src.minesweeper.Board;
 import src.minesweeper.Game;
 import src.minesweeper.UI;
@@ -159,7 +156,7 @@ public class GUITest {
     }
 
     @Test
-    @org.junit.jupiter.api.Disabled
+    @Tag("Fail") // Fails when tests run every other time due to database write
     public void statisticsShouldBeEmptyForNewGame() {
         window.menuItem("New Game").click();
 
@@ -252,7 +249,7 @@ public class GUITest {
 
     // FAIL: This fails because there is no check if the number of mines goes below zero
     @Test
-    @Disabled
+    @Tag("Fail")
     public void numberOfMinesShouldNotGoBelowZero() {
         Board board = game.getBoard();
          //Right-click the whole 8 x 8 grid

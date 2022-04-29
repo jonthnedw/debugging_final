@@ -115,7 +115,6 @@ public class UIUnitTest {
     //Fault detected: Expect an illegal argument exception to be thrown for an illegal argument, not
     //a NegativeArraySizeException
     @Test
-    @Disabled
     public void testConstructorNegativeByNegative() {
         try {
             assertThrows(IllegalArgumentException.class, () -> {
@@ -150,7 +149,6 @@ public class UIUnitTest {
     //Fault detected: Expect an IllegalArgumentException to be thrown for an illegal argument, not an
     //ArrayIndexOutOfBoundsException
     @Test
-    @Disabled
     public void testNumButtonsZeroByNonZero() {
         assertThrows(IllegalArgumentException.class, ()-> {ui = new UI(0, 10,3);});
     }
@@ -160,7 +158,6 @@ public class UIUnitTest {
     // about expected behavior
     //Fault detected: No exception thrown for an illegal argument
     @Test
-    @Disabled
     public void testNumButtonsNonZeroByZero() {
         assertThrows(IllegalArgumentException.class, ()-> {ui = new UI(10, 0,3);});
     }
@@ -169,7 +166,6 @@ public class UIUnitTest {
     // This is an assumption due to lack of documentation
     //Fault detected: No exception thrown for an illegal argument
     @Test
-    @Disabled
     public void testConstructorNegativeMines() {
         assertThrows(IllegalArgumentException.class, ()-> {ui = new UI(10, 10,-3);});
     }
@@ -191,7 +187,6 @@ public class UIUnitTest {
     //Fault detected: we would expect an illegal argument exception to be thrown for an illegal argument,
     //not a NegativeArraySizeException
     @Test
-    @Disabled
     public void testConstructorMoreMinesThanTiles() {
         try {
             assertThrows(IllegalArgumentException.class, () -> {

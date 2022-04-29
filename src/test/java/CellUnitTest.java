@@ -111,7 +111,6 @@ public class CellUnitTest {
     }
 
     @Test
-    @Disabled
     public void testSetAndGetContentIllegalCharacter() {
         defaultCell.setContent(":");
 
