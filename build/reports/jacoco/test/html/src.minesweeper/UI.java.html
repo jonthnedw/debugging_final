@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_project_tests</a> &gt; <a href="index.source.html" class="el_package">src.minesweeper</a> &gt; <span class="el_source">UI.java</span></div><h1>UI.java</h1><pre class="source lang-java linenums">package src.minesweeper;
+
+
+import javax.swing.*;
+import java.awt.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+
+
+public class UI extends JFrame
+{
+    // The buttons
+    protected JButton[][] buttons;
+    
+    // Number of Buttons in Grid
+    protected int rows;
+    protected int cols;
+    
+    // Labels 
+    protected JLabel minesLabel;
+    protected int mines;
+    
+    protected JLabel timePassedLabel;
+    protected Thread timer;
+    protected int timePassed;
+    protected boolean stopTimer;
+    
+    // Frame settings
+<span class="fc" id="L29">    protected final String FRAME_TITLE = &quot;Minesweeper ~ Developed by Haris Muneer&quot;;</span>
+    
+<span class="fc" id="L31">    protected int FRAME_WIDTH = 520;</span>
+<span class="fc" id="L32">    protected int FRAME_HEIGHT = 550;</span>
+<span class="fc" id="L33">    protected int FRAME_LOC_X = 430;</span>
+<span class="fc" id="L34">    protected int FRAME_LOC_Y = 50;</span>
+
+    // Icons
+    protected Icon redMine;
+    protected Icon mine;
+    protected Icon flag;
+    protected Icon tile;
+    
+    
+    // Menu Bar and Items
+    
+    protected JMenuBar menuBar;
+    protected JMenu gameMenu;
+    protected JMenuItem newGame;
+    protected JMenuItem statistics;
+    protected JMenuItem exit;
+
+    
+    
+    //---------------------------------------------------------------//
+    public UI(int r, int c, int m)
+<span class="fc" id="L55">    {                </span>
+<span class="fc" id="L56">        this.rows = r;</span>
+<span class="fc" id="L57">        this.cols = c;</span>
+        
+<span class="fc" id="L59">        buttons = new JButton [rows][cols];</span>
+
+        // Set frame
+<span class="fc" id="L62">        setSize(FRAME_WIDTH, FRAME_HEIGHT);</span>
+<span class="fc" id="L63">        setTitle(FRAME_TITLE);</span>
+<span class="fc" id="L64">        setLocation(FRAME_LOC_X, FRAME_LOC_Y);</span>
+               
+        // The layout of the frame:
+
+        JPanel gameBoard;        
+        JPanel tmPanel;        
+        JPanel scorePanel;
+        
+        //----------------GAME BOARD---------------------//
+        // Build the &quot;gameBoard&quot;.
+<span class="fc" id="L74">        gameBoard = new JPanel();</span>
+<span class="fc" id="L75">        gameBoard.setLayout(new GridLayout(rows,cols,0,0));</span>
+        
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for( int y=0 ; y&lt;rows ; y++ ) </span>
+        {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">            for( int x=0 ; x&lt;cols ; x++ ) </span>
+            {
+                // Set button text.
+<span class="fc" id="L82">                buttons[x][y] = new JButton(&quot;&quot;);</span>
+
+                // Set button name (x,y).
+<span class="fc" id="L85">                buttons[x][y].setName(Integer.toString(x) + &quot;,&quot; + Integer.toString(y));</span>
+<span class="fc" id="L86">                buttons[x][y].setFont(new Font(&quot;Serif&quot;, Font.BOLD, 24));</span>
+                
+<span class="fc" id="L88">                buttons[x][y].setBorder(BorderFactory.createLineBorder(Color.black, 1, true));</span>
+
+                // Add this button to the gameboard.
+<span class="fc" id="L91">                gameBoard.add(buttons[x][y]);</span>
+            }
+        }
+        //-----------------------------------------------//
+                
+                
+        //-------------TIME AND MINE------------------------//
+        
+<span class="fc" id="L99">        JPanel timePassedPanel = new JPanel();</span>
+<span class="fc" id="L100">        timePassedPanel.setLayout(new BorderLayout(10,0));</span>
+        
+        // Initialize the time passed label.
+<span class="fc" id="L103">        this.timePassedLabel = new JLabel (&quot;  0  &quot; , SwingConstants.CENTER);</span>
+<span class="fc" id="L104">        timePassedLabel.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 20));</span>
+                
+<span class="fc" id="L106">        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);</span>
+        
+<span class="fc" id="L108">        timePassedLabel.setBorder(loweredetched);</span>
+<span class="fc" id="L109">        timePassedLabel.setBackground(new Color(110,110,255));</span>
+<span class="fc" id="L110">        timePassedLabel.setForeground(Color.white);</span>
+<span class="fc" id="L111">        timePassedLabel.setOpaque(true);</span>
+        
+<span class="fc" id="L113">        JLabel iT = new JLabel(&quot;&quot;,SwingConstants.CENTER);</span>
+<span class="fc" id="L114">        iT.setIcon(new ImageIcon(getClass().getResource(&quot;/../../resources/main/clock.png&quot;)));</span>
+
+<span class="fc" id="L116">        timePassedPanel.add(iT, BorderLayout.WEST);</span>
+<span class="fc" id="L117">        timePassedPanel.add(timePassedLabel, BorderLayout.CENTER);</span>
+<span class="fc" id="L118">        timePassedPanel.setOpaque(false);</span>
+        
+<span class="fc" id="L120">        this.timePassed = 0;</span>
+<span class="fc" id="L121">        this.stopTimer = true;</span>
+
+        
+<span class="fc" id="L124">        JPanel minesPanel = new JPanel();</span>
+<span class="fc" id="L125">        minesPanel.setLayout(new BorderLayout(10,0));</span>
+        
+        
+        // Initialize mines label.
+<span class="fc" id="L129">        this.minesLabel = new JLabel (&quot;  0  &quot; , SwingConstants.CENTER);</span>
+<span class="fc" id="L130">        minesLabel.setFont(new Font(&quot;Serif&quot;, Font.BOLD, 20));</span>
+<span class="fc" id="L131">        minesLabel.setBorder(loweredetched);</span>
+<span class="fc" id="L132">        minesLabel.setBackground(new Color(110,110,255));</span>
+<span class="fc" id="L133">        minesLabel.setForeground(Color.white);</span>
+        
+<span class="fc" id="L135">        minesLabel.setOpaque(true);</span>
+<span class="fc" id="L136">        setMines(m);</span>
+        
+<span class="fc" id="L138">        JLabel mT = new JLabel(&quot;&quot;, SwingConstants.CENTER);</span>
+<span class="fc" id="L139">        mT.setIcon(new ImageIcon(getClass().getResource(&quot;/../../resources/main/mine.png&quot;)));</span>
+
+<span class="fc" id="L141">        minesPanel.add(minesLabel, BorderLayout.WEST);</span>
+<span class="fc" id="L142">        minesPanel.add(mT, BorderLayout.CENTER);</span>
+<span class="fc" id="L143">        minesPanel.setOpaque(false);</span>
+        
+        // Build the &quot;tmPanel&quot;.
+<span class="fc" id="L146">        tmPanel = new JPanel();</span>
+<span class="fc" id="L147">        tmPanel.setLayout(new BorderLayout(0,20));</span>
+        
+<span class="fc" id="L149">        tmPanel.add(timePassedPanel, BorderLayout.WEST);</span>
+<span class="fc" id="L150">        tmPanel.add(minesPanel, BorderLayout.EAST);</span>
+<span class="fc" id="L151">        tmPanel.setOpaque(false);</span>
+        
+        //--------------------------------------------//
+                        
+        
+        //------------------Menu--------------------------//
+<span class="fc" id="L157">        menuBar = new JMenuBar();</span>
+        
+<span class="fc" id="L159">        gameMenu = new JMenu(&quot;Game&quot;);</span>
+         
+<span class="fc" id="L161">        newGame = new JMenuItem(&quot;   New Game&quot;);</span>
+<span class="fc" id="L162">        statistics = new JMenuItem(&quot;   Statistics&quot;);</span>
+<span class="fc" id="L163">        exit = new JMenuItem(&quot;   Exit&quot;);</span>
+
+<span class="fc" id="L165">        newGame.setName(&quot;New Game&quot;);</span>
+<span class="fc" id="L166">        statistics.setName(&quot;Statistics&quot;);</span>
+<span class="fc" id="L167">        exit.setName(&quot;Exit&quot;);</span>
+
+<span class="fc" id="L169">        gameMenu.add(newGame);</span>
+<span class="fc" id="L170">        gameMenu.add(statistics);</span>
+<span class="fc" id="L171">        gameMenu.add(exit);</span>
+        
+<span class="fc" id="L173">        menuBar.add(gameMenu);                        </span>
+        //----------------------------------------------------//
+               
+        
+<span class="fc" id="L177">        JPanel p = new JPanel();</span>
+<span class="fc" id="L178">        p.setLayout(new BorderLayout(0,10));</span>
+<span class="fc" id="L179">        p.add(gameBoard, BorderLayout.CENTER);</span>
+<span class="fc" id="L180">        p.add(tmPanel, BorderLayout.SOUTH);</span>
+    
+ 
+<span class="fc" id="L183">        p.setBorder(BorderFactory.createEmptyBorder(60, 60, 14, 60));        </span>
+<span class="fc" id="L184">        p.setOpaque(false);</span>
+      
+        
+<span class="fc" id="L187">        setLayout(new BorderLayout());</span>
+<span class="fc" id="L188">        JLabel background = new JLabel(new ImageIcon(getClass().getResource(&quot;/../../resources/main/2.jpg&quot;)));</span>
+        
+<span class="fc" id="L190">        add(background);        </span>
+        
+<span class="fc" id="L192">        background.setLayout(new BorderLayout(0,0));</span>
+        
+<span class="fc" id="L194">        background.add(menuBar,BorderLayout.NORTH);</span>
+<span class="fc" id="L195">        background.add(p, BorderLayout.CENTER);        </span>
+        
+        
+<span class="fc" id="L198">        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(&quot;/../../resources/main/mine.png&quot;)));</span>
+               
+<span class="fc" id="L200">        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);</span>
+<span class="fc" id="L201">    }</span>
+	
+    //-----------------------------------------------------------------//
+
+    //-----------------------Related to Timer------------------------//
+    
+    // Starts the timer
+    public void startTimer()
+    {        
+<span class="fc" id="L210">        stopTimer = false;</span>
+        
+<span class="fc" id="L212">        timer = new Thread() {</span>
+                @Override
+                public void run()
+                {
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">                    while(!stopTimer)</span>
+                    {
+<span class="nc" id="L218">                        timePassed++;</span>
+
+                        // Update the time passed label.
+<span class="nc" id="L221">                        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);</span>
+
+                        // Wait 1 second.
+                        try{
+<span class="nc" id="L225">                            sleep(1000); </span>
+                        }
+<span class="nc" id="L227">                        catch(InterruptedException ex){}</span>
+                    }
+<span class="fc" id="L229">                }</span>
+        };                
+
+<span class="fc" id="L232">       timer.start();</span>
+<span class="fc" id="L233">    }</span>
+
+    
+    public void interruptTimer()
+    {
+<span class="fc" id="L238">        stopTimer = true;</span>
+                
+        try 
+        {
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">            if (timer!= null)</span>
+<span class="fc" id="L243">                timer.join();</span>
+        } 
+<span class="nc" id="L245">        catch (InterruptedException ex) </span>
+        {
+
+<span class="fc" id="L248">        }        </span>
+<span class="fc" id="L249">    }</span>
+    
+    public void resetTimer()
+    {
+<span class="nc" id="L253">        timePassed = 0;</span>
+<span class="nc" id="L254">        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);        </span>
+<span class="nc" id="L255">    }</span>
+
+    public void setTimePassed(int t)
+    {
+<span class="nc" id="L259">        timePassed = t;</span>
+<span class="nc" id="L260">        timePassedLabel.setText(&quot;  &quot; + timePassed + &quot;  &quot;);                </span>
+<span class="nc" id="L261">    }</span>
+    
+    //-----------------------------------------------------------//
+    
+    
+    public void initGame()
+    {
+<span class="nc" id="L268">        hideAll();</span>
+<span class="nc" id="L269">        enableAll();</span>
+<span class="nc" id="L270">    }</span>
+    
+    //------------------HELPER FUNCTIONS-----------------------//
+
+    //Makes buttons clickable
+    public void enableAll()
+    {
+<span class="nc bnc" id="L277" title="All 2 branches missed.">        for( int x=0 ; x&lt;cols ; x++ ) </span>
+        {
+<span class="nc bnc" id="L279" title="All 2 branches missed.">            for( int y=0 ; y&lt;rows ; y++ ) </span>
+            {
+<span class="nc" id="L281">                buttons[x][y].setEnabled(true);</span>
+            }
+        }
+<span class="nc" id="L284">    }</span>
+
+    //Makes buttons non-clickable
+    public void disableAll()
+    {
+<span class="nc bnc" id="L289" title="All 2 branches missed.">        for( int x=0 ; x&lt;cols ; x++ ) </span>
+        {
+<span class="nc bnc" id="L291" title="All 2 branches missed.">            for( int y=0 ; y&lt;rows ; y++ ) </span>
+            {
+<span class="nc" id="L293">                buttons[x][y].setEnabled(false);</span>
+            }
+        }
+<span class="nc" id="L296">    }</span>
+
+
+    //Resets the content of all buttons
+    public void hideAll()
+    {
+<span class="fc bfc" id="L302" title="All 2 branches covered.">        for( int x=0 ; x&lt;cols ; x++ ) </span>
+        {
+<span class="fc bfc" id="L304" title="All 2 branches covered.">            for( int y=0 ; y&lt;rows ; y++ ) </span>
+            {
+<span class="fc" id="L306">                buttons[x][y].setText(&quot;&quot;);                </span>
+<span class="fc" id="L307">                buttons[x][y].setBackground(new Color(0,103,200));</span>
+<span class="fc" id="L308">                buttons[x][y].setIcon(tile);                </span>
+            }
+        }
+<span class="fc" id="L311">    }</span>
+
+    
+    //---------------SET LISTENERS--------------------------//
+    
+    public void setButtonListeners(Game game)
+    {
+<span class="fc" id="L318">        addWindowListener(game);</span>
+    
+        // Set listeners for all buttons in the grid in gameBoard
+<span class="fc bfc" id="L321" title="All 2 branches covered.">        for( int x=0 ; x&lt;cols ; x++ ) </span>
+        {
+<span class="fc bfc" id="L323" title="All 2 branches covered.">            for( int y=0 ; y&lt;rows ; y++ ) </span>
+            {
+<span class="fc" id="L325">                buttons[x][y].addMouseListener(game);</span>
+            }
+        }
+        
+        // Set listeners for menu items in menu bar
+<span class="fc" id="L330">       newGame.addActionListener(game);</span>
+<span class="fc" id="L331">       statistics.addActionListener(game);</span>
+<span class="fc" id="L332">       exit.addActionListener(game);</span>
+
+<span class="fc" id="L334">       newGame.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));</span>
+<span class="fc" id="L335">       exit.setAccelerator(KeyStroke.getKeyStroke('Q', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));</span>
+<span class="fc" id="L336">       statistics.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));       </span>
+<span class="fc" id="L337">    }</span>
+    
+    
+    //-----------------GETTERS AND SETTERS--------------------//
+    
+    public JButton[][] getButtons()
+    {
+<span class="fc" id="L344">        return buttons;</span>
+    }
+    
+    public int getTimePassed()
+    {
+<span class="fc" id="L349">        return timePassed;</span>
+    }    
+
+
+    //----------------------SET LOOK------------------------------//
+    
+    public static void setLook(String look)
+    {
+        try {
+
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">                if (look.equals(info.getName())) {</span>
+<span class="fc" id="L361">                    UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="fc" id="L362">                    break;</span>
+                }
+            }
+            
+<span class="pc" id="L366">        } catch (Exception ex) { }            </span>
+<span class="fc" id="L367">    }</span>
+
+    //-------------------------------------------------------------//
+    
+    public void setMines(int m)
+    {
+<span class="fc" id="L373">        mines = m;</span>
+<span class="fc" id="L374">        minesLabel.setText(&quot;  &quot; + Integer.toString(m) + &quot;  &quot;);</span>
+<span class="fc" id="L375">    }</span>
+    
+    public void incMines()
+    {
+<span class="nc" id="L379">        mines++;</span>
+<span class="nc" id="L380">        setMines(mines);</span>
+<span class="nc" id="L381">    }</span>
+    
+    public void decMines()
+    {
+<span class="nc" id="L385">        mines--;</span>
+<span class="nc" id="L386">        setMines(mines);</span>
+<span class="nc" id="L387">    }</span>
+    
+    public int getMines()
+    {
+<span class="nc" id="L391">        return mines;</span>
+    }
+            
+    //--------------------Related to Icons----------------------------//
+    private static Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) 
+    {
+<span class="fc" id="L397">        Image img = icon.getImage();  </span>
+<span class="fc" id="L398">        Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight,  Image.SCALE_SMOOTH);</span>
+<span class="fc" id="L399">        return new ImageIcon(resizedImage);</span>
+    }    
+    
+    public void setIcons()
+    {
+       //---------------------Set Icons-----------------------------//
+
+<span class="fc" id="L406">        int bOffset = buttons[0][1].getInsets().left;</span>
+<span class="fc" id="L407">        int bWidth = buttons[0][1].getWidth();</span>
+<span class="fc" id="L408">        int bHeight = buttons[0][1].getHeight();</span>
+        
+        ImageIcon d;
+        
+<span class="fc" id="L412">        d = new ImageIcon(getClass().getResource(&quot;/../../resources/main/redmine.png&quot;));</span>
+<span class="fc" id="L413">        redMine =   resizeIcon(d, bWidth - bOffset, bHeight - bOffset);        </span>
+
+<span class="fc" id="L415">        d = new ImageIcon(getClass().getResource(&quot;/../../resources/main/mine.png&quot;));</span>
+<span class="fc" id="L416">        mine =   resizeIcon(d, bWidth - bOffset, bHeight - bOffset);        </span>
+        
+<span class="fc" id="L418">        d = new ImageIcon(getClass().getResource(&quot;/../../resources/main/flag.png&quot;));</span>
+<span class="fc" id="L419">        flag =   resizeIcon(d, bWidth - bOffset, bHeight - bOffset);        </span>
+        
+<span class="fc" id="L421">        d = new ImageIcon(getClass().getResource(&quot;/../../resources/main/tile.png&quot;));</span>
+<span class="fc" id="L422">        tile =   resizeIcon(d, bWidth - bOffset, bHeight - bOffset);        </span>
+                
+        //-------------------------------------------------------//
+        
+<span class="fc" id="L426">    }</span>
+    
+    public Icon getIconMine()
+    {
+<span class="fc" id="L430">        return mine;</span>
+    }
+
+    public Icon getIconRedMine()
+    {
+<span class="nc" id="L435">        return redMine;</span>
+    }
+    
+    public Icon getIconFlag()
+    {
+<span class="nc" id="L440">        return flag;</span>
+    }
+    
+    public Icon getIconTile()
+    {
+<span class="nc" id="L445">        return tile;       </span>
+    }        
+    
+    
+    //---------------------------------------------------------------------//
+    public void setTextColor(JButton b)
+    {
+<span class="fc bfc" id="L452" title="All 2 branches covered.">        if (b.getText().equals(&quot;1&quot;))</span>
+<span class="fc" id="L453">            b.setForeground(Color.blue);</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">        else if (b.getText().equals(&quot;2&quot;))</span>
+<span class="fc" id="L455">            b.setForeground(new Color(76,153,0));</span>
+<span class="pc bpc" id="L456" title="1 of 2 branches missed.">        else if (b.getText().equals(&quot;3&quot;))</span>
+<span class="fc" id="L457">            b.setForeground(Color.red);</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">        else if (b.getText().equals(&quot;4&quot;))</span>
+<span class="nc" id="L459">            b.setForeground(new Color(153,0,0));</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">        else if (b.getText().equals(&quot;5&quot;))</span>
+<span class="nc" id="L461">            b.setForeground(new Color(153,0,153));</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">        else if (b.getText().equals(&quot;6&quot;))</span>
+<span class="nc" id="L463">            b.setForeground(new Color(96,96,96));</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">        else if (b.getText().equals(&quot;7&quot;))</span>
+<span class="nc" id="L465">            b.setForeground(new Color(0,0,102));</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">        else if (b.getText().equals(&quot;8&quot;))</span>
+<span class="nc" id="L467">            b.setForeground(new Color(153,0,76));        </span>
+<span class="fc" id="L468">    }</span>
+    //------------------------------------------------------------------------//
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

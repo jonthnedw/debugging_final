@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CellUnitTest" tests="24" skipped="1" failures="0" errors="0" timestamp="2022-04-28T23:42:04" hostname="Jonathans-MacBook-Pro.local" time="0.021">
+  <properties/>
+  <testcase name="testSetFalseMineCell()" classname="CellUnitTest" time="0.002"/>
+  <testcase name="testSetAndGetMineCell()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testGetSurroundingMinesDefault()" classname="CellUnitTest" time="0.001"/>
+  <testcase name="testGetContentDefault()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testGetMineNoMineCell()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetContentIllegalCharacter()" classname="CellUnitTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testSetAndGetContentFlag()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetContent0()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetContent1()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetContent2()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetContent3()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetContent4()" classname="CellUnitTest" time="0.001"/>
+  <testcase name="testSetAndGetContent5()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetContent6()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetContent7()" classname="CellUnitTest" time="0.001"/>
+  <testcase name="testSetAndGetContent8()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetSurroundingMines1()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetSurroundingMines2()" classname="CellUnitTest" time="0.001"/>
+  <testcase name="testSetAndGetSurroundingMines3()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetSurroundingMines4()" classname="CellUnitTest" time="0.002"/>
+  <testcase name="testSetAndGetSurroundingMines5()" classname="CellUnitTest" time="0.0"/>
+  <testcase name="testSetAndGetSurroundingMines6()" classname="CellUnitTest" time="0.002"/>
+  <testcase name="testSetAndGetSurroundingMines7()" classname="CellUnitTest" time="0.001"/>
+  <testcase name="testSetAndGetSurroundingMines8()" classname="CellUnitTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

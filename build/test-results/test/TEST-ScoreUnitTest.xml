@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ScoreUnitTest" tests="21" skipped="2" failures="0" errors="0" timestamp="2022-04-28T23:42:04" hostname="Jonathans-MacBook-Pro.local" time="0.024">
+  <properties/>
+  <testcase name="testGetLongestLosingStreakWhenStreakIsLostAndThenRecreated()" classname="ScoreUnitTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testGetGamesWonOneGameWon()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testWinPercentage75Percent()" classname="ScoreUnitTest" time="0.002"/>
+  <testcase name="testGetGamesWonStartAtZero()" classname="ScoreUnitTest" time="0.0"/>
+  <testcase name="testWinPercentage25Percent()" classname="ScoreUnitTest" time="0.003"/>
+  <testcase name="testWinPercentageNoWinsAndManyPlays()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testWinPercentage100Percent()" classname="ScoreUnitTest" time="0.0"/>
+  <testcase name="testGetGamesWonMultipleGamesWon()" classname="ScoreUnitTest" time="0.0"/>
+  <testcase name="testGetLongestLosingStreakWhenStreakIsLost()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testGetLongestLosingStreakWhenStreakIsMade()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testGetGamesPlayedPlayedOnce()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testWinPercentageWonWithNoGamesPlayed()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testGetGamesPlayedStartAtZero()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testGetLongestWinningStreakWhenStreakIsLost()" classname="ScoreUnitTest" time="0.0"/>
+  <testcase name="testGetLongestWinningStreakWhenStreakIsMade()" classname="ScoreUnitTest" time="0.0"/>
+  <testcase name="testGetLongestWinningStreakWhenStreakIsLostAndThenRecreated()" classname="ScoreUnitTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testGetGamesPlayedMultipleGames()" classname="ScoreUnitTest" time="0.0"/>
+  <testcase name="testWinPercentageNoWins()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testWinPercentage50Percent()" classname="ScoreUnitTest" time="0.001"/>
+  <testcase name="testWinPercentage66Percent()" classname="ScoreUnitTest" time="0.0"/>
+  <testcase name="testWinPercentage33Percent()" classname="ScoreUnitTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

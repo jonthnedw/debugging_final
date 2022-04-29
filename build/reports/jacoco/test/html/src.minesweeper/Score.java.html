@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Score.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_project_tests</a> &gt; <a href="index.source.html" class="el_package">src.minesweeper</a> &gt; <span class="el_source">Score.java</span></div><h1>Score.java</h1><pre class="source lang-java linenums">package src.minesweeper;
+
+import static java.lang.Math.ceil;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collections;
+import java.util.Comparator;
+
+
+public class Score
+{
+    ArrayList&lt;Time&gt; bestTimes;
+    
+    int gamesPlayed;
+    int gamesWon;
+       
+    int longestWinningStreak;
+    int longestLosingStreak;
+    
+    int currentStreak;
+
+    int currentWinningStreak;
+    int currentLosingStreak;
+    
+    public Score()
+<span class="fc" id="L32">    {</span>
+<span class="fc" id="L33">        gamesPlayed = gamesWon = currentStreak = longestLosingStreak = longestWinningStreak = currentWinningStreak = currentLosingStreak = 0;</span>
+<span class="fc" id="L34">        bestTimes = new ArrayList();</span>
+<span class="fc" id="L35">    }</span>
+    
+    
+    public int getGamesPlayed()
+    {
+<span class="fc" id="L40">        return gamesPlayed;        </span>
+    }
+    
+    public int getGamesWon()
+    {        
+<span class="fc" id="L45">        return gamesWon;</span>
+    }
+    
+    public int getWinPercentage()
+    {
+<span class="fc" id="L50">        double gP = gamesPlayed;</span>
+<span class="fc" id="L51">        double gW = gamesWon;</span>
+        
+<span class="fc" id="L53">        double percentage = ceil((gW/gP) * 100);</span>
+        
+<span class="fc" id="L55">        return (int)percentage;</span>
+    }
+    
+    public int getLongestWinningStreak()
+    {
+<span class="nc" id="L60">        return longestWinningStreak;</span>
+    }
+    
+    public int getLongestLosingStreak()
+    {
+<span class="nc" id="L65">        return longestLosingStreak;</span>
+    }
+    
+    public int getCurrentStreak()
+    {
+<span class="nc" id="L70">        return currentStreak;</span>
+    }
+    
+    public int getCurrentLosingStreak()
+    {
+<span class="nc" id="L75">        return currentLosingStreak;</span>
+    }
+
+    public int getCurrentWinningStreak(){
+<span class="nc" id="L79">        return currentWinningStreak;</span>
+    }
+    
+    public void incGamesWon()
+    {
+<span class="nc" id="L84">        gamesWon++;</span>
+<span class="nc" id="L85">    }</span>
+    
+    public void incGamesPlayed()
+    {
+<span class="fc" id="L89">        gamesPlayed++;</span>
+<span class="fc" id="L90">    }</span>
+    
+    public void incCurrentStreak()
+    {
+<span class="nc" id="L94">        currentStreak++;</span>
+<span class="nc" id="L95">    }</span>
+    
+    public void incCurrentLosingStreak()
+    {
+<span class="fc" id="L99">        currentLosingStreak++;</span>
+        
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (longestLosingStreak &lt; currentLosingStreak)</span>
+        {
+<span class="fc" id="L103">            longestLosingStreak = currentLosingStreak;</span>
+        }                
+<span class="fc" id="L105">    }</span>
+
+    public void incCurrentWinningStreak()
+    {
+<span class="nc" id="L109">        currentWinningStreak++;</span>
+        
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (longestWinningStreak &lt; currentWinningStreak)</span>
+        {
+<span class="nc" id="L113">            longestWinningStreak = currentWinningStreak;</span>
+        }                
+<span class="nc" id="L115">    }</span>
+    
+    
+    public void decCurrentStreak()
+    {        
+<span class="fc" id="L120">        currentStreak--;</span>
+<span class="fc" id="L121">    }    </span>
+    
+    
+    public void resetScore()
+    {
+<span class="nc" id="L126">        gamesPlayed = gamesWon = currentStreak = longestLosingStreak = longestWinningStreak = currentWinningStreak = currentLosingStreak = 0;</span>
+<span class="nc" id="L127">    }</span>
+    
+    
+    
+    public ArrayList&lt;Time&gt; getBestTimes()
+    {
+<span class="fc" id="L133">        return bestTimes;</span>
+    }
+        
+    
+    public void addTime(int time, Date date)
+    {
+<span class="nc" id="L139">        bestTimes.add(new Time(time,date));</span>
+<span class="nc" id="L140">        Collections.sort(bestTimes,new TimeComparator()); </span>
+        
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if(bestTimes.size() &gt; 5)</span>
+<span class="nc" id="L143">            bestTimes.remove(bestTimes.size()-1);</span>
+<span class="nc" id="L144">    }</span>
+     
+    //--------------------------------------------------------//
+
+    
+    //------------DATABASE--------------------------//
+    
+    //------------POPULATE FROM DATABASE------------//
+    public boolean populate()
+    {
+<span class="fc" id="L154">        Connection connection = null;</span>
+<span class="fc" id="L155">        Statement statement = null;</span>
+<span class="fc" id="L156">        ResultSet resultSet = null;</span>
+
+        try {
+<span class="fc" id="L159">            String dbURL = Game.dbPath; </span>
+
+<span class="fc" id="L161">            connection = DriverManager.getConnection(dbURL); </span>
+<span class="fc" id="L162">            statement = connection.createStatement();</span>
+<span class="fc" id="L163">            resultSet = statement.executeQuery(&quot;SELECT * FROM SCORE&quot;);</span>
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">            while(resultSet.next()) </span>
+            {
+<span class="fc" id="L167">                gamesPlayed = resultSet.getInt(&quot;GAMES_PLAYED&quot;);</span>
+<span class="fc" id="L168">                gamesWon = resultSet.getInt(&quot;GAMES_WON&quot;);</span>
+
+<span class="fc" id="L170">                longestWinningStreak = resultSet.getInt(&quot;LWSTREAK&quot;);</span>
+<span class="fc" id="L171">                longestLosingStreak = resultSet.getInt(&quot;LLSTREAK&quot;);</span>
+
+<span class="fc" id="L173">                currentStreak = resultSet.getInt(&quot;CSTREAK&quot;);</span>
+
+<span class="fc" id="L175">                currentWinningStreak = resultSet.getInt(&quot;CWSTREAK&quot;);</span>
+<span class="fc" id="L176">                currentLosingStreak = resultSet.getInt(&quot;CLSTREAK&quot;);                                </span>
+            }
+            
+            // cleanup resources, once after processing
+<span class="fc" id="L180">            resultSet.close();</span>
+<span class="fc" id="L181">            statement.close();</span>
+
+            
+            //------------------------LOAD TIMES------------------//
+            
+<span class="fc" id="L186">            statement = connection.createStatement();</span>
+<span class="fc" id="L187">            resultSet = statement.executeQuery(&quot;SELECT * FROM TIME&quot;);</span>
+            
+            
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">            while(resultSet.next())</span>
+            {
+<span class="nc" id="L192">                int time = resultSet.getInt(&quot;TIME_VALUE&quot;);</span>
+<span class="nc" id="L193">                Date date = resultSet.getDate(&quot;DATE_VALUE&quot;);</span>
+                
+<span class="nc" id="L195">                bestTimes.add(new Time(time,date));</span>
+<span class="nc" id="L196">            }</span>
+            
+            
+            // cleanup resources, once after processing
+<span class="fc" id="L200">            resultSet.close();</span>
+<span class="fc" id="L201">            statement.close();</span>
+            
+            
+            // and then finally close connection
+<span class="fc" id="L205">            connection.close();            </span>
+            
+<span class="fc" id="L207">            return true;</span>
+        }
+<span class="nc" id="L209">        catch(SQLException sqlex)</span>
+        {
+<span class="nc" id="L211">            sqlex.printStackTrace();</span>
+<span class="nc" id="L212">            return false;</span>
+        }
+    }
+
+    
+    public void save()
+    {
+<span class="fc" id="L219">        Connection connection = null;</span>
+<span class="fc" id="L220">        PreparedStatement statement = null;</span>
+        
+
+        try {
+<span class="fc" id="L224">            String dbURL = Game.dbPath; </span>
+            
+<span class="fc" id="L226">            connection = DriverManager.getConnection(dbURL); </span>
+
+            
+            //----------EMPTY SCORE TABLE------//
+<span class="fc" id="L230">            String template = &quot;DELETE FROM SCORE&quot;; </span>
+<span class="fc" id="L231">            statement = connection.prepareStatement(template);</span>
+<span class="fc" id="L232">            statement.executeUpdate();</span>
+            
+            //----------EMPTY TIME TABLE------//
+<span class="fc" id="L235">            template = &quot;DELETE FROM TIME&quot;; </span>
+<span class="fc" id="L236">            statement = connection.prepareStatement(template);</span>
+<span class="fc" id="L237">            statement.executeUpdate();</span>
+            
+            //--------------INSERT DATA INTO SCORE TABLE-----------//            
+<span class="fc" id="L240">            template = &quot;INSERT INTO SCORE (GAMES_PLAYED,GAMES_WON, LWSTREAK, LLSTREAK, CSTREAK, CWSTREAK, CLSTREAK) values (?,?,?,?,?,?,?)&quot;;</span>
+<span class="fc" id="L241">            statement = connection.prepareStatement(template);</span>
+            
+<span class="fc" id="L243">            statement.setInt(1, gamesPlayed);</span>
+<span class="fc" id="L244">            statement.setInt(2, gamesWon);</span>
+<span class="fc" id="L245">            statement.setInt(3, longestWinningStreak);</span>
+<span class="fc" id="L246">            statement.setInt(4, longestLosingStreak);</span>
+<span class="fc" id="L247">            statement.setInt(5, currentStreak);</span>
+<span class="fc" id="L248">            statement.setInt(6, currentWinningStreak);</span>
+<span class="fc" id="L249">            statement.setInt(7, currentLosingStreak);</span>
+            
+<span class="fc" id="L251">            statement.executeUpdate();</span>
+            
+            //-------------------INSERT DATA INTO TIME TABLE-----------//
+<span class="fc" id="L254">            template = &quot;INSERT INTO TIME (TIME_VALUE, DATE_VALUE) values (?,?)&quot;;</span>
+<span class="fc" id="L255">            statement = connection.prepareStatement(template);</span>
+            
+
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">            for (int i = 0; i &lt; bestTimes.size(); i++)</span>
+            {
+<span class="nc" id="L260">                statement.setInt(1, bestTimes.get(i).getTimeValue());</span>
+<span class="nc" id="L261">                statement.setDate(2, bestTimes.get(i).getDateValue());</span>
+                
+<span class="nc" id="L263">                statement.executeUpdate();            </span>
+            }
+
+            //---------------------------------------------------------//
+            
+<span class="fc" id="L268">            statement.close();</span>
+            
+            // and then finally close connection
+<span class="fc" id="L271">            connection.close();            </span>
+        }
+<span class="nc" id="L273">        catch(SQLException sqlex)</span>
+        {
+<span class="nc" id="L275">            sqlex.printStackTrace();</span>
+<span class="fc" id="L276">        }</span>
+        
+<span class="fc" id="L278">    }</span>
+
+    //--------------------------------------------------//
+    
+    
+    //---------------------------------------------------//
+<span class="nc" id="L284">    public class TimeComparator implements Comparator&lt;Time&gt;</span>
+    {
+        @Override
+        public int compare(Time a, Time b) {
+<span class="nc bnc" id="L288" title="All 2 branches missed.">            if (a.getTimeValue() &gt; b.getTimeValue())</span>
+<span class="nc" id="L289">                return 1;</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">            else if (a.getTimeValue() &lt; b.getTimeValue())</span>
+<span class="nc" id="L291">                return -1;</span>
+            else
+<span class="nc" id="L293">                return 0;</span>
+        }                        
+    }
+
+    //----------------------------------------------------------//
+    public class Time{
+        Date date;
+        int time;
+        
+        public Time(int t, Date d)
+<span class="nc" id="L303">        {</span>
+<span class="nc" id="L304">            time = t;</span>
+<span class="nc" id="L305">            date = d;</span>
+<span class="nc" id="L306">        }</span>
+        
+        public Date getDateValue()
+        {
+<span class="nc" id="L310">            return date;</span>
+        }
+        
+        public int getTimeValue()
+        {
+<span class="nc" id="L315">            return time;</span>
+        }        
+    }    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

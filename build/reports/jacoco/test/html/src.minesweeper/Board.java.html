@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final_project_tests</a> &gt; <a href="index.source.html" class="el_package">src.minesweeper</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">package src.minesweeper;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javafx.util.Pair;
+
+
+
+public class Board 
+{
+    private int numberOfMines;	
+    protected Cell cells[][];
+
+    private int rows;
+    private int cols;
+
+        
+    //---------------------------------------------//
+    
+    public Board(int numberOfMines, int r, int c)
+<span class="fc" id="L25">    {</span>
+<span class="fc" id="L26">        this.rows = r;</span>
+<span class="fc" id="L27">        this.cols = c;</span>
+<span class="fc" id="L28">        this.numberOfMines = numberOfMines;</span>
+
+<span class="fc" id="L30">        cells = new Cell[rows][cols];</span>
+
+        //Step 1: First create a board with empty Cells
+<span class="fc" id="L33">        createEmptyCells();         </span>
+
+        //Step 2: Then set mines randomly at cells
+<span class="fc" id="L36">        setMines();</span>
+
+        //Step 3: Then set the number of surrounding mines(&quot;neighbours&quot;) at each cell
+<span class="fc" id="L39">        setSurroundingMinesNumber();</span>
+<span class="fc" id="L40">    }</span>
+
+
+    //------------------------------------------------------------------//
+    //STEP 1//
+    public void createEmptyCells()
+    {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (int x = 0; x &lt; cols; x++)</span>
+        {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            for (int y = 0; y &lt; rows; y++)</span>
+            {
+<span class="fc" id="L51">                cells[x][y] = new Cell();</span>
+            }
+        }
+<span class="fc" id="L54">    }</span>
+
+    //------------------------------------------------------------------//
+    //STEP 2//
+    public void setMines()
+    {
+        int x,y;
+        boolean hasMine;
+<span class="fc" id="L62">        int currentMines = 0;                </span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        while (currentMines != numberOfMines)</span>
+        {
+            // Generate a random x coordinate (between 0 and cols)
+<span class="fc" id="L67">            x = (int)Math.floor(Math.random() * cols);</span>
+
+            // Generate a random y coordinate (between 0 and rows)
+<span class="fc" id="L70">            y = (int)Math.floor(Math.random() * rows);</span>
+
+<span class="fc" id="L72">            hasMine = cells[x][y].getMine();</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            if(!hasMine)</span>
+            {		
+<span class="fc" id="L76">                cells[x][y].setMine(true);</span>
+<span class="fc" id="L77">                currentMines++;	</span>
+            }			
+        }
+<span class="fc" id="L80">    }</span>
+    //------------------------------------------------------------------//
+
+    //------------------------------------------------------------------//
+    //STEP 3//
+    public void setSurroundingMinesNumber()
+    {	
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for(int x = 0 ; x &lt; cols ; x++) </span>
+        {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            for(int y = 0 ; y &lt; rows ; y++) </span>
+            {
+<span class="fc" id="L91">                cells[x][y].setSurroundingMines(calculateNeighbours(x,y));                        </span>
+            }
+        }
+<span class="fc" id="L94">    }</span>
+    //------------------------------------------------------------------//	
+
+
+
+
+    //---------------------HELPER FUNCTIONS---------------------------//        
+
+    //Calculates the number of surrounding mines (&quot;neighbours&quot;)
+    public int calculateNeighbours(int xCo, int yCo)
+    {
+<span class="fc" id="L105">        int neighbours = 0;</span>
+
+        // Check the neighbours (the columns xCo - 1, xCo, xCo + 1)
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for(int x=makeValidCoordinateX(xCo - 1); x&lt;=makeValidCoordinateX(xCo + 1); x++) </span>
+        {
+            // Check the neighbours (the rows yCo - 1, yCo, yCo + 1).
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            for(int y=makeValidCoordinateY(yCo - 1); y&lt;=makeValidCoordinateY(yCo + 1); y++) </span>
+            {
+                // Skip (xCo, yCo), since that's no neighbour.
+<span class="fc bfc" id="L114" title="All 4 branches covered.">                if(x != xCo || y != yCo)</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                    if(cells[x][y].getMine())   // If the neighbour contains a mine, neighbours++.</span>
+<span class="fc" id="L116">                        neighbours++;</span>
+            }
+        }
+
+<span class="fc" id="L120">        return neighbours;</span>
+    }
+
+    //------------------------------------------------------------------//	
+
+    //Simply makes a coordinate a valid one (i.e within the boundaries of the Board)
+    public int makeValidCoordinateX(int i)
+    {
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (i &lt; 0)</span>
+<span class="fc" id="L129">            i = 0;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        else if (i &gt; cols-1)</span>
+<span class="fc" id="L131">            i = cols-1;</span>
+
+<span class="fc" id="L133">        return i;</span>
+    }	
+    
+    //Simply makes a coordinate a valid one (i.e within the boundaries of the Board)
+    public int makeValidCoordinateY(int i)
+    {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (i &lt; 0)</span>
+<span class="fc" id="L140">            i = 0;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        else if (i &gt; rows-1)</span>
+<span class="fc" id="L142">            i = rows-1;</span>
+
+<span class="fc" id="L144">        return i;</span>
+    }	
+    
+    //------------------------------------------------------------------//	        
+
+    //-------------DATA BASE------------------------//
+    
+    // to check whether there is a save game or not
+    public boolean checkSave()
+    {
+<span class="fc" id="L154">        Connection connection = null;</span>
+<span class="fc" id="L155">        Statement statement = null;</span>
+<span class="fc" id="L156">        ResultSet resultSet = null;</span>
+        
+<span class="fc" id="L158">        boolean saveExists = false;</span>
+
+        try {
+<span class="fc" id="L161">            String dbURL = Game.dbPath; </span>
+            
+<span class="fc" id="L163">            connection = DriverManager.getConnection(dbURL); </span>
+<span class="fc" id="L164">            statement = connection.createStatement();</span>
+<span class="fc" id="L165">            resultSet = statement.executeQuery(&quot;SELECT * FROM GAME_STATE&quot;);</span>
+            
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">            while(resultSet.next()) </span>
+            {
+<span class="nc" id="L169">                saveExists = true;</span>
+            }
+            
+            // cleanup resources, once after processing
+<span class="fc" id="L173">            resultSet.close();</span>
+<span class="fc" id="L174">            statement.close();</span>
+                       
+            // and then finally close connection
+<span class="fc" id="L177">            connection.close();            </span>
+            
+<span class="fc" id="L179">            return saveExists;</span>
+        }
+<span class="nc" id="L181">        catch(SQLException sqlex)</span>
+        {
+<span class="nc" id="L183">            sqlex.printStackTrace();</span>
+<span class="nc" id="L184">            return false;</span>
+        }        
+    }
+    
+    //--------------LOAD SAVED GAME-----------------//
+    
+    
+    public Pair loadSaveGame()
+    {
+<span class="nc" id="L193">        Connection connection = null;</span>
+<span class="nc" id="L194">        Statement statement = null;</span>
+<span class="nc" id="L195">        ResultSet resultSet = null;</span>
+
+        try {
+<span class="nc" id="L198">            String dbURL = Game.dbPath; </span>
+            
+<span class="nc" id="L200">            connection = DriverManager.getConnection(dbURL); </span>
+            
+            //--------------Load Cells State-------------------//
+<span class="nc" id="L203">            statement = connection.createStatement();</span>
+<span class="nc" id="L204">            resultSet = statement.executeQuery(&quot;SELECT * FROM CELL&quot;);</span>
+
+<span class="nc bnc" id="L206" title="All 2 branches missed.">            for(int x = 0 ; x &lt; cols ; x++) </span>
+            {
+<span class="nc bnc" id="L208" title="All 2 branches missed.">                for(int y = 0 ; y &lt; rows ; y++) </span>
+                {                                        
+<span class="nc" id="L210">                    resultSet.next();</span>
+                    
+<span class="nc" id="L212">                    cells[x][y].setContent(resultSet.getString(&quot;CONTENT&quot;));</span>
+<span class="nc" id="L213">                    cells[x][y].setMine(resultSet.getBoolean(&quot;MINE&quot;));</span>
+<span class="nc" id="L214">                    cells[x][y].setSurroundingMines(resultSet.getInt(&quot;SURROUNDING_MINES&quot;));                    </span>
+                }
+            }
+            
+<span class="nc" id="L218">            statement.close();</span>
+<span class="nc" id="L219">            resultSet.close();</span>
+            //----------------------------------------------------//
+
+            //---------------Load Game Variables-----------------//
+<span class="nc" id="L223">            statement = connection.createStatement();</span>
+<span class="nc" id="L224">            resultSet = statement.executeQuery(&quot;SELECT * FROM GAME_STATE&quot;);</span>
+
+<span class="nc" id="L226">            resultSet.next();</span>
+                        
+<span class="nc" id="L228">            Pair p = new Pair(resultSet.getInt(&quot;TIMER&quot;),resultSet.getInt(&quot;MINES&quot;));</span>
+            
+            //After loading, delete the saved game
+<span class="nc" id="L231">            deleteSavedGame();</span>
+            
+            // cleanup resources, once after processing
+<span class="nc" id="L234">            resultSet.close();</span>
+<span class="nc" id="L235">            statement.close();</span>
+                       
+            // and then finally close connection
+<span class="nc" id="L238">            connection.close();</span>
+
+<span class="nc" id="L240">            return p;</span>
+        }
+<span class="nc" id="L242">        catch(SQLException sqlex)</span>
+        {
+<span class="nc" id="L244">            sqlex.printStackTrace();</span>
+<span class="nc" id="L245">            return null;</span>
+        }                
+    }
+    
+    
+    //------------------------------------------------------------------------//
+    public void deleteSavedGame()
+    {
+<span class="nc" id="L253">        Connection connection = null;</span>
+<span class="nc" id="L254">        PreparedStatement statement = null;</span>
+        
+        try {
+<span class="nc" id="L257">            String dbURL = Game.dbPath; </span>
+            
+<span class="nc" id="L259">            connection = DriverManager.getConnection(dbURL); </span>
+
+            
+            //----------EMPTY GAME_STATE TABLE------//
+<span class="nc" id="L263">            String template = &quot;DELETE FROM GAME_STATE&quot;; </span>
+<span class="nc" id="L264">            statement = connection.prepareStatement(template);</span>
+<span class="nc" id="L265">            statement.executeUpdate();</span>
+            
+            //----------EMPTY CELL TABLE------//
+<span class="nc" id="L268">            template = &quot;DELETE FROM CELL&quot;; </span>
+<span class="nc" id="L269">            statement = connection.prepareStatement(template);</span>
+<span class="nc" id="L270">            statement.executeUpdate();</span>
+            
+<span class="nc" id="L272">            statement.close();</span>
+            
+            // and then finally close connection
+<span class="nc" id="L275">            connection.close();            </span>
+        }
+<span class="nc" id="L277">        catch(SQLException sqlex)</span>
+        {
+<span class="nc" id="L279">            sqlex.printStackTrace();</span>
+<span class="nc" id="L280">        }                </span>
+<span class="nc" id="L281">    }</span>
+    
+           
+    //--------------SAVE GAME IN DATABASE-----------//
+    public void saveGame(int timer, int mines)
+    {
+<span class="nc" id="L287">        Connection connection = null;</span>
+<span class="nc" id="L288">        PreparedStatement statement = null;</span>
+        
+        try {
+<span class="nc" id="L291">            String dbURL = Game.dbPath; </span>
+            
+<span class="nc" id="L293">            connection = DriverManager.getConnection(dbURL); </span>
+
+            
+            //--------------INSERT DATA INTO CELL TABLE-----------//            
+<span class="nc" id="L297">            String template = &quot;INSERT INTO CELL (CONTENT, MINE, SURROUNDING_MINES) values (?,?,?)&quot;;</span>
+<span class="nc" id="L298">            statement = connection.prepareStatement(template);</span>
+
+<span class="nc bnc" id="L300" title="All 2 branches missed.">            for(int x = 0 ; x &lt; cols ; x++) </span>
+            {
+<span class="nc bnc" id="L302" title="All 2 branches missed.">                for(int y = 0 ; y &lt; rows ; y++) </span>
+                {
+<span class="nc" id="L304">                    statement.setString(1, cells[x][y].getContent());</span>
+<span class="nc" id="L305">                    statement.setBoolean(2, cells[x][y].getMine());</span>
+<span class="nc" id="L306">                    statement.setInt(3, (int)cells[x][y].getSurroundingMines());                    </span>
+
+<span class="nc" id="L308">                    statement.executeUpdate();</span>
+                }
+            }
+            //--------------------------------------------------//
+
+            
+            //--------------------SAVE GAME STATE----------------------//
+<span class="nc" id="L315">            template = &quot;INSERT INTO GAME_STATE (TIMER,MINES) values (?,?)&quot;;</span>
+<span class="nc" id="L316">            statement = connection.prepareStatement(template);</span>
+            
+<span class="nc" id="L318">            statement.setInt(1, timer);</span>
+<span class="nc" id="L319">            statement.setInt(2, mines);</span>
+
+<span class="nc" id="L321">            statement.executeUpdate();</span>
+            
+            //---------------------------------------------------------//
+            
+<span class="nc" id="L325">            statement.close();</span>
+            
+            // and then finally close connection
+<span class="nc" id="L328">            connection.close();            </span>
+        }
+<span class="nc" id="L330">        catch(SQLException sqlex)</span>
+        {
+<span class="nc" id="L332">            sqlex.printStackTrace();</span>
+<span class="nc" id="L333">        }</span>
+        
+<span class="nc" id="L335">    }</span>
+    
+    
+    
+    //--------------------------------------------//
+    //---------GETTERS AND SETTERS-------------//
+    public void setNumberOfMines(int numberOfMines)
+    {
+<span class="nc" id="L343">        this.numberOfMines = numberOfMines;</span>
+<span class="nc" id="L344">    }</span>
+
+    public int getNumberOfMines()
+    {
+<span class="fc" id="L348">        return numberOfMines;</span>
+    }
+
+    public Cell[][] getCells()
+    {
+<span class="fc" id="L353">        return cells;</span>
+    }
+    
+    public int getRows()
+    {
+<span class="fc" id="L358">        return rows;</span>
+    }
+    
+    public int getCols()
+    {
+<span class="fc" id="L363">        return cols;</span>
+    }
+    //-----------------------------------------//
+
+    public void resetBoard()
+    {
+<span class="nc bnc" id="L369" title="All 2 branches missed.">        for(int x = 0 ; x &lt; cols ; x++) </span>
+        {
+<span class="nc bnc" id="L371" title="All 2 branches missed.">            for(int y = 0 ; y &lt; rows ; y++) </span>
+            {
+<span class="nc" id="L373">                cells[x][y].setContent(&quot;&quot;);                        </span>
+            }
+        }
+<span class="nc" id="L376">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
