@@ -11,7 +11,7 @@ Certain interactions in Game were not feasible to test using state-based testing
 
 No faults were found using Integration Testing
 
-### GameTestInstructions
+### GameTest Instructions
 When running any Game class test that results in a pop-up dialogue box, select any option that is NOT "Exit." 
 Normally, we simply select "Play again," if an option box comes up with only "Yes" or "No," "Yes" was selected. "Reset" and "Close" should also be okay to select.
 Commented instructions that describe deleting data rows in the local database can be ignored as the BeforeEach method now
@@ -30,15 +30,22 @@ In the *Score Class*, line 101 and 111 are if statements. They cannot be failed 
 
 
 *Game Class*:
-In ResumeGame(), ShowScore(), WindowClosing(), and ActionPerformed(), [Jonathan fill here the attempts/reason why we cannot access these JPane branches]
+In ResumeGame(), ShowScore(), WindowClosing(), and ActionPerformed(), we were unable to reach the branches that had 
+event listeners due to the asynchronous behavior of the code. We attemped to reach these branches using GUI function calls
+however it was hard to hook into the correct frame since the were not apart of the GUI testing suite. 
 
-In GameWon(), GameLost(), ShowScore(), WindowClosing(), and ActionPerformed(), [Jonathan fill here the attempts/reason why we cannot access these actionListener branches].
+In GameWon(), GameLost(), ShowScore(), WindowClosing(), and ActionPerformed(), we are unable to reach these branches mainly because they contain event handler events which cannot
+be reached synchronously within the unit test. We attempted this by creating a helper function that woudl executre the
+GUI actions on another thread: ![](thread.jpg)
+However this solution was unreliable since at times the code would not execute in time on both threads and this would mean
+we would have time insert thread sleeps which would overcomplicate the tests. So we were unable to reach any branches with
+event listeners because of the need for asynchronous code execution.
 
 In GameWon(), if statement on 246 cannot be entered because if the individual has won, they have by default set a best time, so the best times array will not be empty.
 
 In MouseClicked(), the if statement on 831 is always true, because if the "playing" field is false entering this method, it is made true just before this if statement.
 
-### BoardUnitTesting
+### Board UnitTesting
 Failing Tests:
 For all failures, they are made on assumptions of functionality since there is no documentation in this source code.
 
@@ -64,14 +71,14 @@ For all failures, they are made on assumptions of functionality since there is n
   The method seems to suggest that a saved board can be loaded into whatever board object the load method is called on. However, if the dimensions differ, an index out of bounds error will trigger.
 
 
-### CellUnitTesting
+### Cell UnitTesting
 Failing Tests:
 For all failures, they are made on assumptions of functionality since there is no documentation in this source code.
 
 - public void testSetAndGetContentIllegalCharacter() : 
   There is no check for unused characters when "setting the content" of a cell. The documentation states that used characters are: M, F, "", and the numbers 0-8. There is no check that the content you are setting are any of these characters, so no illegal argument exceptions are thrown and it does not prevent illegal setting of content.
 
-### ScoreUnitTesting
+### Score UnitTesting
 Failing Tests:
 For all failures, they are made on assumptions of functionality since there is no documentation in this source code.
 
@@ -87,7 +94,7 @@ The same error occurs for winning streaks interrupted by a losing streak.
 - public void testPopulateSQLException() : 
   False failure. This method, like some others, will fail when run in bulk, but will pass when run individually.
 
-### GameUnitTesting
+### Game UnitTesting
 Failing Tests:
 For all failures, they are made on assumptions of functionality since there is no documentation in this source code.
 
@@ -104,7 +111,7 @@ For all failures, they are made on assumptions of functionality since there is n
   False failure. This method, like some others, will fail when run in bulk, but will pass when run individually. I believe this is caused by the local database but it is unclear since the BeforeEach should rewrite the database before every test
 
 
-### UIUnitTesting
+### UI UnitTesting
 Failing tests:
 
 - public void testConstructorNegativeByNegative() : 
@@ -121,3 +128,27 @@ Fault detected: No exception thrown for an illegal argument
 
 - public void testConstructorMoreMinesThanTiles() : 
 Fault detected: we would expect an illegal argument exception to be thrown for an illegal argument, not a NegativeArraySizeException
+
+### GUI Testing
+Failing tests: 
+
+- public void numberOfMinesShouldNotGoBelowZero() :
+This failure is due to a fault in the code which never checks if the numnber of mines can go below zero, which means the
+user can right-click on as many cells as they want (and make the number of mines negative).
+
+- public void statisticsShouldBeEmptyForNewGame() :
+This failure is due to the database being written in the tests. However this test may past if the file is empty but from
+experience it will fail every other test run. 
+
+### PIT Mutation Analysis
+We reported a low mutation score simply because the there is high coupling in a lot of the source code and often times a
+mutation in the code would not result in a change of gameplay. First of all we were unable to include Board.java in the
+PIT analysis since any mutation to that file resulted in SQL exceptions which would cause PIT to fail. When we ran it on
+other files little to no mutations would be killed mainly because a lot of the unit testing check for faults in the
+functions altering these functions may not change how the unit test would perform simply becase there is high coupling
+in these functions amd these functions would do more than one thing. Because more than one thing would be done in these
+methods it made it hard to perform mutation analysis. Also for some GUI test these would create weak mutations since the
+output may not change if the UI was differnt (i.e. a different color or number of cells)
+
+This is why we were unable to complete mutation testing with PIT. 
+
