@@ -4,6 +4,7 @@ import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import src.minesweeper.Board;
 import src.minesweeper.Game;
@@ -82,6 +83,19 @@ public class GUITest {
         }
     }
 
+    // Helper function to win a game
+    private void winGame(Board board) {
+        for (int i = board.getRows() - 1; i >= 0; i--) {
+            for (int j = board.getCols() - 1;j >= 0; j--) {
+                if (!board.getCells()[i][j].getMine()) {
+                    window.button(i + "," + j).click();
+                } else {
+                    window.button(i + "," + j).rightClick();
+                }
+            }
+        }
+    }
+
     // Helper function that returns true if the GUI has all the default settings of a new game
     private boolean isNewGame(TestGame game) {
         boolean isNew = true;
@@ -139,6 +153,9 @@ public class GUITest {
         assertNotNull(jLabelFinder(frame, "  Longest Winning Streak:  "));
         assertNotNull(jLabelFinder(frame, "  Longest Losing Streak:  "));
         assertNotNull(jLabelFinder(frame, "  Current Streak:  "));
+        assertFalse(jButtonFinder(frame, "Reset").isEnabled());
+
+        jButtonFinder(frame, "Close").click();
     }
 
     @Test
@@ -156,6 +173,8 @@ public class GUITest {
         jLabelFinder(frame, "  Longest Winning Streak:  ").requireText("  Longest Winning Streak:  0");
         jLabelFinder(frame, "  Longest Losing Streak:  ").requireText("  Longest Losing Streak:  0");
         jLabelFinder(frame, "  Current Streak:  ").requireText("  Current Streak:  0");
+
+        jButtonFinder(frame, "Close").click();
     }
 
     @Test
@@ -231,9 +250,9 @@ public class GUITest {
         assertEquals(10, game.getGui().getMines());
     }
 
-    // FAILED
+    // FAIL: This fails because there is no check if the number of mines goes below zero
     @Test
-    @org.junit.jupiter.api.Disabled
+    @Disabled
     public void numberOfMinesShouldNotGoBelowZero() {
         Board board = game.getBoard();
          //Right-click the whole 8 x 8 grid
@@ -255,19 +274,15 @@ public class GUITest {
 
     @Test
     public void findingAllMinesShouldPopupWinningWindow() {
-
-        Board board = game.getBoard();
-        for (int i = board.getRows() - 1; i >= 0; i--) {
-            for (int j = board.getCols() - 1; j >= 0; j--) {
-                if (board.getCells()[i][j].getMine()) {
-                    window.button(i + "," + j).rightClick();
-                } else {
-                    window.button(i + "," + j).click();
-                }
-            }
-        }
-
+        winGame(game.getBoard());
         assertNotNull(jDialogFinder("Game Won"));
+    }
+
+    @Test
+    public void finishingGameFollowedByPlayAgain() {
+        winGame(game.getBoard());
+        jButtonFinder(jDialogFinder("Game Won"), "Play Again").click();
+        assertTrue(isNewGame(game));
     }
 
     @Test

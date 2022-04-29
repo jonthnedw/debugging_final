@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import src.minesweeper.Cell;
 
@@ -110,6 +111,7 @@ public class CellUnitTest {
     }
 
     @Test
+    @Disabled
     public void testSetAndGetContentIllegalCharacter() {
         defaultCell.setContent(":");
 
