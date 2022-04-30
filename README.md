@@ -3,6 +3,17 @@
 
 Tools: jAssert, JUnit, PIT, JaCoco 
 
+*Please don't change the file hierarchy, it is important for tests to run as well as reports to be generated (especially 
+the build folder).*
+
+Running all tests: In build.gradle run test { ... } rule which will run all test. See below for dealing with dialog
+boxes (basically don't click Exit). For GUI testing don't touch the mouse and run on Mac if possible. 
+
+To get Jacoco to run disable all failing tests in test classes. The same thing must be done for PIT analysis.
+
+### Reports
+PIT and Jacoco reports can be found in build folder under build/reports/
+
 ### GameIntegrationTest
 
 To run this test file, the tester will need to click "Play again" on every dialog box that appears to resume the script running
@@ -31,8 +42,9 @@ In the *Score Class*, line 101 and 111 are if statements. They cannot be failed 
 
 *Game Class*:
 In ResumeGame(), ShowScore(), WindowClosing(), and ActionPerformed(), we were unable to reach the branches that had 
-event listeners due to the asynchronous behavior of the code. We attemped to reach these branches using GUI function calls
-however it was hard to hook into the correct frame since the were not apart of the GUI testing suite. 
+event listeners due to the asynchronous behavior of the code. We attempted to reach these branches using GUI function calls
+however it was hard to hook into the correct frame since they were not a part of the GUI testing suite which lead to 
+jAssert not finding components.
 
 In GameWon(), GameLost(), ShowScore(), WindowClosing(), and ActionPerformed(), we are unable to reach these branches mainly because they contain event handler events which cannot
 be reached synchronously within the unit test. We attempted this by creating a helper function that woudl executre the
